@@ -1,8 +1,6 @@
 /**
- * Cell Potential - utils
- *
  * Ex: 
- * var random = CellPotential.utils.getRandomInteger(0, 9);
+ * var random = Life.utils.getRandomInteger(0, 9);
  * console.log(random);
  *
  * @static
@@ -12,7 +10,7 @@
  */
 
 /** @namespace */
-var CellPotential = CellPotential || {};
+var Life = CellPotential || {};
 
 CellPotential.utils = (function($, cpot) {
 

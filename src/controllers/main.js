@@ -64,11 +64,11 @@ var Life = Life || {};
 		function buildNeuron() {
 
 			neuron = new life.Neuron();
-			neuron.init();
+			life.neuronHandler.init(neuron);
 
-			neuron.add('ionic-channel', 'k1', build('ionic-channel', life.Models.channelK1));
-			neuron.add('ionic-channel', 'na1', build('ionic-channel', life.Models.channelNa1));
-			neuron.add('ionic-channel', 'cl1', build('ionic-channel', life.Models.channelCl1));
+			life.neuronHandler.add('ionic-channel', 'k1', build('ionic-channel', life.Models.channelK1));
+			life.neuronHandler.add('ionic-channel', 'na1', build('ionic-channel', life.Models.channelNa1));
+			life.neuronHandler.add('ionic-channel', 'cl1', build('ionic-channel', life.Models.channelCl1));
 		}
 
 		function buildIonicChannel(model) {
