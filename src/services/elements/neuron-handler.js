@@ -172,6 +172,21 @@ Life.neuronHandler = (function(life) {
 			}
 		},
 
+		buildEntities: function(entityType, model) {
+
+			var entity = null;
+			switch (entityType) {
+				case 'ionic-channel':
+					entity = life.ionicChannelHandler.build(model);
+					break;
+				case 'active-transport':
+					break;
+				case 'synapse':
+					break;
+			}
+			return entity;
+		},
+
 		/**
 		 * Free any pointer stored in a neuron
 		 * @return null
