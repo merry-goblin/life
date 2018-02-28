@@ -10,9 +10,4 @@ var Life = Life || {};
 Life.IonicChannel = function(settings) {
 
 	this.model = null;
-
-	this.init = function(modelParam) {
-		
-		this.model = modelParam;
-    };
 }
