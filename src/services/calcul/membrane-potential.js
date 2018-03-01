@@ -19,8 +19,6 @@ Life.membranePotential = (function(life) {
 		/*** Public methods ***/
 
 		/**
-		 * This is a hybrid between Goldman equation and Nernst equation
-		 * because i feel like i have to do this way
 		 * @param  array[object]
 		 * @return float
 		 */
