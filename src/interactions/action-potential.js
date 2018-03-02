@@ -9,6 +9,6 @@ var Life = Life || {};
 
 Life.ActionPotential = function() {
 
-	this.origin = null;
-	this.startTime = null;
+	this.x = null; // position x
+	this.start = null; // creation time
 }

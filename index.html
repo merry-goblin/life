@@ -20,12 +20,22 @@
 
 	</section>
 
+	<div class="container">
+
+		<div class="row">
+			<div class="col-md-2">
+				<button id="pps1" class="btn btn-default">Activer PPS1</button>
+			</div>
+		</div>
+	</div>
+
 	<script src="./assets/js/jquery-3.3.0.min.js"></script>
 	<script src="./vendor/ocanvas/ocanvas-2.8.8.js"></script>
 	<script src="./config/app.js"></script>
-	<script src="./config/models/channel-k1.js"></script>
-	<script src="./config/models/channel-na1.js"></script>
-	<script src="./config/models/channel-cl1.js"></script>
+	<script src="./config/models/channels/k1.js"></script>
+	<script src="./config/models/channels/na1.js"></script>
+	<script src="./config/models/channels/cl1.js"></script>
+	<script src="./config/models/neurons/t1.js"></script>
 	<script src="./src/entities/ionic-channel.js"></script>
 	<script src="./src/entities/active-transport.js"></script>
 	<script src="./src/entities/neuron.js"></script>
@@ -34,6 +44,7 @@
 	<script src="./src/interactions/postsynaptic-potential.js"></script>
 	<script src="./src/services/elements/neuron-handler.js"></script>
 	<script src="./src/services/elements/ionic-channel-handler.js"></script>
+	<script src="./src/services/elements/action-potential-handler.js"></script>
 	<script src="./src/services/graphics.js"></script>
 	<script src="./src/services/calcul/membrane-potential.js"></script>
 	<script src="./src/services/calcul/analytic-geometry.js"></script>

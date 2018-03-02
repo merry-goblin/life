@@ -93,7 +93,7 @@ Life.neuronHandler = (function(life) {
 
 		/*** Public static methods ***/
 
-		init: function(neuron) {
+		init: function(neuron, model) {
 
 			this.destruct(neuron);
 
@@ -105,6 +105,8 @@ Life.neuronHandler = (function(life) {
 			neuron.postsynapticPotentials = {};
 
 			neuron.presynapticPotential = false;
+
+			neuron.model = model;
 		},
 
 		add: function(neuron, type, key, element) {

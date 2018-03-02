@@ -9,6 +9,8 @@ var Life = Life || {};
 
 Life.Neuron = function() {
 
+	this.model = null;
+
 	//	Entities
 	this.ionChannels = null;
 	this.activeTransports = null;
@@ -20,4 +22,8 @@ Life.Neuron = function() {
 
 	//	States
 	this.presynapticPotential = false;
+
+	//	Distances
+	this.dentriteDistance = null;
+	this.axonDistance = null;
 }

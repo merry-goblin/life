@@ -107,9 +107,11 @@ var Life = Life || {};
 			 */
 			init: function() {
 
-				//	handleGraphics();
-				
 				buildNeuron();
+
+				
+
+				//	handleGraphics();
 
 				testACalculation();
 			},
