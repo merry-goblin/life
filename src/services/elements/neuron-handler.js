@@ -13,7 +13,7 @@ Life.neuronHandler = (function(life) {
 
 	//	Entities
 	function addEntityToList(entities, key, entity) {
-		
+
 		entities[key] = entity;
 	}
 
@@ -28,19 +28,19 @@ Life.neuronHandler = (function(life) {
 	}
 
 	//	Interactions
-	function addInteractionToList(interactions, key, interaction) {
+	function addInteractionToList(interactions, interaction) {
 		
-		interactions[key] = interaction;
+		interactions.push(interaction);
 	}
 
-	function getInteractionFromList(interactions, key) {
+	function getInteractionFromList(interactions, index) {
 		
-		return interactions[key];
+		return interactions[index];
 	}
 
-	function removeInteractionFromList(interactions, key) {
+	function removeInteractionFromList(interactions, index) {
 		
-		delete interactions[key];
+		delete interactions[index];
 	}
 
 	/**
@@ -122,10 +122,10 @@ Life.neuronHandler = (function(life) {
 					addEntityToList(neuron.synapses, key, element);
 					break;
 				case 'action-potential':
-					addInteractionToList(neuron.actionPotentials, key, element);
+					addInteractionToList(neuron.actionPotentials, element);
 					break;
 				case 'postsynaptic-potential':
-					addInteractionToList(neuron.postsynapticPotentials, key, element);
+					addInteractionToList(neuron.postsynapticPotentials, element);
 					break;
 			}
 		},
@@ -144,10 +144,10 @@ Life.neuronHandler = (function(life) {
 					element = getEntityFromList(neuron.synapses, key);
 					break;
 				case 'action-potential':
-					element = getInteractionFromList(neuron.actionPotentials, key);
+					element = getInteractionFromList(neuron.actionPotentials, key); // key is an index here
 					break;
 				case 'postsynaptic-potential':
-					element = getInteractionFromList(neuron.postsynapticPotentials, key);
+					element = getInteractionFromList(neuron.postsynapticPotentials, key); // key is an index here
 					break;
 			}
 			return element;
@@ -166,27 +166,12 @@ Life.neuronHandler = (function(life) {
 					removeEntityFromList(neuron.synapses, key);
 					break;
 				case 'action-potential':
-					removeInteractionFromList(neuron.actionPotentials, key);
+					removeInteractionFromList(neuron.actionPotentials, key); // key is an index here
 					break;
 				case 'postsynaptic-potential':
-					removeInteractionFromList(neuron.postsynapticPotentials, key);
+					removeInteractionFromList(neuron.postsynapticPotentials, key); // key is an index here
 					break;
 			}
-		},
-
-		buildEntities: function(entityType, model) {
-
-			var entity = null;
-			switch (entityType) {
-				case 'ionic-channel':
-					entity = life.ionicChannelHandler.build(model);
-					break;
-				case 'active-transport':
-					break;
-				case 'synapse':
-					break;
-			}
-			return entity;
 		},
 
 		/**

@@ -7,7 +7,7 @@
 /** @namespace */
 var Life = Life || {};
 
-Life.actionPotentialHandler = (function(life) {
+Life.postsynapticPotentialHandler = (function(life) {
 
 	/*** Private static methods ***/
 
@@ -15,16 +15,20 @@ Life.actionPotentialHandler = (function(life) {
 
 		/*** Public static methods ***/
 
-		build: function() {
+		build: function(synapse, start) {
 
-			return null;
+			var postsynapticPotential = new life.PostsynapticPotential();
+			postsynapticPotential.x = synapse.x;
+			postsynapticPotential.start;
+
+			return postsynapticPotential;
 		},
 
 		/**
 		 * Free any pointer stored in an element
 		 * @return null
 		 */
-		destruct: function(actionPotential) {
+		destruct: function(postsynapticPotential) {
 
 			
 		}

@@ -66,9 +66,11 @@ var Life = Life || {};
 			neuron = new life.Neuron();
 			life.neuronHandler.init(neuron);
 
-			life.neuronHandler.add('ionic-channel', 'k1', life.neuronHandler.buildEntities('ionic-channel', life.Models.channelK1));
-			life.neuronHandler.add('ionic-channel', 'na1', life.neuronHandler.buildEntities('ionic-channel', life.Models.channelNa1));
-			life.neuronHandler.add('ionic-channel', 'cl1', life.neuronHandler.buildEntities('ionic-channel', life.Models.channelCl1));
+			life.neuronHandler.add(neuron, 'ionic-channel', 'k1', life.ionicChannelHandler.build(life.Models.channelK1));
+			life.neuronHandler.add(neuron, 'ionic-channel', 'na1', life.ionicChannelHandler.build(life.Models.channelNa1));
+			life.neuronHandler.add(neuron, 'ionic-channel', 'cl1', life.ionicChannelHandler.build(life.Models.channelCl1));
+
+			life.neuronHandler.add(neuron, 'synapse', 's1', life.synapseHandler.build(life.Models.synapseT1, -50));
 		}
 
 		function testACalculation() {
@@ -114,6 +116,16 @@ var Life = Life || {};
 				//	handleGraphics();
 
 				testACalculation();
+			},
+
+			manualSynapseActivation: function(synapseKey) {
+
+				var start = new Date();
+				var startTime = start.getTime();
+				var synapse = life.neuronHandler.get(neuron, 'synapse', synapseKey);
+				postsynapticPotential =  life.postsynapticPotentialHandler.build(synapse, startTime);
+
+				life.neuronHandler.add(neuron, 'postsynaptic-potential', 'pp1', postsynapticPotential);
 			},
 
 			/**
