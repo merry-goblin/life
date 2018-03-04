@@ -7,7 +7,7 @@
 /** @namespace */
 var Life = Life || {};
 
-Life.IonicChannel = function(settings) {
+Life.IonicChannel = function() {
 
 	this.model = null;
 }
