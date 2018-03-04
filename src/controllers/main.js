@@ -125,7 +125,9 @@ var Life = Life || {};
 				var synapse = life.neuronHandler.get(neuron, 'synapse', synapseKey);
 				postsynapticPotential =  life.postsynapticPotentialHandler.build(synapse, startTime);
 
-				life.neuronHandler.add(neuron, 'postsynaptic-potential', 'pp1', postsynapticPotential);
+				life.neuronHandler.add(neuron, 'postsynaptic-potential', null, postsynapticPotential);
+
+				console.log(life.neuronHandler.getList(neuron, 'postsynaptic-potential'));
 			},
 
 			/**

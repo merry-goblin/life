@@ -101,8 +101,8 @@ Life.neuronHandler = (function(life) {
 			neuron.activeTransports = {};
 			neuron.synapses = {};
 
-			neuron.actionPotentials = {};
-			neuron.postsynapticPotentials = {};
+			neuron.actionPotentials = new Array();
+			neuron.postsynapticPotentials = new Array();
 
 			neuron.presynapticPotential = false;
 
@@ -151,6 +151,29 @@ Life.neuronHandler = (function(life) {
 					break;
 			}
 			return element;
+		},
+
+		getList: function(neuron, type) {
+
+			var list = null;
+			switch (type) {
+				case 'ionic-channel':
+					list = neuron.ionChannels;
+					break;
+				case 'active-transport':
+					list = neuron.activeTransports;
+					break;
+				case 'synapse':
+					list = neuron.synapses;
+					break;
+				case 'action-potential':
+					list = neuron.actionPotentials;
+					break;
+				case 'postsynaptic-potential':
+					list = neuron.postsynapticPotentials;
+					break;
+			}
+			return list;
 		},
 
 		remove: function(type, key) {
