@@ -22,9 +22,35 @@
 
 	<div class="container">
 
-		<div class="row">
+		<div class="row form-group">
 			<div class="col-md-2">
-				<button id="pps1" class="btn btn-default synapse-action" data-synapse-key="s1">Activer PPS1</button>
+				<button class="btn btn-default cycle-action" data-action="play">Play</button>
+			</div>
+			<div class="col-md-2">
+				<button class="btn btn-default cycle-action" data-action="pause">Pause</button>
+			</div>
+			<div class="col-md-2">
+				<button class="btn btn-default cycle-action" data-action="forward">Forward</button>
+			</div>
+			<div class="col-md-2">
+				<button class="btn btn-default cycle-action" data-action="faster">Faster</button>
+			</div>
+			<div class="col-md-2">
+				<button class="btn btn-default cycle-action" data-action="slower">Slower</button>
+			</div>
+		</div>
+		<div class="row form-group">
+			<div class="col-md-2">
+				<button class="btn btn-default synapse-action" data-synapse-key="s1">Activer PPS1</button>
+			</div>
+			<div class="col-md-2">
+				<button class="btn btn-default synapse-action" data-synapse-key="s2">Activer PPS2</button>
+			</div>
+			<div class="col-md-2">
+				<button class="btn btn-default synapse-action" data-synapse-key="s3">Activer PPS3</button>
+			</div>
+			<div class="col-md-2">
+				<button class="btn btn-default synapse-action" data-synapse-key="s4">Activer PPS4</button>
 			</div>
 		</div>
 	</div>
@@ -44,12 +70,12 @@
 	<script src="./src/elements/interactions/action-potential.js"></script>
 	<script src="./src/elements/interactions/postsynaptic-potential.js"></script>
 	<script src="./src/elements/cycles/cycle.js"></script>
-	<script src="./src/services/elements/neuron-handler.js"></script>
-	<script src="./src/services/elements/ionic-channel-handler.js"></script>
-	<script src="./src/services/elements/synapse-handler.js"></script>
-	<script src="./src/services/elements/postsynaptic-potential-handler.js"></script>
-	<script src="./src/services/elements/action-potential-handler.js"></script>
-	<script src="./src/services/elements/cycle-handler.js"></script>
+	<script src="./src/services/handlers/neuron-handler.js"></script>
+	<script src="./src/services/handlers/ionic-channel-handler.js"></script>
+	<script src="./src/services/handlers/synapse-handler.js"></script>
+	<script src="./src/services/handlers/postsynaptic-potential-handler.js"></script>
+	<script src="./src/services/handlers/action-potential-handler.js"></script>
+	<script src="./src/services/handlers/cycle-handler.js"></script>
 	<script src="./src/services/graphics.js"></script>
 	<script src="./src/services/calculs/membrane-potential.js"></script>
 	<script src="./src/services/calculs/analytic-geometry.js"></script>

@@ -71,6 +71,9 @@ var Life = Life || {};
 			life.neuronHandler.add(neuron, 'ionic-channel', 'cl1', life.ionicChannelHandler.build(life.Models.channelCl1));
 
 			life.neuronHandler.add(neuron, 'synapse', 's1', life.synapseHandler.build(life.Models.synapseT1, -50));
+			life.neuronHandler.add(neuron, 'synapse', 's2', life.synapseHandler.build(life.Models.synapseT1, -45));
+			life.neuronHandler.add(neuron, 'synapse', 's3', life.synapseHandler.build(life.Models.synapseT1, -20));
+			life.neuronHandler.add(neuron, 'synapse', 's4', life.synapseHandler.build(life.Models.synapseT1, 150));
 		}
 
 		function testACalculation() {
