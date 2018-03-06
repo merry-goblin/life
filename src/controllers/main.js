@@ -17,6 +17,8 @@ var Life = Life || {};
 		var settings = $.extend({}, settings);
 
 		var graphics = null;
+		var cycleManager = null
+
 		var interval = null;
 		
 		var neuron = null;
@@ -113,7 +115,6 @@ var Life = Life || {};
 			init: function() {
 
 				buildNeuron();
-
 				handleGraphics();
 
 				testACalculation();

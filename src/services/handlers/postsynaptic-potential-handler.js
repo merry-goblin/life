@@ -15,7 +15,7 @@ Life.postsynapticPotentialHandler = (function(life) {
 
 		/*** Public static methods ***/
 
-		build: function(synapse, start) {
+		build: function(synapse, start, impulseSpeed) {
 
 			var postsynapticPotential = new life.PostsynapticPotential();
 			postsynapticPotential.x = synapse.x;
