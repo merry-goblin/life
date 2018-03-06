@@ -22,8 +22,4 @@ Life.Neuron = function() {
 
 	//	States
 	this.presynapticPotential = false;
-
-	//	Distances
-	this.dentriteDistance = null;
-	this.axonDistance = null;
 }

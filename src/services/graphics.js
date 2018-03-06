@@ -15,10 +15,11 @@ var Life = Life || {};
 		var settings = $.extend({}, settings);
 		var canvas = null;
 		var layer = null;
-		
+
 		var soma = null;
 		var cytoplasm = null;
-		var dendriteLength = null;
+		var dendriteRuler = null;
+		var axonRuler = null;
 
 		/*** Private methods ***/
 
@@ -53,10 +54,14 @@ var Life = Life || {};
 			})
 			layer.move(canvasDimensions.w, canvasDimensions.h);
 			canvas.addChild(layer);
-			
+		}
+
+		function buildNeuron(neuron) {
+
 			addSoma();
-			addCytoplasm();
-			addDendriteLenth();
+			addCytoplasm(-580, 580);
+			addRuler(dendriteRuler, -580, -44, neuron.model.distances.dendrites + " micrometers");
+			addRuler(axonRuler, 44, 580, neuron.model.distances.axon + " micrometers");
 		}
 		
 		function addSoma() {
@@ -73,12 +78,12 @@ var Life = Life || {};
 			layer.addChild(soma);
 		}
 
-		function addCytoplasm() {
+		function addCytoplasm(x1, x2) {
 
 			cytoplasm = canvas.display.rectangle({
-				x: -580,
+				x: x1,
 				y: -16,
-				width: 1160,
+				width: Math.abs(x2-x1),
 				height: 32,
 				fill: "#aaf"
 			});
@@ -86,40 +91,49 @@ var Life = Life || {};
 			layer.addChild(cytoplasm);
 		}
 
-		function addDendriteLenth() {
+		function addRuler(ruler, x1, x2, label) {
 
 			//	A group to easily select all children
-			dendriteLength = canvas.display.rectangle({
+			ruler = canvas.display.rectangle({
 				x: 0,
 				y: 0,
 				width: 0,
 				height: 0,
 				fill: "transparent"
 			})
-			layer.addChild(dendriteLength);
+			layer.addChild(ruler);
 
 			var line1 = canvas.display.line({
-				start: { x: -580, y: 100 },
-				end: { x: -42, y: 100 },
+				start: { x: x1, y: 100 },
+				end: { x: x2, y: 100 },
 				stroke: "2px #333",
 				cap: "round"
 			});
 			var line2 = canvas.display.line({
-				start: { x: -580, y: 140 },
-				end: { x: -580, y:60 },
+				start: { x: x1, y: 130 },
+				end: { x: x1, y:70 },
 				stroke: "2px #333",
 				cap: "round"
 			});
 			var line3 = canvas.display.line({
-				start: { x: -44, y: 140 },
-				end: { x: -44, y: 60 },
+				start: { x: x2, y: 130 },
+				end: { x: x2, y: 70 },
 				stroke: "2px #333",
 				cap: "round"
 			}); 
+			var text = canvas.display.text({
+				x: Math.abs(x2-x1)/2 + x1,
+				y: 80,
+				origin: { x: "center", y: "center" },
+				font: "bold 15px sans-serif",
+				text: label,
+				fill: "#333"
+			});
 
-			dendriteLength.addChild(line1);
-			dendriteLength.addChild(line2);
-			dendriteLength.addChild(line3);
+			ruler.addChild(line1);
+			ruler.addChild(line2);
+			ruler.addChild(line3);
+			ruler.addChild(text);
 		}
 
 		var scope = {
@@ -129,10 +143,12 @@ var Life = Life || {};
 			/**
 			 * Build a whole new world
 			 * @param string worldId
+			 * @param Life.Neuron neuron
 			 */
-			init: function(worldId) {
+			init: function(worldId, neuron) {
 
 				initOCanvas(worldId);
+				buildNeuron(neuron);
 				this.update();
 			},
 

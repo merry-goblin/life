@@ -53,7 +53,7 @@ var Life = Life || {};
 		function handleGraphics() {
 
 			graphics = new life.Graphics();
-			graphics.init("world");
+			graphics.init("world", neuron);
 
 			// Set interval
 			// Calculate next step from the world
@@ -64,7 +64,7 @@ var Life = Life || {};
 		function buildNeuron() {
 
 			neuron = new life.Neuron();
-			life.neuronHandler.init(neuron);
+			life.neuronHandler.init(neuron, life.Models.neuronT1);
 
 			life.neuronHandler.add(neuron, 'ionic-channel', 'k1', life.ionicChannelHandler.build(life.Models.channelK1));
 			life.neuronHandler.add(neuron, 'ionic-channel', 'na1', life.ionicChannelHandler.build(life.Models.channelNa1));
