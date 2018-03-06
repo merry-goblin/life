@@ -16,7 +16,9 @@ var Life = Life || {};
 		var canvas = null;
 		var layer = null;
 		
-		var circle = null;
+		var soma = null;
+		var cytoplasm = null;
+		var dendriteLength = null;
 
 		/*** Private methods ***/
 
@@ -52,21 +54,72 @@ var Life = Life || {};
 			layer.move(canvasDimensions.w, canvasDimensions.h);
 			canvas.addChild(layer);
 			
-			addCircleDemo();
+			addSoma();
+			addCytoplasm();
+			addDendriteLenth();
 		}
 		
-		function addCircleDemo() {
+		function addSoma() {
 		
-			circle = canvas.display.arc({
+			soma = canvas.display.arc({
 				x: 0,
 				y: 0,
 				radius: 46,
 				start: 0,
 				end: 360,
-				fill: "#0aa"
+				fill: "#aaf"
 			});
 
-			layer.addChild(circle);
+			layer.addChild(soma);
+		}
+
+		function addCytoplasm() {
+
+			cytoplasm = canvas.display.rectangle({
+				x: -580,
+				y: -16,
+				width: 1160,
+				height: 32,
+				fill: "#aaf"
+			});
+
+			layer.addChild(cytoplasm);
+		}
+
+		function addDendriteLenth() {
+
+			//	A group to easily select all children
+			dendriteLength = canvas.display.rectangle({
+				x: 0,
+				y: 0,
+				width: 0,
+				height: 0,
+				fill: "transparent"
+			})
+			layer.addChild(dendriteLength);
+
+			var line1 = canvas.display.line({
+				start: { x: -580, y: 100 },
+				end: { x: -42, y: 100 },
+				stroke: "2px #333",
+				cap: "round"
+			});
+			var line2 = canvas.display.line({
+				start: { x: -580, y: 140 },
+				end: { x: -580, y:60 },
+				stroke: "2px #333",
+				cap: "round"
+			});
+			var line3 = canvas.display.line({
+				start: { x: -44, y: 140 },
+				end: { x: -44, y: 60 },
+				stroke: "2px #333",
+				cap: "round"
+			}); 
+
+			dendriteLength.addChild(line1);
+			dendriteLength.addChild(line2);
+			dendriteLength.addChild(line3);
 		}
 
 		var scope = {

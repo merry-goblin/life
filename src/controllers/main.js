@@ -114,9 +114,7 @@ var Life = Life || {};
 
 				buildNeuron();
 
-				
-
-				//	handleGraphics();
+				handleGraphics();
 
 				testACalculation();
 			},
