@@ -9,6 +9,10 @@ var Life = Life || {};
 
 Life.actionPotentialHandler = (function(life) {
 
+	/*** Private static properties ***/
+
+	var currentUniqId = 0;
+
 	/*** Private static methods ***/
 
 	var scope = {
@@ -17,12 +21,35 @@ Life.actionPotentialHandler = (function(life) {
 
 		build: function(origin, startTime, impulseSpeed) {
 
-			var postsynapticPotential = new life.ActionPotential();
-			postsynapticPotential.origin = origin;
-			postsynapticPotential.startTime = startTime;
-			
+			var actionPotential = new life.ActionPotential();
+			actionPotential.origin = origin;
+			actionPotential.startTime = startTime;
+			actionPotential.impulses = new Array();
 
-			return null;
+			buildEquations(actionPotential, impulseSpeed);
+
+			return actionPotential;
+		},
+
+		buildEquations: function(actionPotential, impulseSpeed) {
+
+			var gradient = 1/impulseSpeed;
+
+			var equation1 = buildEquation(actionPotential, gradient);
+			var equation2 = buildEquation(actionPotential, (-1 * gradient));
+
+			actionPotential.impulses.push(equation1);
+			actionPotential.impulses.push(equation2);
+		},
+
+		buildEquation: function(actionPotential, gradient) {
+
+			var equation = new life.Equation();
+			equation.a = gradient;
+			equation.b = actionPotential.startTime;
+			equation.c = actionPotential.origin;
+
+			return equation;
 		},
 
 		/**
