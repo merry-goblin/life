@@ -15,7 +15,12 @@ Life.actionPotentialHandler = (function(life) {
 
 		/*** Public static methods ***/
 
-		build: function() {
+		build: function(origin, startTime, impulseSpeed) {
+
+			var postsynapticPotential = new life.ActionPotential();
+			postsynapticPotential.origin = origin;
+			postsynapticPotential.startTime = startTime;
+			
 
 			return null;
 		},

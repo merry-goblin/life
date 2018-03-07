@@ -9,6 +9,7 @@ var Life = Life || {};
 
 Life.ActionPotential = function() {
 
-	this.x = null; // position x
-	this.start = null; // creation time
+	this.origin = null; // position x
+	this.startTime = null; // creation time
+	this.impulses = null; // nervous impulses which go on two opposite directions
 }

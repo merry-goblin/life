@@ -15,11 +15,11 @@ Life.postsynapticPotentialHandler = (function(life) {
 
 		/*** Public static methods ***/
 
-		build: function(synapse, start, impulseSpeed) {
+		build: function(synapse, startTime) {
 
 			var postsynapticPotential = new life.PostsynapticPotential();
-			postsynapticPotential.x = synapse.x;
-			postsynapticPotential.start;
+			postsynapticPotential.origin = synapse.x;
+			postsynapticPotential.startTime = startTime;
 
 			return postsynapticPotential;
 		},

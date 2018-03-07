@@ -37,6 +37,15 @@ Life.analyticGeometry = (function(life) {
 			}
 
 			return response;
+		},
+
+		/**
+		 * @param  float s [speed]
+		 * @return float
+		 */
+		gradientOfALine: function(s) {
+
+			return (s != 0) ? (1/s) : 0;
 		}
 	}
 	return scope;
