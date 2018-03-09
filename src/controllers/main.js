@@ -34,12 +34,20 @@ var Life = Life || {};
 			stopLoop();
 		}
 
+		function manageCycles() {
+
+			cycleManager.manage(neuron);
+			console.log(cycleManager.getTime());
+		}
+
 		/**
 		 * Application's main loop
 		 * @return null
 		 */
 		function loop() {
 
+
+			manageCycles();
 			graphics.update();
 		}
 
@@ -114,6 +122,7 @@ var Life = Life || {};
 			 */
 			init: function() {
 
+				cycleManager = life.CycleManager();
 				buildNeuron();
 				handleGraphics();
 
@@ -130,6 +139,18 @@ var Life = Life || {};
 				life.neuronHandler.add(neuron, 'postsynaptic-potential', null, postsynapticPotential);
 
 				console.log(life.neuronHandler.getList(neuron, 'postsynaptic-potential'));
+			},
+
+			changeCycleSpeed: function(action) {
+
+				switch (action) {
+					case "play":
+						cycleManager.play();
+						break;
+					case "pause":
+						cycleManager.pause();
+						break;
+				}
 			},
 
 			/**

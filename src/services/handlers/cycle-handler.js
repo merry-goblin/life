@@ -22,13 +22,6 @@ Life.cycleHandler = (function(life) {
 			return cycle;
 		},
 
-		init: function(cycle) {
-
-			cycle.timer = 0;
-
-			return cycle;
-		},
-
 		/**
 		 * Free any pointer stored in an element
 		 * @return null

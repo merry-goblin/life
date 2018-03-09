@@ -9,5 +9,6 @@ var Life = Life || {};
 
 Life.Cycle = function() {
 
-	this.timer = 0;
+	this.start = 0;
+	this.end = 0;
 }
