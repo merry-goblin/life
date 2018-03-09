@@ -16,10 +16,18 @@ var Life = Life || {};
 		var canvas = null;
 		var layer = null;
 
+		//	OCanvas
 		var soma = null;
 		var cytoplasm = null;
 		var dendriteRuler = null;
 		var axonRuler = null;
+
+		//	JQuery
+		var $speed = null;
+		var $time = null;
+
+		//	Services
+		var cycleManager = null;
 
 		/*** Private methods ***/
 
@@ -136,6 +144,20 @@ var Life = Life || {};
 			ruler.addChild(text);
 		}
 
+		function buildCycleInfos(cycleManagerParam) {
+
+			cycleManager = cycleManagerParam;
+
+			$speed = $("#speedInfos");
+			$time = $("#timeInfos");
+		}
+
+		function updateCycleInfos() {
+
+			$speed.val(cycleManager.getSpeed());
+			$time.val(cycleManager.getTime());
+		}
+
 		var scope = {
 
 			/*** Public methods ***/
@@ -145,15 +167,17 @@ var Life = Life || {};
 			 * @param string worldId
 			 * @param Life.Neuron neuron
 			 */
-			init: function(worldId, neuron) {
+			init: function(worldId, neuron, cycleManager) {
 
 				initOCanvas(worldId);
 				buildNeuron(neuron);
+				buildCycleInfos(cycleManager);
 				this.update();
 			},
 
 			update: function() {
 
+				updateCycleInfos();
 				canvas.redraw();
 			},
 

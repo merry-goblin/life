@@ -36,6 +36,11 @@ var Life = Life || {};
 				return time;
 			},
 
+			getSpeed: function() {
+
+				return speed;
+			},
+
 			play: function() {
 
 				speed = (speed == 0) ? 1 : speed;

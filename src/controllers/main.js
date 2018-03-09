@@ -20,7 +20,7 @@ var Life = Life || {};
 		var cycleManager = null
 
 		var interval = null;
-		
+
 		var neuron = null;
 
 		/*** Private methods ***/
@@ -37,7 +37,6 @@ var Life = Life || {};
 		function manageCycles() {
 
 			cycleManager.manage(neuron);
-			console.log(cycleManager.getTime());
 		}
 
 		/**
@@ -59,11 +58,11 @@ var Life = Life || {};
 	
 			clearInterval(interval);
 		}
-		
+
 		function handleGraphics() {
 
 			graphics = new life.Graphics();
-			graphics.init("world", neuron);
+			graphics.init("world", neuron, cycleManager);
 
 			// Set interval
 			// Calculate next step from the world
