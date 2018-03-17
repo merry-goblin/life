@@ -4,3 +4,38 @@
 	max-width: 1200px;
 	margin: 0px auto;
 }
+
+.btn {
+	position: relative;
+}
+
+.btn-enabled {
+	top: 0px;
+	left: 0px;
+	color: #585;
+	background-color: #9c9/*#c3e6cb*/;
+	border-color: #9c9;
+	box-shadow: 2px 2px 2px 1px rgba(0, 0, 255, .2);
+}
+
+.btn-enabled:hover {
+	top: 2px;
+	left: 2px;
+	color: #dfd;
+	background-color: #7a7;
+	border-color: #7a7;
+	box-shadow: unset;
+}
+
+.btn-disabled {
+	top: 2px;
+	left: 2px;
+	color: #ccc;
+	background-color: #e2e3e5;
+	border-color: transparent;
+}
+
+.btn-disabled:hover {
+	color: #ccc;
+	cursor: default;
+}

@@ -11,13 +11,29 @@ var Life = Life || {};
 
 	life.CycleManager = function() {
 
+		/*** Constants ***/
+
+		var maxSpeed = 32; // microsecondes
+
 		/*** Private static properties ***/
 
-		var speed = 0; // microsecondes
-
+		var speed = 1; // microsecondes
 		var time = 0; // microsecondes
+		var isPlaying = false;
+		var isStepForwarding = false;
 
 		/*** Private static methods ***/
+
+		function consumeStepForward() {
+
+			var step = 0;
+			if (isStepForwarding) {
+				step = speed;
+				isStepForwarding = false;
+			}
+
+			return step;
+		}
 
 		var scope = {
 
@@ -28,7 +44,18 @@ var Life = Life || {};
 				// manage interactions during current cycle
 				// todo
 
-				time += speed;
+				var currentSpeed = consumeStepForward();
+				if (isPlaying) {
+					currentSpeed = speed;
+				}
+				time += currentSpeed;
+			},
+
+				/* Getters */
+
+			getMaxSpeed: function() {
+
+				return maxSpeed;
 			},
 
 			getTime: function() {
@@ -41,14 +68,40 @@ var Life = Life || {};
 				return speed;
 			},
 
+			getIsPlaying: function() {
+
+				return isPlaying;
+			},
+
+				/* Actions */
+
 			play: function() {
 
-				speed = (speed == 0) ? 1 : speed;
+				isPlaying = true;
 			},
 
 			pause: function() {
 
-				speed = 0;
+				isPlaying = false;
+			},
+
+			forward: function() {
+
+				isStepForwarding = true;
+			},
+
+			faster: function() {
+
+				if (speed < maxSpeed) {
+					speed *= 2;
+				}
+			},
+
+			slower: function() {
+
+				if (speed > 1) {
+					speed /= 2;
+				}
 			},
 
 			/**

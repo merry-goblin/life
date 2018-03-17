@@ -149,6 +149,15 @@ var Life = Life || {};
 					case "pause":
 						cycleManager.pause();
 						break;
+					case "forward":
+						cycleManager.forward();
+						break;
+					case "slower":
+						cycleManager.slower();
+						break;
+					case "faster":
+						cycleManager.faster();
+						break;
 				}
 			},
 

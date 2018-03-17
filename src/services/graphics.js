@@ -158,6 +158,52 @@ var Life = Life || {};
 			$time.val(cycleManager.getTime());
 		}
 
+		function updateCycleUI() {
+
+			var $playButton = $(".cycle-action[data-action='play']");
+			var $pauseButton = $(".cycle-action[data-action='pause']");
+			var $forwardButton = $(".cycle-action[data-action='forward']");
+			var $slowerButton = $(".cycle-action[data-action='slower']");
+			var $fasterButton = $(".cycle-action[data-action='faster']");
+
+			if (cycleManager.getIsPlaying()) {
+				disableButton($playButton);
+				enableButton($pauseButton);
+				disableButton($forwardButton);
+			}
+			else {
+				enableButton($playButton);
+				disableButton($pauseButton);
+				enableButton($forwardButton);
+			}
+
+			if (cycleManager.getSpeed() > 1) {
+				enableButton($slowerButton);
+			}
+			else {
+				disableButton($slowerButton);
+			}
+
+			if (cycleManager.getSpeed() < cycleManager.getMaxSpeed()) {
+				enableButton($fasterButton);
+			}
+			else {
+				disableButton($fasterButton);
+			}
+		}
+
+		function enableButton($button) {
+
+			$button.removeClass("btn-disabled");
+			$button.addClass("btn-enabled");
+		}
+
+		function disableButton($button) {
+
+			$button.removeClass("btn-enabled");
+			$button.addClass("btn-disabled");
+		}
+
 		var scope = {
 
 			/*** Public methods ***/
@@ -178,6 +224,7 @@ var Life = Life || {};
 			update: function() {
 
 				updateCycleInfos();
+				updateCycleUI();
 				canvas.redraw();
 			},
 
