@@ -5,6 +5,12 @@
 	margin: 0px auto;
 }
 
+.cycle-ui {
+	padding-top: 32px;
+}
+
+/* Button */
+
 .btn {
 	position: relative;
 }
@@ -18,7 +24,8 @@
 	box-shadow: 2px 2px 2px 1px rgba(0, 0, 255, .2);
 }
 
-.btn-enabled:hover {
+.btn-enabled:hover, 
+.btn-enabled:focus {
 	top: 2px;
 	left: 2px;
 	color: #dfd;
@@ -35,7 +42,25 @@
 	border-color: transparent;
 }
 
-.btn-disabled:hover {
+.btn-disabled:hover,
+.btn-disabled:focus {
 	color: #ccc;
 	cursor: default;
+}
+
+/* Tooltip */
+
+.tip span.title {
+    display: none;
+}
+.tip:hover span.title {
+	display: block;
+	position: absolute;
+	top: -36px;
+	left: 0px;
+	padding: 3px 10px;
+	background-color: #f0f0f0;
+	border: #c0c0c0 1px dotted;
+	color: #888;
+	opacity: 0.5;
 }

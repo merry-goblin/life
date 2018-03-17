@@ -38,22 +38,22 @@
 				<input class="form-control" type="text" value="" id="speedInfos">
 			</div>
 		</div>
-		<div class="row form-group">
+		<div class="row form-group cycle-ui">
 			<div class="col-md-12">
-				<button class="btn btn-disabled cycle-action" data-action="play" title="Play">
-					<span class="glyphicon glyphicon-play"></span>
+				<button class="btn btn-disabled cycle-action tip" data-action="play">
+					<span class="glyphicon glyphicon-play"></span><span class="title">Play</span>
 				</button>
-				<button class="btn btn-disabled cycle-action" data-action="pause" title="Pause">
-					<span class="glyphicon glyphicon-pause"></span>
+				<button class="btn btn-disabled cycle-action tip" data-action="pause">
+					<span class="glyphicon glyphicon-pause"></span><span class="title">Pause</span>
 				</button>
-				<button class="btn btn-disabled cycle-action" data-action="forward" title="A step forward">
-					<span class="glyphicon glyphicon-step-forward"></span>
+				<button class="btn btn-disabled cycle-action tip" data-action="forward">
+					<span class="glyphicon glyphicon-step-forward"></span><span class="title">A step forward</span>
 				</button>
-				<button class="btn btn-disabled cycle-action" data-action="slower" title="Slower">
-					<span class="glyphicon glyphicon-chevron-left"></span>
+				<button class="btn btn-disabled cycle-action tip" data-action="slower">
+					<span class="glyphicon glyphicon-chevron-left"></span><span class="title">Slower</span>
 				</button>
-				<button class="btn btn-disabled cycle-action" data-action="faster" title="Faster">
-					<span class="glyphicon glyphicon-chevron-right"></span>
+				<button class="btn btn-disabled cycle-action tip" data-action="faster">
+					<span class="glyphicon glyphicon-chevron-right"></span><span class="title">Faster</span>
 				</button>
 			</div>
 		</div>
@@ -117,8 +117,10 @@
 			$(".cycle-action").click(function() {
 
 				var $element = $(this);
-				var action = $element.attr('data-action');
-				mainController.changeCycleSpeed(action);
+				if ($element.hasClass("btn-enabled")) {
+					var action = $element.attr('data-action');
+					mainController.changeCycleSpeed(action);
+				}
 			});
 
 		})(jQuery, Life);
