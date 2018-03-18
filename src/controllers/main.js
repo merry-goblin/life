@@ -75,14 +75,16 @@ var Life = Life || {};
 			neuron = new life.Neuron();
 			life.neuronHandler.init(neuron, life.Models.neuronT1);
 
+			//	Add ionic channels on all the membran
 			life.neuronHandler.add(neuron, 'ionic-channel', 'k1', life.ionicChannelHandler.build(life.Models.channelK1));
 			life.neuronHandler.add(neuron, 'ionic-channel', 'na1', life.ionicChannelHandler.build(life.Models.channelNa1));
 			life.neuronHandler.add(neuron, 'ionic-channel', 'cl1', life.ionicChannelHandler.build(life.Models.channelCl1));
 
+			//	Add synapses at specific point of the membran
 			life.neuronHandler.add(neuron, 'synapse', 's1', life.synapseHandler.build(life.Models.synapseT1, -50));
 			life.neuronHandler.add(neuron, 'synapse', 's2', life.synapseHandler.build(life.Models.synapseT1, -45));
 			life.neuronHandler.add(neuron, 'synapse', 's3', life.synapseHandler.build(life.Models.synapseT1, -20));
-			life.neuronHandler.add(neuron, 'synapse', 's4', life.synapseHandler.build(life.Models.synapseT1, 150));
+			life.neuronHandler.add(neuron, 'synapse', 's4', life.synapseHandler.build(life.Models.synapseT1, 5000));
 		}
 
 		function testACalculation() {
@@ -137,7 +139,9 @@ var Life = Life || {};
 
 				life.neuronHandler.add(neuron, 'postsynaptic-potential', null, postsynapticPotential);
 
-				console.log(life.neuronHandler.getList(neuron, 'postsynaptic-potential'));
+				graphics.activateSynapse(synapseKey);
+
+				//console.log(life.neuronHandler.getList(neuron, 'postsynaptic-potential'));
 			},
 
 			changeCycleSpeed: function(action) {

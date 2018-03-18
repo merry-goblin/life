@@ -15,12 +15,16 @@ var Life = Life || {};
 		var settings = $.extend({}, settings);
 		var canvas = null;
 		var layer = null;
+		var worldWith = 0;
+		var worldHeight = 0;
 
 		//	OCanvas
 		var soma = null;
 		var cytoplasm = null;
 		var dendriteRuler = null;
 		var axonRuler = null;
+		var synapseLayer = null;
+		var synapseList = null;
 
 		//	JQuery
 		var $speed = null;
@@ -43,6 +47,8 @@ var Life = Life || {};
 		function initOCanvas(worldId) {
 
 			var worldDomElement = document.getElementById(worldId);
+			worldWith = worldDomElement.width;
+			worldHeight = worldDomElement.height;
 			var canvasDimensions = {
 				w: worldDomElement.width / 2,
 				h: worldDomElement.height / 2
@@ -68,8 +74,9 @@ var Life = Life || {};
 
 			addSoma();
 			addCytoplasm(-580, 580);
-			addRuler(dendriteRuler, -580, -44, neuron.model.distances.dendrites + " micrometers");
-			addRuler(axonRuler, 44, 580, neuron.model.distances.axon + " micrometers");
+			addRuler(dendriteRuler, -580, -2, neuron.model.distances.dendrites + " micrometers");
+			addRuler(axonRuler, 2, 580, neuron.model.distances.axon + " micrometers");
+			addSynapses(neuron.synapses, neuron.model.distances.dendrites, neuron.model.distances.axon);
 		}
 		
 		function addSoma() {
@@ -97,6 +104,74 @@ var Life = Life || {};
 			});
 
 			layer.addChild(cytoplasm);
+		}
+
+		function removeSynapses() {
+
+			if (synapseLayer != null) {
+				layer.remove(synapseLayer);
+				synapseLayer = null;
+			}
+		}
+
+		function addSynapses(synapses, dendriteDistance, axonDistance) {
+
+			//	Clear current synapses
+			removeSynapses();
+			synapseList = {};
+
+			//	Synapses container
+			synapseLayer = canvas.display.rectangle({
+				x: 0,
+				y: 0,
+				width: 0,
+				height: 0,
+				fill: "transparent"
+			})
+			synapseLayer.move(0, -15);
+			layer.addChild(synapseLayer);
+
+			//	Add synapses
+			for (var key in synapses) {
+				synapseList[key] = addSynapse(synapses[key], dendriteDistance, axonDistance);
+			}
+		}
+
+		function addSynapse(synapse, dendriteDistance, axonDistance) {
+
+			var x = 0;
+			if (synapse.x < 0) {
+				x = (synapse.x / dendriteDistance) * (worldWith / 2);
+			}
+			else if (synapse.x > 0) {
+				x = (synapse.x / axonDistance) * (worldWith / 2);
+			}
+
+			var ellipse = canvas.display.ellipse({
+				x: x,
+				y: 0,
+				radius_x: 8,
+				radius_y: 6,
+				fill: "white",
+				stroke: "2px #0aa"
+			});
+
+			synapseLayer.addChild(ellipse);
+
+			return ellipse;
+		}
+
+		function highlightSynapse(synapse) {
+
+			//synapse.stroke = "2px #a94442";
+			synapse.fill = "#d66";
+			synapse.stroke = "2px #d66";
+		}
+
+		function removeHighlightSynapse(synapse) {
+
+			synapse.fill = "white";
+			synapse.stroke = "2px #0aa";
 		}
 
 		function addRuler(ruler, x1, x2, label) {
@@ -219,6 +294,28 @@ var Life = Life || {};
 				buildNeuron(neuron);
 				buildCycleInfos(cycleManager);
 				this.update();
+			},
+
+			/**
+			 *	If a synapse is added after graphic service initialization this funtion must be used
+			 */
+			redrawElements: function(neuron) {
+
+				//	todo
+			},
+
+			activateSynapse: function(key) {
+
+				if (synapseList[key] != null) {
+					highlightSynapse(synapseList[key]);
+				}
+			},
+
+			inactivateSynapse: function(key) {
+
+				if (synapseList[key] != null) {
+					removeHighlightSynapse(synapseList[key]);
+				}
 			},
 
 			update: function() {
