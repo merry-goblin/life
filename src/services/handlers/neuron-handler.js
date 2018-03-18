@@ -153,6 +153,9 @@ Life.neuronHandler = (function(life) {
 			return element;
 		},
 
+		/**
+		 *	Don't remember why i though i needed that function ...
+		 */
 		getList: function(neuron, type) {
 
 			var list = null;

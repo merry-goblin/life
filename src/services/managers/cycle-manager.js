@@ -35,6 +35,13 @@ var Life = Life || {};
 			return step;
 		}
 
+		function consumeActivations(neuron) {
+
+			for (var key in neuron.synapses) {
+				life.synapseHandler.consumeActivation(neuron.synapses[key]);
+			}
+		}
+
 		var scope = {
 
 			/*** Public static methods ***/
@@ -49,6 +56,10 @@ var Life = Life || {};
 					currentSpeed = speed;
 				}
 				time += currentSpeed;
+
+				if (currentSpeed > 0) {
+					consumeActivations(neuron);
+				}
 			},
 
 				/* Getters */

@@ -45,9 +45,8 @@ var Life = Life || {};
 		 */
 		function loop() {
 
-
 			manageCycles();
-			graphics.update();
+			graphics.update(neuron);
 		}
 
 		/**
@@ -132,16 +131,12 @@ var Life = Life || {};
 
 			manualSynapseActivation: function(synapseKey) {
 
-				var start = new Date();
-				var startTime = start.getTime();
 				var synapse = life.neuronHandler.get(neuron, 'synapse', synapseKey);
-				postsynapticPotential =  life.postsynapticPotentialHandler.build(synapse, startTime);
+				var postsynapticPotential = life.synapseHandler.activate(synapse);
 
 				life.neuronHandler.add(neuron, 'postsynaptic-potential', null, postsynapticPotential);
 
 				graphics.activateSynapse(synapseKey);
-
-				//console.log(life.neuronHandler.getList(neuron, 'postsynaptic-potential'));
 			},
 
 			changeCycleSpeed: function(action) {

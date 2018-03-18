@@ -155,6 +155,7 @@ var Life = Life || {};
 				fill: "white",
 				stroke: "2px #0aa"
 			});
+			ellipse.isActive = false;
 
 			synapseLayer.addChild(ellipse);
 
@@ -163,15 +164,32 @@ var Life = Life || {};
 
 		function highlightSynapse(synapse) {
 
-			//synapse.stroke = "2px #a94442";
-			synapse.fill = "#d66";
-			synapse.stroke = "2px #d66";
+			if (!synapse.isActive) {
+				synapse.isActive = true;
+				synapse.fill = "#d66";
+				synapse.stroke = "2px #d66";
+			}
 		}
 
 		function removeHighlightSynapse(synapse) {
 
-			synapse.fill = "white";
-			synapse.stroke = "2px #0aa";
+			if (synapse.isActive) {
+				synapse.isActive = false;
+				synapse.fill = "white";
+				synapse.stroke = "2px #0aa";
+			}
+		}
+
+		function updateSynapsesState(synapses) {
+
+			for (var key in synapses) {
+				if (synapses[key].isActive == true) {
+					highlightSynapse(synapseList[key]);
+				}
+				else {
+					removeHighlightSynapse(synapseList[key]);
+				}
+			}
 		}
 
 		function addRuler(ruler, x1, x2, label) {
@@ -311,6 +329,12 @@ var Life = Life || {};
 				}
 			},
 
+			/**
+			 *	Already handled on each update. No need to call. I keep it 'cause it could help for doing some testing
+			 *
+			 *	@param  string key
+			 *	@return null
+			 */
 			inactivateSynapse: function(key) {
 
 				if (synapseList[key] != null) {
@@ -318,10 +342,13 @@ var Life = Life || {};
 				}
 			},
 
-			update: function() {
+			update: function(neuron) {
 
 				updateCycleInfos();
 				updateCycleUI();
+				if (neuron != null) {
+					updateSynapsesState(neuron.synapses);
+				}
 				canvas.redraw();
 			},
 

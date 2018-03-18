@@ -10,4 +10,5 @@ var Life = Life || {};
 Life.Synapse = function() {
 
 	this.x = null; // < 0 soma & dendrites | >= 0 axon
+	this.isActive = false;
 }

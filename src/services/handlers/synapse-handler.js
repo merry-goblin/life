@@ -25,6 +25,31 @@ Life.synapseHandler = (function(life) {
 		},
 
 		/**
+		 *	An activation changes channels permeability
+		 *	We call it a post synaptic potential
+		 *	@param  Life.Synapse synapse
+		 *	@return Life.PostsynapticPotential
+		 */
+		activate: function(synapse) {
+
+			synapse.isActive = true;
+
+			var start = new Date();
+			var startTime = start.getTime();
+			var postsynapticPotential = life.postsynapticPotentialHandler.build(synapse, startTime);
+
+			return postsynapticPotential;
+		},
+
+		consumeActivation: function(synapse) {
+
+			var isActivate = synapse.isActive;
+			synapse.isActive = false;
+
+			return isActivate;
+		},
+
+		/**
 		 * Free any pointer stored in an element
 		 * @return null
 		 */
