@@ -128,7 +128,7 @@ var Life = Life || {};
 				height: 0,
 				fill: "transparent"
 			})
-			synapseLayer.move(0, -15);
+			synapseLayer.move(0, -24);
 			layer.addChild(synapseLayer);
 
 			//	Add synapses
@@ -190,6 +190,21 @@ var Life = Life || {};
 					removeHighlightSynapse(synapseList[key]);
 				}
 			}
+		}
+
+		function addPostSynapticPotential() {
+
+			var arc = canvas.display.arc({
+				x: -120,
+				y: -16,
+				radius: 24,
+				start: 0,
+				end: 180,
+				fill: "#ff6600",
+				stroke: "1px #dd5500"
+			});
+
+			layer.addChild(arc);
 		}
 
 		function addRuler(ruler, x1, x2, label) {
@@ -311,6 +326,7 @@ var Life = Life || {};
 				initOCanvas(worldId);
 				buildNeuron(neuron);
 				buildCycleInfos(cycleManager);
+				addPostSynapticPotential();
 				this.update();
 			},
 
