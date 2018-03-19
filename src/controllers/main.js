@@ -46,7 +46,7 @@ var Life = Life || {};
 		function loop() {
 
 			manageCycles();
-			graphics.update(neuron);
+			graphics.update();
 		}
 
 		/**
@@ -60,7 +60,7 @@ var Life = Life || {};
 
 		function handleGraphics() {
 
-			graphics = new life.Graphics();
+			graphics = new life.LineraNeuronGraphics();
 			graphics.init("world", neuron, cycleManager);
 
 			// Set interval
@@ -137,6 +137,7 @@ var Life = Life || {};
 				life.neuronHandler.add(neuron, 'postsynaptic-potential', null, postsynapticPotential);
 
 				graphics.activateSynapse(synapseKey);
+				graphics.addPostsynapticPotential(postsynapticPotential);
 			},
 
 			changeCycleSpeed: function(action) {

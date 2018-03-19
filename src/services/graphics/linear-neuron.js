@@ -9,7 +9,7 @@ var Life = Life || {};
 
 (function($, life) {
 
-	life.Graphics = function(settings) {
+	life.LineraNeuronGraphics = function(settings) {
 
 		/*** Private properties ***/
 		var settings = $.extend({}, settings);
@@ -17,6 +17,8 @@ var Life = Life || {};
 		var layer = null;
 		var worldWith = 0;
 		var worldHeight = 0;
+
+		var neuron = null;
 
 		//	OCanvas
 		var soma = null;
@@ -70,8 +72,9 @@ var Life = Life || {};
 			canvas.addChild(layer);
 		}
 
-		function buildNeuron(neuron) {
+		function buildNeuron(neuronParam) {
 
+			neuron = neuronParam;
 			addSoma();
 			addCytoplasm(-580, 580);
 			addRuler(dendriteRuler, -580, -2, neuron.model.distances.dendrites + " micrometers");
@@ -192,10 +195,10 @@ var Life = Life || {};
 			}
 		}
 
-		function addPostSynapticPotential() {
+		function displayPostSynapticPotential(postSynapticPotential) {
 
 			var arc = canvas.display.arc({
-				x: -120,
+				x: calculatePosition(postSynapticPotential.origin),
 				y: -16,
 				radius: 24,
 				start: 0,
@@ -312,6 +315,19 @@ var Life = Life || {};
 			$button.addClass("btn-disabled");
 		}
 
+		function calculatePosition(position) {
+
+			var x = 0;
+			if (position < 0) {
+				x = (position / neuron.model.distances.dendrites) * (worldWith / 2);
+			}
+			else if (position > 0) {
+				x = (position / neuron.model.distances.axon) * (worldWith / 2);
+			}
+
+			return x;
+		}
+
 		var scope = {
 
 			/*** Public methods ***/
@@ -319,21 +335,21 @@ var Life = Life || {};
 			/**
 			 * Build a whole new world
 			 * @param string worldId
-			 * @param Life.Neuron neuron
+			 * @param Life.Neuron neuronParam
+			 * @param Life.CycleManager cycleManager
 			 */
-			init: function(worldId, neuron, cycleManager) {
+			init: function(worldId, neuronParam, cycleManager) {
 
 				initOCanvas(worldId);
-				buildNeuron(neuron);
+				buildNeuron(neuronParam);
 				buildCycleInfos(cycleManager);
-				addPostSynapticPotential();
 				this.update();
 			},
 
 			/**
 			 *	If a synapse is added after graphic service initialization this funtion must be used
 			 */
-			redrawElements: function(neuron) {
+			redrawElements: function() {
 
 				//	todo
 			},
@@ -358,7 +374,12 @@ var Life = Life || {};
 				}
 			},
 
-			update: function(neuron) {
+			addPostsynapticPotential: function(postsynapticPotential) {
+
+				displayPostSynapticPotential(postsynapticPotential);
+			},
+
+			update: function() {
 
 				updateCycleInfos();
 				updateCycleUI();
