@@ -22,6 +22,10 @@ var Life = Life || {};
 		var interval = null;
 
 		var neuron = null;
+		var previousNeuron1 = null;
+		var previousNeuron2 = null;
+		var previousNeuron3 = null;
+		var previousNeuron4 = null;
 
 		/*** Private methods ***/
 
@@ -71,6 +75,16 @@ var Life = Life || {};
 
 		function buildNeuron() {
 
+			//	Previous neurons
+			previousNeuron1 = new life.Neuron();
+			life.neuronHandler.init(previousNeuron1, life.Models.neuronT1);
+			previousNeuron2 = new life.Neuron();
+			life.neuronHandler.init(previousNeuron2, life.Models.neuronT1);
+			previousNeuron3 = new life.Neuron();
+			life.neuronHandler.init(previousNeuron3, life.Models.neuronT2);
+			previousNeuron4 = new life.Neuron();
+			life.neuronHandler.init(previousNeuron4, life.Models.neuronT1);
+
 			neuron = new life.Neuron();
 			life.neuronHandler.init(neuron, life.Models.neuronT1);
 
@@ -80,10 +94,10 @@ var Life = Life || {};
 			life.neuronHandler.add(neuron, 'ionic-channel', 'cl1', life.ionicChannelHandler.build(life.Models.channelCl1));
 
 			//	Add synapses at specific point of the membran
-			life.neuronHandler.add(neuron, 'synapse', 's1', life.synapseHandler.build(life.Models.synapseT1, -50));
-			life.neuronHandler.add(neuron, 'synapse', 's2', life.synapseHandler.build(life.Models.synapseT1, -45));
-			life.neuronHandler.add(neuron, 'synapse', 's3', life.synapseHandler.build(life.Models.synapseT1, -20));
-			life.neuronHandler.add(neuron, 'synapse', 's4', life.synapseHandler.build(life.Models.synapseT1, 5000));
+			life.neuronHandler.add(neuron, 'synapse', 's1', life.synapseHandler.build(life.Models.synapseT1, -50, previousNeuron1, neuron));
+			life.neuronHandler.add(neuron, 'synapse', 's2', life.synapseHandler.build(life.Models.synapseT1, -45, previousNeuron2, neuron));
+			life.neuronHandler.add(neuron, 'synapse', 's3', life.synapseHandler.build(life.Models.synapseT1, -20, previousNeuron3, neuron));
+			life.neuronHandler.add(neuron, 'synapse', 's4', life.synapseHandler.build(life.Models.synapseT1, 5000, previousNeuron4, neuron));
 		}
 
 		function testACalculation() {

@@ -15,11 +15,13 @@ Life.synapseHandler = (function(life) {
 
 		/*** Public static methods ***/
 
-		build: function(model, x) {
+		build: function(model, x, previousNeuron, postNeuron) {
 
 			var synapse = new life.Synapse();
 			synapse.model = model;
 			synapse.x = x;
+			synapse.previousNeuron = previousNeuron;
+			synapse.postNeuron = postNeuron;
 
 			return synapse;
 		},
@@ -56,6 +58,8 @@ Life.synapseHandler = (function(life) {
 		destruct: function(synapse) {
 
 			synapse.model = null;
+			synapse.previousNeuron = null;
+			synapse.postNeuron = null;
 		}
 	}
 	return scope;

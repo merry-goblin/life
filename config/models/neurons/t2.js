@@ -9,5 +9,5 @@ Life.Models.neuronT2 = {
 		axon: 10000
 	},
 	impulseSpeed: 12, // micrometers / microsecondes
-	neurotransmitter: Life.Neurotransmitters.glutamate;
+	neurotransmitter: Life.Neurotransmitters.glutamate
 }
