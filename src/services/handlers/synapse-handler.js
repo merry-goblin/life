@@ -36,9 +36,13 @@ Life.synapseHandler = (function(life) {
 
 			synapse.isActive = true;
 
+			//	Calculate new local membrane potential
+			var potential = null;
+
+			//	Build post synaptic potential
 			var start = new Date();
 			var startTime = start.getTime();
-			var postsynapticPotential = life.postsynapticPotentialHandler.build(synapse, startTime, null);
+			var postsynapticPotential = life.postsynapticPotentialHandler.build(synapse, startTime, potential);
 
 			return postsynapticPotential;
 		},

@@ -9,5 +9,11 @@ Life.Models.neuronT2 = {
 		axon: 10000
 	},
 	impulseSpeed: 12, // micrometers / microsecondes
-	neurotransmitter: Life.Neurotransmitters.glutamate
+	neurotransmitter: Life.Neurotransmitters.glutamate,
+	channels: [
+		Life.Models.channelCl1,
+		Life.Models.channelK1,
+		Life.Models.channelNa1
+	],
+	standByPotential: null
 }

@@ -89,6 +89,22 @@ Life.neuronHandler = (function(life) {
 		neuron.postsynapticPotentials = null;
 	}
 
+	function initNeuronModel(model) {
+
+		if (model.standByPotential == null) {
+			var params = new Array();
+			for (var i=0, nb=model.channels.length; i<nb; i++) {
+				var channel = model.channels[i];
+				params.push({
+					valance: 1,
+					extra: 5,
+					intra: 140,
+					permeability: channel.permeability.default
+				});
+			}
+		}
+	}
+
 	var scope = {
 
 		/*** Public static methods ***/
@@ -107,6 +123,7 @@ Life.neuronHandler = (function(life) {
 			neuron.presynapticPotential = false;
 
 			neuron.model = model;
+			initNeuronModel(model);
 		},
 
 		add: function(neuron, type, key, element) {
