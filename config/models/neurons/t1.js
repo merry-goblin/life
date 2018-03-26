@@ -9,5 +9,5 @@ Life.Models.neuronT1 = {
 		axon: 10000
 	},
 	impulseSpeed: 12, // micrometers / microsecondes
-	neurotransmitter: Life.Neurotransmitters.gaba
+	neurotransmitter: Life.Neurotransmitters.gaba // In biology some neurons can produce more than one neurotransmitter. Let s keep it simple.
 }

@@ -15,12 +15,12 @@ Life.synapseHandler = (function(life) {
 
 		/*** Public static methods ***/
 
-		build: function(model, x, previousNeuron, postNeuron) {
+		build: function(model, x, preNeuron, postNeuron) {
 
 			var synapse = new life.Synapse();
 			synapse.model = model;
 			synapse.x = x;
-			synapse.previousNeuron = previousNeuron;
+			synapse.preNeuron = preNeuron;
 			synapse.postNeuron = postNeuron;
 
 			return synapse;
@@ -38,7 +38,7 @@ Life.synapseHandler = (function(life) {
 
 			var start = new Date();
 			var startTime = start.getTime();
-			var postsynapticPotential = life.postsynapticPotentialHandler.build(synapse, startTime);
+			var postsynapticPotential = life.postsynapticPotentialHandler.build(synapse, startTime, null);
 
 			return postsynapticPotential;
 		},
