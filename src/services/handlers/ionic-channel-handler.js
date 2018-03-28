@@ -35,15 +35,18 @@ Life.ionicChannelHandler = (function(life) {
 		 */
 		getPermeability: function(channel, potential, neurotransmitter) {
 
-			var permability = channel.model.permeability.default;
-			var neurotransmitterGatedList = channel.model.sensibility.neurotransmitterGated;
+			//	Default
+			var permeability = channel.permeability.default;
+
+			//	Neurotransmitter activation
+			var neurotransmitterGatedList = channel.sensibility.neurotransmitterGated;
 			for (var i=0, nb=neurotransmitterGatedList.length; i<nb; i++) {
 				if (neurotransmitterGatedList[i].neurotransmitter == neurotransmitter) {
-					permability = neurotransmitterGatedList[i].permeability;
+					permeability = neurotransmitterGatedList[i].permeability;
 				}
 			}
 
-			returnpermability
+			return permeability;
 		},
 
 		/**

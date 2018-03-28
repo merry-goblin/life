@@ -13,23 +13,24 @@ Life.synapseHandler = (function(life) {
 
 	function calculatePotentialOnSynapseActivation(synapse) {
 
+		var potential = 0;
 		var neurotransmitter = synapse.preNeuron.model.neurotransmitter;
 		var model = synapse.postNeuron.model;
 
-		if (model.standByPotential == null) {
-			var params = new Array();
-			for (var i=0, nb=model.channels.length; i<nb; i++) {
-				var channel = model.channels[i];
-				var ion = channel.permeability.ion;
-				params.push({
-					valance: Life.config.valence[ion],
-					extra: Life.config.extra[ion],
-					intra: Life.config.intra[ion],
-					permeability: channel.permeability.default
-				});
-			}
-			model.standByPotential = life.membranePotential.goldmanEquation(params);
+		var params = new Array();
+		for (var i=0, nb=model.channels.length; i<nb; i++) {
+			var channel = model.channels[i];
+			var ion = channel.permeability.ion;
+			params.push({
+				valance: life.config.valence[ion],
+				extra: life.config.extra[ion],
+				intra: life.config.intra[ion],
+				permeability: life.ionicChannelHandler.getPermeability(channel, potential, neurotransmitter)
+			});
 		}
+		potential = life.membranePotential.goldmanEquation(params);
+
+		return potential;
 	}
 
 	var scope = {
@@ -58,7 +59,7 @@ Life.synapseHandler = (function(life) {
 			synapse.isActive = true;
 
 			//	Calculate new local membrane potential
-			var potential = null;
+			var potential = calculatePotentialOnSynapseActivation(synapse);
 
 			//	Build post synaptic potential
 			var start = new Date();
