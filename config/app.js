@@ -20,5 +20,11 @@ Life.config = {
 		Cl: 147,
 		Ca: 1,
 		A: 0
+	},
+	valence: {
+		K: 1,
+		Na: 1,
+		Cl: 1,
+		Ca: 2
 	}
 }

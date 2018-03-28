@@ -95,13 +95,16 @@ Life.neuronHandler = (function(life) {
 			var params = new Array();
 			for (var i=0, nb=model.channels.length; i<nb; i++) {
 				var channel = model.channels[i];
+				var ion = channel.permeability.ion;
 				params.push({
-					valance: 1,
-					extra: 5,
-					intra: 140,
+					valance: Life.config.valence[ion],
+					extra: Life.config.extra[ion],
+					intra: Life.config.intra[ion],
 					permeability: channel.permeability.default
 				});
 			}
+			model.standByPotential = life.membranePotential.goldmanEquation(params);
+			console.log(model.standByPotential);
 		}
 	}
 
