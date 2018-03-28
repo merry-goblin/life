@@ -104,7 +104,6 @@ Life.neuronHandler = (function(life) {
 				});
 			}
 			model.standByPotential = life.membranePotential.goldmanEquation(params);
-			console.log(model.standByPotential);
 		}
 	}
 

@@ -24,7 +24,7 @@ Life.config = {
 	valence: {
 		K: 1,
 		Na: 1,
-		Cl: 1,
+		Cl: -1,
 		Ca: 2
 	}
 }

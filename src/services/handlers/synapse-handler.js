@@ -11,6 +11,27 @@ Life.synapseHandler = (function(life) {
 
 	/*** Private static methods ***/
 
+	function calculatePotentialOnSynapseActivation(synapse) {
+
+		var neurotransmitter = synapse.preNeuron.model.neurotransmitter;
+		var model = synapse.postNeuron.model;
+
+		if (model.standByPotential == null) {
+			var params = new Array();
+			for (var i=0, nb=model.channels.length; i<nb; i++) {
+				var channel = model.channels[i];
+				var ion = channel.permeability.ion;
+				params.push({
+					valance: Life.config.valence[ion],
+					extra: Life.config.extra[ion],
+					intra: Life.config.intra[ion],
+					permeability: channel.permeability.default
+				});
+			}
+			model.standByPotential = life.membranePotential.goldmanEquation(params);
+		}
+	}
+
 	var scope = {
 
 		/*** Public static methods ***/

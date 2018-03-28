@@ -11,6 +11,8 @@ Life.ionicChannelHandler = (function(life) {
 
 	/*** Private static methods ***/
 
+
+
 	var scope = {
 
 		/*** Public static methods ***/
@@ -21,6 +23,27 @@ Life.ionicChannelHandler = (function(life) {
 			ionicChannel.model = model;
 
 			return ionicChannel;
+		},
+
+		/**
+		 * Voltage is not handled yet
+		 * 
+		 * @param  Life.IonicChannel channel
+		 * @param  float potential
+		 * @param  integer neurotransmitter [Life.Neurotransmitters.*]
+		 * @return float
+		 */
+		getPermeability: function(channel, potential, neurotransmitter) {
+
+			var permability = channel.model.permeability.default;
+			var neurotransmitterGatedList = channel.model.sensibility.neurotransmitterGated;
+			for (var i=0, nb=neurotransmitterGatedList.length; i<nb; i++) {
+				if (neurotransmitterGatedList[i].neurotransmitter == neurotransmitter) {
+					permability = neurotransmitterGatedList[i].permeability;
+				}
+			}
+
+			returnpermability
 		},
 
 		/**

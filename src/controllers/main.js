@@ -120,7 +120,6 @@ var Life = Life || {};
 			});
 
 			var potential = life.membranePotential.goldmanEquation(params);
-			console.log(potential);
 		}
 
 		var scope = {
