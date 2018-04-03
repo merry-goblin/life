@@ -11,8 +11,6 @@ Life.ionicChannelHandler = (function(life) {
 
 	/*** Private static methods ***/
 
-
-
 	var scope = {
 
 		/*** Public static methods ***/

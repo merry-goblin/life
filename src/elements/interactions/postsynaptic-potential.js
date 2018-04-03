@@ -12,4 +12,5 @@ Life.PostsynapticPotential = function() {
 	this.origin = null;
 	this.startTime = null;
 	this.radius = 3;
+	this.potential = null;
 }
