@@ -61,7 +61,7 @@ var Life = Life || {};
 
 		function handleGraphics() {
 
-			graphics = new life.LineraNeuronGraphics();
+			graphics = new life.LinearNeuronGraphics();
 			graphics.init("world", neuron, cycleManager);
 
 			// Set interval

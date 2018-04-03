@@ -9,7 +9,7 @@ var Life = Life || {};
 
 (function($, life) {
 
-	life.LineraNeuronGraphics = function(settings) {
+	life.LinearNeuronGraphics = function(settings) {
 
 		/*** Private properties ***/
 		var settings = $.extend({}, settings);
