@@ -29,12 +29,14 @@ var Life = Life || {};
 			init: function(cycleManagerService) {
 
 				cycleManager = cycleManagerService;
-				events = new Array();
+				events = {};
 
 				for (var i=0, nb=eventNames.length; i<nb; i++) {
 					let eventName = eventNames[i];
 					event = life.eventHandler.build(eventName);
 					life.eventHandler.listen(event, cycleManager, eventName);
+
+					events[eventName] = event;
 				}
 			},
 
@@ -50,8 +52,8 @@ var Life = Life || {};
 			destruct: function() {
 
 				if (events != null) {
-					for (var i=0, nb=events.length; i<nb; i++) {
-						life.eventHandler.destruct(events[i]);
+					for (var key in events) {
+						life.eventHandler.destruct(events[key]);
 					}
 				}
 			}

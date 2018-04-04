@@ -255,12 +255,22 @@ var Life = Life || {};
 			ruler.addChild(text);
 		}
 
-		function buildCycleInfos(cycleManagerParam) {
+		function buildCycleInfos(cycleManagerService, cycleListenerService) {
 
-			cycleManager = cycleManagerParam;
+			cycleManager = cycleManagerService;
+			cycleListener = cycleListenerService;
 
 			$speed = $("#speedInfos");
 			$time = $("#timeInfos");
+
+			$(".cycle-action").click(function() {
+
+				var $element = $(this);
+				if ($element.hasClass("btn-enabled")) {
+					var action = $element.attr('data-action');
+					cycleListener.trigger(action);
+				}
+			});
 		}
 
 		function updateCycleInfos() {
@@ -338,11 +348,11 @@ var Life = Life || {};
 			 * @param Life.Neuron neuronParam
 			 * @param Life.CycleManager cycleManager
 			 */
-			init: function(worldId, neuronParam, cycleManager) {
+			init: function(worldId, neuronParam, cycleManager, cycleListener) {
 
 				initOCanvas(worldId);
 				buildNeuron(neuronParam);
-				buildCycleInfos(cycleManager);
+				buildCycleInfos(cycleManager, cycleListener);
 				this.update();
 			},
 

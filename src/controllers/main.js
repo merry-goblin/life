@@ -17,7 +17,8 @@ var Life = Life || {};
 		var settings = $.extend({}, settings);
 
 		var graphics = null;
-		var cycleManager = null
+		var cycleManager = null;
+		var cycleListener = null;
 
 		var interval = null;
 
@@ -62,7 +63,7 @@ var Life = Life || {};
 		function handleGraphics() {
 
 			graphics = new life.LinearNeuronGraphics();
-			graphics.init("world", neuron, cycleManager);
+			graphics.init("world", neuron, cycleManager, cycleListener);
 
 			// Set interval
 			// Calculate next step from the world
@@ -133,6 +134,8 @@ var Life = Life || {};
 			init: function() {
 
 				cycleManager = life.CycleManager();
+				cycleListener = life.CycleListener();
+				cycleListener.init(cycleManager);
 				buildNeuron();
 				handleGraphics();
 
@@ -149,27 +152,6 @@ var Life = Life || {};
 
 				graphics.activateSynapse(synapseKey);
 				graphics.addPostsynapticPotential(postsynapticPotential);
-			},
-
-			changeCycleSpeed: function(action) {
-
-				switch (action) {
-					case "play":
-						cycleManager.play();
-						break;
-					case "pause":
-						cycleManager.pause();
-						break;
-					case "forward":
-						cycleManager.forward();
-						break;
-					case "slower":
-						cycleManager.slower();
-						break;
-					case "faster":
-						cycleManager.faster();
-						break;
-				}
 			},
 
 			/**

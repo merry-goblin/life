@@ -121,15 +121,6 @@
 				mainController.manualSynapseActivation(synapseKey);
 			});
 
-			$(".cycle-action").click(function() {
-
-				var $element = $(this);
-				if ($element.hasClass("btn-enabled")) {
-					var action = $element.attr('data-action');
-					mainController.changeCycleSpeed(action);
-				}
-			});
-
 		})(jQuery, Life);
 
 	</script>
