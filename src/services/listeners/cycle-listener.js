@@ -18,29 +18,29 @@ var Life = Life || {};
 
 		var cycleManager = null;
 
-		/*** Private static methods ***/
-
-		
-
 		var scope = {
 
 			/*** Public static methods ***/
 
 			/**
-			 * @param  Life.CycleManager cycleManager
+			 * @param  Life.CycleManager cycleManagerService
 			 * @return null
 			 */
-			init: function(cycleManagerParam) {
+			init: function(cycleManagerService) {
 
-				cycleManager = cycleManagerParam;
-
+				cycleManager = cycleManagerService;
 				events = new Array();
+
 				for (var i=0, nb=eventNames.length; i<nb; i++) {
 					let eventName = eventNames[i];
-					events[eventName] = new Event(eventName);
-					events[eventName].addEventListener;
+					event = life.eventHandler.build(eventName);
+					life.eventHandler.listen(event, cycleManager, eventName);
 				}
-				
+			},
+
+			trigger: function(eventName, args) {
+
+				life.eventHandler.trigger(events[eventName], args);
 			},
 
 			/**
@@ -49,7 +49,11 @@ var Life = Life || {};
 			 */
 			destruct: function() {
 
-				
+				if (events != null) {
+					for (var i=0, nb=events.length; i<nb; i++) {
+						life.eventHandler.destruct(events[i]);
+					}
+				}
 			}
 		}
 		return scope;
