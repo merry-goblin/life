@@ -22,4 +22,7 @@ Life.Neuron = function() {
 
 	//	States
 	this.presynapticPotential = false;
+
+	//	Listeners
+	this.synapseListener = null;
 }

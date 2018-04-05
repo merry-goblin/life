@@ -9,35 +9,31 @@ var Life = Life || {};
 
 (function(life) {
 
-	life.CycleListener = function() {
+	life.SynapseListener = function() {
 
 		/*** Private static properties ***/
 
 		var events = null;
-		var eventNames = ['play', 'pause', 'forward', 'slower', 'faster'];
 
-		var cycleManager = null;
+		/*** Private static methods ***/
+
+		function buildEvent(eventName) {
+
+			event = life.eventHandler.build(eventName);
+
+			events[eventName] = event;
+		}
 
 		var scope = {
 
 			/*** Public static methods ***/
 
 			/**
-			 * @param  Life.CycleManager cycleManagerService
 			 * @return null
 			 */
-			init: function(cycleManagerService) {
+			init: function() {
 
-				cycleManager = cycleManagerService;
 				events = {};
-
-				for (var i=0, nb=eventNames.length; i<nb; i++) {
-					let eventName = eventNames[i];
-					event = life.eventHandler.build(eventName);
-					life.eventHandler.listen(event, cycleManager, eventName);
-
-					events[eventName] = event;
-				}
 			},
 
 			trigger: function(eventName, args) {
@@ -45,6 +41,18 @@ var Life = Life || {};
 				if (events[eventName] != null) {
 					life.eventHandler.trigger(events[eventName], args);
 				}
+			},
+
+			add: function(synapseKey) {
+
+				let eventName = 'add.' + synapseKey;
+				buildEvent(eventName);
+			},
+
+			activate: function(synapseKey) {
+
+				let eventName = 'activate.' + synapseKey;
+				buildEvent(eventName);
 			},
 
 			/**
