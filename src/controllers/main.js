@@ -62,7 +62,6 @@ var Life = Life || {};
 
 		function handleGraphics() {
 
-			graphics = new life.LinearNeuronGraphics();
 			graphics.init("world", neuron, cycleManager, cycleListener);
 
 			// Set interval
@@ -92,6 +91,7 @@ var Life = Life || {};
 			life.neuronHandler.add(neuron, 'ionic-channel', 'cl1', life.ionicChannelHandler.build(life.Models.channelCl1));
 
 			//	Add synapses at specific point of the membran
+			neuron.synapseListener.registerService(graphics, {'add': 'addSynapse'});
 			life.neuronHandler.add(neuron, 'synapse', 's1', life.synapseHandler.build(life.Models.synapseT1, -50, preNeurons.n1, neuron));
 			life.neuronHandler.add(neuron, 'synapse', 's2', life.synapseHandler.build(life.Models.synapseT1, -45, preNeurons.n2, neuron));
 			life.neuronHandler.add(neuron, 'synapse', 's3', life.synapseHandler.build(life.Models.synapseT1, -20, preNeurons.n3, neuron));
@@ -133,6 +133,7 @@ var Life = Life || {};
 			 */
 			init: function() {
 
+				graphics = new life.LinearNeuronGraphics();
 				cycleManager = life.CycleManager();
 				cycleListener = life.CycleListener();
 				cycleListener.init(cycleManager);

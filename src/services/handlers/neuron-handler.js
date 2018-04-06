@@ -12,34 +12,42 @@ Life.neuronHandler = (function(life) {
 	/*** Private static methods ***/
 
 	//	Entities
-	function addEntityToList(entities, key, entity) {
+	function addEntityToList(entities, key, entity, listener) {
 
 		entities[key] = entity;
+
+		if (listener != null) {
+			listener.add(key);
+		}
 	}
 
 	function getEntityFromList(entities, key) {
-		
+
 		return entities[key];
 	}
 
 	function removeEntityFromList(entities, key) {
-		
+
 		delete entities[key];
+
+		if (listener != null) {
+			listener.remove(key);
+		}
 	}
 
 	//	Interactions
 	function addInteractionToList(interactions, interaction) {
-		
+
 		interactions.push(interaction);
 	}
 
 	function getInteractionFromList(interactions, index) {
-		
+
 		return interactions[index];
 	}
 
 	function removeInteractionFromList(interactions, index) {
-		
+
 		delete interactions[index];
 	}
 
@@ -139,10 +147,11 @@ Life.neuronHandler = (function(life) {
 					addEntityToList(neuron.ionChannels, key, element);
 					break;
 				case 'active-transport':
+					neuron.
 					addEntityToList(neuron.activeTransports, key, element);
 					break;
 				case 'synapse':
-					addEntityToList(neuron.synapses, key, element);
+					addEntityToList(neuron.synapses, key, element, neuron.synapseListener);
 					break;
 				case 'action-potential':
 					addInteractionToList(neuron.actionPotentials, element);
@@ -212,7 +221,7 @@ Life.neuronHandler = (function(life) {
 					removeEntityFromList(neuron.activeTransports, key);
 					break;
 				case 'synapse':
-					removeEntityFromList(neuron.synapses, key);
+					removeEntityFromList(neuron.synapses, key, neuron.synapseListener);
 					break;
 				case 'action-potential':
 					removeInteractionFromList(neuron.actionPotentials, key); // key is an index here

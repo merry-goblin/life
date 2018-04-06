@@ -389,6 +389,10 @@ var Life = Life || {};
 				displayPostSynapticPotential(postsynapticPotential);
 			},
 
+			addSynapse: function(arg1) {
+
+			},
+
 			update: function() {
 
 				updateCycleInfos();

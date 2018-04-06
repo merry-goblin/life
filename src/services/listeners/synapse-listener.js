@@ -14,6 +14,7 @@ var Life = Life || {};
 		/*** Private static properties ***/
 
 		var events = null;
+		var eventNames = ['add', 'remove', 'activate'];
 
 		/*** Private static methods ***/
 
@@ -34,6 +35,12 @@ var Life = Life || {};
 			init: function() {
 
 				events = {};
+
+				for (var i=0, nb=eventNames.length; i<nb; i++) {
+					let eventName = eventNames[i];
+					event = life.eventHandler.build(eventName);
+					events[eventName] = event;
+				}
 			},
 
 			trigger: function(eventName, args) {
@@ -45,14 +52,27 @@ var Life = Life || {};
 
 			add: function(synapseKey) {
 
-				let eventName = 'add.' + synapseKey;
-				buildEvent(eventName);
+				this.trigger('add', synapseKey);
+			},
+
+			remove: function(synapseKey) {
+
+				this.trigger('remove', synapseKey);
 			},
 
 			activate: function(synapseKey) {
 
-				let eventName = 'activate.' + synapseKey;
-				buildEvent(eventName);
+				this.trigger('activate', synapseKey);
+			},
+
+			registerService: function(service, methodNames) {
+
+				for (var i=0, nb=eventNames.length; i<nb; i++) {
+					let eventName = eventNames[i];
+					if (methodNames[eventName] != null) {
+						life.eventHandler.listen(events[eventName], service, methodNames[eventName]);
+					}
+				}
 			},
 
 			/**
