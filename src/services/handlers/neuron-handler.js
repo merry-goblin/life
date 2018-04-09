@@ -134,7 +134,7 @@ Life.neuronHandler = (function(life) {
 
 			//	Listeners
 			neuron.synapseListener = new life.SynapseListener();
-			neuron.synapseListener.init();
+			neuron.synapseListener.init(neuron);
 
 			neuron.model = model;
 			initNeuronModel(model);

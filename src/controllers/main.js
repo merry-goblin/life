@@ -14,11 +14,13 @@ var Life = Life || {};
 	life.Main = function(settings) {
 
 		/*** Private properties ***/
+		var self = null;
 		var settings = $.extend({}, settings);
 
 		var graphics = null;
 		var cycleManager = null;
 		var cycleListener = null;
+		var pspManagers = null;
 
 		var interval = null;
 
@@ -96,6 +98,8 @@ var Life = Life || {};
 			life.neuronHandler.add(neuron, 'synapse', 's2', life.synapseHandler.build(life.Models.synapseT1, -45, preNeurons.n2, neuron));
 			life.neuronHandler.add(neuron, 'synapse', 's3', life.synapseHandler.build(life.Models.synapseT1, -20, preNeurons.n3, neuron));
 			life.neuronHandler.add(neuron, 'synapse', 's4', life.synapseHandler.build(life.Models.synapseT1, 5000, preNeurons.n4, neuron));
+
+			neuron.synapseListener.registerService(self, {'activate': 'addPostsynapticPotentialManager'});
 		}
 
 		function testACalculation() {
@@ -133,6 +137,9 @@ var Life = Life || {};
 			 */
 			init: function() {
 
+				self = this;
+
+				pspManagers = new Array();
 				graphics = new life.LinearNeuronGraphics();
 				cycleManager = life.CycleManager();
 				cycleListener = life.CycleListener();
@@ -153,6 +160,11 @@ var Life = Life || {};
 
 				graphics.activateSynapse(synapseKey);
 				graphics.addPostsynapticPotential(postsynapticPotential);
+			},
+
+			addPostsynapticPotentialManager: function(pspManager) {
+
+				pspManagers.push(pspManager);
 			},
 
 			/**

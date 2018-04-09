@@ -13,6 +13,7 @@ var Life = Life || {};
 
 		/*** Private static properties ***/
 
+		var neuron = null;
 		var events = null;
 		var eventNames = ['add', 'remove', 'activate'];
 
@@ -32,9 +33,10 @@ var Life = Life || {};
 			/**
 			 * @return null
 			 */
-			init: function() {
+			init: function(neuronParam) {
 
 				events = {};
+				neuron = neuronParam;
 
 				for (var i=0, nb=eventNames.length; i<nb; i++) {
 					let eventName = eventNames[i];
@@ -62,7 +64,11 @@ var Life = Life || {};
 
 			activate: function(synapseKey) {
 
-				this.trigger('activate', synapseKey);
+				//	Shortcut
+				var manager = new life.PostSynapticPotentialManager();
+				manager.init(neuron, synapseKey);
+
+				this.trigger('activate', manager);
 			},
 
 			registerService: function(service, methodNames) {
@@ -81,6 +87,7 @@ var Life = Life || {};
 			 */
 			destruct: function() {
 
+				neuron = null;
 				if (events != null) {
 					for (var key in events) {
 						life.eventHandler.destruct(events[key]);

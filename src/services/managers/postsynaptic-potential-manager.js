@@ -11,108 +11,29 @@ var Life = Life || {};
 
 	life.PostSynapticPotentialManager = function() {
 
-		/*** Constants ***/
+		/*** Private properties ***/
 
-		var maxSpeed = 32; // microsecondes
-
-		/*** Private static properties ***/
-
-		var speed = 1; // microsecondes
-		var time = 0; // microsecondes
-		var isPlaying = false;
-		var isStepForwarding = false;
-
-		/*** Private static methods ***/
-
-		function consumeStepForward() {
-
-			var step = 0;
-			if (isStepForwarding) {
-				step = speed;
-				isStepForwarding = false;
-			}
-
-			return step;
-		}
-
-		function consumeActivations(neuron) {
-
-			for (var key in neuron.synapses) {
-				life.synapseHandler.consumeActivation(neuron.synapses[key]);
-			}
-		}
+		var postsynapticPotential = null;
 
 		var scope = {
 
 			/*** Public static methods ***/
 
-			manage: function(neuron) {
+			init: function(neuron, synapseKey) {
 
-				// manage interactions during current cycle
-				// todo
+				var synapse = life.neuronHandler.get(neuron, 'synapse', synapseKey);
+				postsynapticPotential = life.synapseHandler.activate(synapse);
+				console.log(postsynapticPotential);
 
-				var currentSpeed = consumeStepForward();
-				if (isPlaying) {
-					currentSpeed = speed;
-				}
-				time += currentSpeed;
+				life.neuronHandler.add(neuron, 'postsynaptic-potential', null, postsynapticPotential);
 
-				if (currentSpeed > 0) {
-					consumeActivations(neuron);
-				}
+				/*graphics.activateSynapse(synapseKey);
+				graphics.addPostsynapticPotential(postsynapticPotential);*/
 			},
 
-				/* Getters */
+			manage: function() {
 
-			getMaxSpeed: function() {
 
-				return maxSpeed;
-			},
-
-			getTime: function() {
-
-				return time;
-			},
-
-			getSpeed: function() {
-
-				return speed;
-			},
-
-			getIsPlaying: function() {
-
-				return isPlaying;
-			},
-
-				/* Actions */
-
-			play: function() {
-
-				isPlaying = true;
-			},
-
-			pause: function() {
-
-				isPlaying = false;
-			},
-
-			forward: function() {
-
-				isStepForwarding = true;
-			},
-
-			faster: function() {
-
-				if (speed < maxSpeed) {
-					speed *= 2;
-				}
-			},
-
-			slower: function() {
-
-				if (speed > 1) {
-					speed /= 2;
-				}
 			},
 
 			/**
