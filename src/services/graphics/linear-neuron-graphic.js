@@ -273,6 +273,16 @@ var Life = Life || {};
 			});
 		}
 
+		function buildSynapseActivation(synapseListener) {
+
+			$(".synapse-action").click(function() {
+				var $element = $(this);
+				var synapseKey = $element.attr('data-synapse-key');
+				synapseListener.activate(synapseKey);
+			});
+
+		}
+
 		function updateCycleInfos() {
 
 			$speed.val(cycleManager.getSpeed());
@@ -353,6 +363,7 @@ var Life = Life || {};
 				initOCanvas(worldId);
 				buildNeuron(neuronParam);
 				buildCycleInfos(cycleManager, cycleListener);
+				buildSynapseActivation(neuronParam.synapseListener);
 				this.update();
 			},
 
