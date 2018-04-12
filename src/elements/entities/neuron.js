@@ -25,4 +25,6 @@ Life.Neuron = function() {
 
 	//	Listeners
 	this.synapseListener = null;
+	this.postsynapticPotentialListener = null;
+	this.graphicsService = null;
 }

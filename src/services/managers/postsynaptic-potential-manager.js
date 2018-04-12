@@ -33,7 +33,7 @@ var Life = Life || {};
 
 			manage: function() {
 
-
+				
 			},
 
 			/**
