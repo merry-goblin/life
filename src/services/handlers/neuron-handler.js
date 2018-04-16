@@ -115,11 +115,20 @@ Life.neuronHandler = (function(life) {
 		}
 	}
 
+	function initNeuronScope(scope, neuron) {
+
+		scope.entity = neuron;
+		scope.services.synapseListener = new life.SynapseListener();
+		scope.services.synapseListener.init(neuron);
+		scope.services.postsynapticPotentialListener = new life.PostsynapticPotentialListener();
+		scope.services.postsynapticPotentialListener.init(neuron);
+	}
+
 	var scope = {
 
 		/*** Public static methods ***/
 
-		init: function(neuron, model) {
+		init: function(scope, neuron, model) {
 
 			this.destruct(neuron);
 
@@ -129,21 +138,20 @@ Life.neuronHandler = (function(life) {
 
 			neuron.actionPotentials = new Array();
 			neuron.postsynapticPotentials = new Array();
-
 			neuron.presynapticPotential = false;
 
 			//	Listeners
-			neuron.synapseListener = new life.SynapseListener();
-			neuron.synapseListener.init(neuron);
-			neuron.postsynapticPotentialListener = new life.PostsynapticPotentialListener();
-			neuron.postsynapticPotentialListener.init(neuron);
+			if (scope != null) {
+				initNeuronScope(scope, neuron);
+			}
 
 			neuron.model = model;
 			initNeuronModel(model);
 		},
 
-		add: function(neuron, type, key, element) {
+		add: function(scope, neuron, type, key, element) {
 
+			var listener = null;
 			switch (type) {
 				case 'ionic-channel':
 					addEntityToList(neuron.ionChannels, key, element);
@@ -153,7 +161,8 @@ Life.neuronHandler = (function(life) {
 					addEntityToList(neuron.activeTransports, key, element);
 					break;
 				case 'synapse':
-					addEntityToList(neuron.synapses, key, element, neuron.synapseListener);
+					listener = (scope != null) ? scope.services.synapseListener : null;
+					addEntityToList(neuron.synapses, key, element, listener);
 					break;
 				case 'action-potential':
 					addInteractionToList(neuron.actionPotentials, element);
@@ -213,8 +222,9 @@ Life.neuronHandler = (function(life) {
 			return list;
 		},
 
-		remove: function(type, key) {
+		remove: function(scope, type, key) {
 
+			var listener = null;
 			switch (type) {
 				case 'ionic-channel':
 					removeEntityFromList(neuron.ionChannels, key);
@@ -223,7 +233,8 @@ Life.neuronHandler = (function(life) {
 					removeEntityFromList(neuron.activeTransports, key);
 					break;
 				case 'synapse':
-					removeEntityFromList(neuron.synapses, key, neuron.synapseListener);
+					listener = (scope != null) ? scope.services.synapseListener : null;
+					removeEntityFromList(neuron.synapses, key, listener);
 					break;
 				case 'action-potential':
 					removeInteractionFromList(neuron.actionPotentials, key); // key is an index here

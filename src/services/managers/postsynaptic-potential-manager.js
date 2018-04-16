@@ -19,13 +19,13 @@ var Life = Life || {};
 
 			/*** Public static methods ***/
 
-			init: function(neuron, synapseKey) {
+			init: function(neuronScope, synapseKey) {
 
 				var synapse = life.neuronHandler.get(neuron, 'synapse', synapseKey);
 				postsynapticPotential = life.synapseHandler.activate(synapse);
 				console.log(postsynapticPotential);
 
-				life.neuronHandler.add(neuron, 'postsynaptic-potential', null, postsynapticPotential);
+				life.neuronHandler.add(neuronScope, neuronScope.neuron, 'postsynaptic-potential', null, postsynapticPotential);
 
 				/*graphics.activateSynapse(synapseKey);
 				graphics.addPostsynapticPotential(postsynapticPotential);*/

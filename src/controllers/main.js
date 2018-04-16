@@ -26,6 +26,7 @@ var Life = Life || {};
 
 		var neuron = null;
 		var preNeurons = new Array();
+		var nScope = null;
 
 		/*** Private methods ***/
 
@@ -76,30 +77,32 @@ var Life = Life || {};
 
 			//	Previous neurons
 			preNeurons.n1 = new life.Neuron();
-			life.neuronHandler.init(preNeurons.n1, life.Models.neuronT1);
+			life.neuronHandler.init(null, preNeurons.n1, life.Models.neuronT1);
 			preNeurons.n2 = new life.Neuron();
-			life.neuronHandler.init(preNeurons.n2, life.Models.neuronT1);
+			life.neuronHandler.init(null, preNeurons.n2, life.Models.neuronT1);
 			preNeurons.n3 = new life.Neuron();
-			life.neuronHandler.init(preNeurons.n3, life.Models.neuronT2);
+			life.neuronHandler.init(null, preNeurons.n3, life.Models.neuronT2);
 			preNeurons.n4 = new life.Neuron();
-			life.neuronHandler.init(preNeurons.n4, life.Models.neuronT1);
+			life.neuronHandler.init(null, preNeurons.n4, life.Models.neuronT1);
 
 			neuron = new life.Neuron();
-			life.neuronHandler.init(neuron, life.Models.neuronT1);
+			life.neuronHandler.init(nScope, neuron, life.Models.neuronT1);
 
 			//	Add ionic channels on all the membran
-			life.neuronHandler.add(neuron, 'ionic-channel', 'k1', life.ionicChannelHandler.build(life.Models.channelK1));
-			life.neuronHandler.add(neuron, 'ionic-channel', 'na1', life.ionicChannelHandler.build(life.Models.channelNa1));
-			life.neuronHandler.add(neuron, 'ionic-channel', 'cl1', life.ionicChannelHandler.build(life.Models.channelCl1));
+			life.neuronHandler.add(nScope, neuron, 'ionic-channel', 'k1', life.ionicChannelHandler.build(life.Models.channelK1));
+			life.neuronHandler.add(nScope, neuron, 'ionic-channel', 'na1', life.ionicChannelHandler.build(life.Models.channelNa1));
+			life.neuronHandler.add(nScope, neuron, 'ionic-channel', 'cl1', life.ionicChannelHandler.build(life.Models.channelCl1));
 
 			//	Add synapses at specific point of the membran
-			neuron.synapseListener.registerService(graphics, {'add': 'addSynapse'});
-			life.neuronHandler.add(neuron, 'synapse', 's1', life.synapseHandler.build(life.Models.synapseT1, -50, preNeurons.n1, neuron));
-			life.neuronHandler.add(neuron, 'synapse', 's2', life.synapseHandler.build(life.Models.synapseT1, -45, preNeurons.n2, neuron));
-			life.neuronHandler.add(neuron, 'synapse', 's3', life.synapseHandler.build(life.Models.synapseT1, -20, preNeurons.n3, neuron));
-			life.neuronHandler.add(neuron, 'synapse', 's4', life.synapseHandler.build(life.Models.synapseT1, 5000, preNeurons.n4, neuron));
+			nScope.services.synapseListener.registerService(graphics, {'add': 'addSynapse'});
+			life.neuronHandler.add(nScope, neuron, 'synapse', 's1', life.synapseHandler.build(life.Models.synapseT1, -50, preNeurons.n1, neuron));
+			life.neuronHandler.add(nScope, neuron, 'synapse', 's2', life.synapseHandler.build(life.Models.synapseT1, -45, preNeurons.n2, neuron));
+			life.neuronHandler.add(nScope, neuron, 'synapse', 's3', life.synapseHandler.build(life.Models.synapseT1, -20, preNeurons.n3, neuron));
+			life.neuronHandler.add(nScope, neuron, 'synapse', 's4', life.synapseHandler.build(life.Models.synapseT1, 5000, preNeurons.n4, neuron));
 
-			neuron.synapseListener.registerService(self, {'activate': 'addPostsynapticPotentialManager'});
+			nScope.services.synapseListener.registerService(self, {'activate': 'addPostsynapticPotentialManager'});
+
+
 		}
 
 		function testACalculation() {
@@ -156,7 +159,7 @@ var Life = Life || {};
 				var postsynapticPotential = life.synapseHandler.activate(synapse);
 				console.log(postsynapticPotential);
 
-				life.neuronHandler.add(neuron, 'postsynaptic-potential', null, postsynapticPotential);
+				life.neuronHandler.add(nScope, neuron, 'postsynaptic-potential', null, postsynapticPotential);
 
 				graphics.activateSynapse(synapseKey);
 				graphics.addPostsynapticPotential(postsynapticPotential);
