@@ -65,7 +65,7 @@ var Life = Life || {};
 
 		function handleGraphics() {
 
-			graphics.init("world", neuron, cycleManager, cycleListener);
+			graphics.init("world", nScope, cycleManager, cycleListener);
 
 			// Set interval
 			// Calculate next step from the world
@@ -85,6 +85,7 @@ var Life = Life || {};
 			preNeurons.n4 = new life.Neuron();
 			life.neuronHandler.init(null, preNeurons.n4, life.Models.neuronT1);
 
+			nScope = new life.NeuronScope();
 			neuron = new life.Neuron();
 			life.neuronHandler.init(nScope, neuron, life.Models.neuronT1);
 

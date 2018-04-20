@@ -9,7 +9,7 @@ var Life = Life || {};
 
 Life.NeuronScope = function() {
 
-	this.entity = null;
+	this.neuron = null;
 	this.services = {
 		synapseListener: null,
 		postsynapticPotentialListener: null,

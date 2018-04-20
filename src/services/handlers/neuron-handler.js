@@ -117,7 +117,7 @@ Life.neuronHandler = (function(life) {
 
 	function initNeuronScope(scope, neuron) {
 
-		scope.entity = neuron;
+		scope.neuron = neuron;
 		scope.services.synapseListener = new life.SynapseListener();
 		scope.services.synapseListener.init(neuron);
 		scope.services.postsynapticPotentialListener = new life.PostsynapticPotentialListener();

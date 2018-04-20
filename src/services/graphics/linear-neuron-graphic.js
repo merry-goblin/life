@@ -18,7 +18,7 @@ var Life = Life || {};
 		var worldWith = 0;
 		var worldHeight = 0;
 
-		var neuron = null;
+		var nScope = null;
 
 		//	OCanvas
 		var soma = null;
@@ -72,9 +72,10 @@ var Life = Life || {};
 			canvas.addChild(layer);
 		}
 
-		function buildNeuron(neuronParam) {
+		function buildNeuron(nScopeParam) {
 
-			neuron = neuronParam;
+			nScope = nScopeParam;
+			var neuron = nScope.neuron;
 			addSoma();
 			addCytoplasm(-580, 580);
 			addRuler(dendriteRuler, -580, -2, neuron.model.distances.dendrites + " micrometers");
@@ -358,12 +359,12 @@ var Life = Life || {};
 			 * @param Life.Neuron neuronParam
 			 * @param Life.CycleManager cycleManager
 			 */
-			init: function(worldId, neuronParam, cycleManager, cycleListener) {
+			init: function(worldId, nScopeParam, cycleManager, cycleListener) {
 
 				initOCanvas(worldId);
-				buildNeuron(neuronParam);
+				buildNeuron(nScopeParam);
 				buildCycleInfos(cycleManager, cycleListener);
-				buildSynapseActivation(neuronParam.synapseListener);
+				buildSynapseActivation(nScopeParam.services.synapseListener);
 				this.update();
 			},
 
@@ -408,8 +409,8 @@ var Life = Life || {};
 
 				updateCycleInfos();
 				updateCycleUI();
-				if (neuron != null) {
-					updateSynapsesState(neuron.synapses);
+				if (nScope != null) {
+					updateSynapsesState(nScope.neuron.synapses);
 				}
 				canvas.redraw();
 			},
