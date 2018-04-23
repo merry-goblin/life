@@ -25,10 +25,10 @@ var Life = Life || {};
 			 * @param  Life.Neuron neuronParam
 			 * @return null
 			 */
-			init: function(neuronParam) {
+			init: function(neuronScopeParam) {
 
 				events = {};
-				neuron = neuronParam;
+				neuronScope = neuronScopeParam;
 
 				for (var i=0, nb=eventNames.length; i<nb; i++) {
 					let eventName = eventNames[i];

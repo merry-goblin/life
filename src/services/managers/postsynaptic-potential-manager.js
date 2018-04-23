@@ -21,9 +21,8 @@ var Life = Life || {};
 
 			init: function(neuronScope, synapseKey) {
 
-				var synapse = life.neuronHandler.get(neuron, 'synapse', synapseKey);
+				var synapse = life.neuronHandler.get(neuronScope.neuron, 'synapse', synapseKey);
 				postsynapticPotential = life.synapseHandler.activate(synapse);
-				console.log(postsynapticPotential);
 
 				life.neuronHandler.add(neuronScope, neuronScope.neuron, 'postsynaptic-potential', null, postsynapticPotential);
 
