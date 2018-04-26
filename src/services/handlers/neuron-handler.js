@@ -36,9 +36,13 @@ Life.neuronHandler = (function(life) {
 	}
 
 	//	Interactions
-	function addInteractionToList(interactions, interaction) {
+	function addInteractionToList(interactions, interaction, listener) {
 
 		interactions.push(interaction);
+
+		if (listener != null) {
+			listener.add(key);
+		}
 	}
 
 	function getInteractionFromList(interactions, index) {
@@ -46,9 +50,13 @@ Life.neuronHandler = (function(life) {
 		return interactions[index];
 	}
 
-	function removeInteractionFromList(interactions, index) {
+	function removeInteractionFromList(interactions, index, listener) {
 
 		delete interactions[index];
+
+		if (listener != null) {
+			listener.remove(key);
+		}
 	}
 
 	/**
@@ -168,7 +176,8 @@ Life.neuronHandler = (function(life) {
 					addInteractionToList(neuron.actionPotentials, element);
 					break;
 				case 'postsynaptic-potential':
-					addInteractionToList(neuron.postsynapticPotentials, element);
+					listener = (scope != null) ? scope.services.postsynapticPotentialListener : null;
+					addInteractionToList(neuron.postsynapticPotentials, element, listener);
 					break;
 			}
 		},

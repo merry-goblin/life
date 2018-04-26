@@ -13,7 +13,7 @@ var Life = Life || {};
 
 		/*** Private static properties ***/
 
-		var neuron = null;
+		var neuronScope = null;
 		var events = null;
 		var eventNames = ['add', 'remove'];
 
@@ -44,14 +44,14 @@ var Life = Life || {};
 				}
 			},
 
-			add: function(synapseKey) {
-
-				this.trigger('add', synapseKey);
+			add: function(postsynapticPotentialKey) {
+console.log('add', postsynapticPotentialKey);
+				this.trigger('add', postsynapticPotentialKey);
 			},
 
-			remove: function(synapseKey) {
+			remove: function(postsynapticPotentialKey) {
 
-				this.trigger('remove', synapseKey);
+				this.trigger('remove', postsynapticPotentialKey);
 			},
 
 			registerService: function(service, methodNames) {
