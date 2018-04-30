@@ -38,10 +38,11 @@ Life.neuronHandler = (function(life) {
 	//	Interactions
 	function addInteractionToList(interactions, interaction, listener) {
 
+		var index = interactions.length;
 		interactions.push(interaction);
 
 		if (listener != null) {
-			listener.add(key);
+			listener.add(index);
 		}
 	}
 
@@ -52,11 +53,11 @@ Life.neuronHandler = (function(life) {
 
 	function removeInteractionFromList(interactions, index, listener) {
 
-		delete interactions[index];
-
 		if (listener != null) {
-			listener.remove(key);
+			listener.remove(index);
 		}
+
+		delete interactions[index];
 	}
 
 	/**

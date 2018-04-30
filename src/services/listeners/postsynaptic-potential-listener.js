@@ -45,7 +45,7 @@ var Life = Life || {};
 			},
 
 			add: function(postsynapticPotentialKey) {
-console.log('add', postsynapticPotentialKey);
+
 				this.trigger('add', postsynapticPotentialKey);
 			},
 

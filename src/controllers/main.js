@@ -96,6 +96,7 @@ var Life = Life || {};
 
 			//	Add synapses at specific point of the membran
 			nScope.services.synapseListener.registerService(graphics, {'add': 'addSynapse'});
+			nScope.services.synapseListener.registerService(graphics, {'remove': 'removeSynapse'});
 			life.neuronHandler.add(nScope, neuron, 'synapse', 's1', life.synapseHandler.build(life.Models.synapseT1, -50, preNeurons.n1, neuron));
 			life.neuronHandler.add(nScope, neuron, 'synapse', 's2', life.synapseHandler.build(life.Models.synapseT1, -45, preNeurons.n2, neuron));
 			life.neuronHandler.add(nScope, neuron, 'synapse', 's3', life.synapseHandler.build(life.Models.synapseT1, -20, preNeurons.n3, neuron));
@@ -103,7 +104,9 @@ var Life = Life || {};
 
 			nScope.services.synapseListener.registerService(self, {'activate': 'addPostsynapticPotentialManager'});
 
-
+			//	Postsynaptic potentiel 
+			nScope.services.postsynapticPotentialListener.registerService(graphics, {'add': 'addPostsynapticPotentialListener'});
+			nScope.services.postsynapticPotentialListener.registerService(graphics, {'remove': 'removePostsynapticPotentialListener'});
 		}
 
 		function testACalculation() {
