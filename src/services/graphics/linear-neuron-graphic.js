@@ -27,6 +27,7 @@ var Life = Life || {};
 		var axonRuler = null;
 		var synapseLayer = null;
 		var synapseList = null;
+		var postsynapticPotentialList = null;
 
 		//	JQuery
 		var $speed = null;
@@ -81,8 +82,9 @@ var Life = Life || {};
 			addRuler(dendriteRuler, -580, -2, neuron.model.distances.dendrites + " micrometers");
 			addRuler(axonRuler, 2, 580, neuron.model.distances.axon + " micrometers");
 			addSynapses(neuron.synapses, neuron.model.distances.dendrites, neuron.model.distances.axon);
+			postsynapticPotentialList = new Array();
 		}
-		
+
 		function addSoma() {
 		
 			soma = canvas.display.arc({
@@ -196,7 +198,9 @@ var Life = Life || {};
 			}
 		}
 
-		function displayPostSynapticPotential(postSynapticPotential) {
+		function displayPostSynapticPotential(postSynapticPotentialKey) {
+
+			postSynapticPotential = life.neuronHandler.get(nScope.neuron, 'postsynaptic-potential', postSynapticPotentialKey);
 
 			var arc = canvas.display.arc({
 				x: calculatePosition(postSynapticPotential.origin),
@@ -207,6 +211,8 @@ var Life = Life || {};
 				fill: "#ff6600",
 				stroke: "1px #dd5500"
 			});
+
+			postsynapticPotentialList[postSynapticPotentialKey] = postSynapticPotential;
 
 			layer.addChild(arc);
 		}
@@ -340,10 +346,10 @@ var Life = Life || {};
 
 			var x = 0;
 			if (position < 0) {
-				x = (position / neuron.model.distances.dendrites) * (worldWith / 2);
+				x = (position / nScope.neuron.model.distances.dendrites) * (worldWith / 2);
 			}
 			else if (position > 0) {
-				x = (position / neuron.model.distances.axon) * (worldWith / 2);
+				x = (position / nScope.neuron.model.distances.axon) * (worldWith / 2);
 			}
 
 			return x;
@@ -396,9 +402,14 @@ var Life = Life || {};
 				}
 			},
 
-			addPostsynapticPotential: function(postsynapticPotential) {
+			addPostsynapticPotential: function(postsynapticPotentialKey) {
 
-				displayPostSynapticPotential(postsynapticPotential);
+				displayPostSynapticPotential(postsynapticPotentialKey);
+			},
+
+			removePostsynapticPotential: function(postsynapticPotential) {
+
+				//	todo
 			},
 
 			addSynapse: function(arg1) {
