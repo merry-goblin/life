@@ -53,7 +53,7 @@ var Life = Life || {};
 				}
 				time += currentSpeed;
 
-				life.neuronManager.manage(nScope, timePassed);
+				life.neuronManager.manage(nScope, currentSpeed);
 			},
 
 				/* Getters */
