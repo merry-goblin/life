@@ -35,21 +35,17 @@ var Life = Life || {};
 			return step;
 		}
 
-		function consumeActivations(neuron) {
-
-			for (var key in neuron.synapses) {
-				life.synapseHandler.consumeActivation(neuron.synapses[key]);
-			}
-		}
-
 		var scope = {
 
 			/*** Public static methods ***/
 
-			manage: function(neuron) {
-
-				// manage interactions during current cycle
-				// todo
+			/**
+			 * Manage interactions during current cycle
+			 *
+			 * @param  Life.NeuronScope nScope
+			 * @return null
+			 */
+			manage: function(nScope) {
 
 				var currentSpeed = consumeStepForward();
 				if (isPlaying) {
@@ -57,9 +53,7 @@ var Life = Life || {};
 				}
 				time += currentSpeed;
 
-				if (currentSpeed > 0) {
-					consumeActivations(neuron);
-				}
+				life.neuronManager.manage(nScope, timePassed);
 			},
 
 				/* Getters */

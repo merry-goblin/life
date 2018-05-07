@@ -25,9 +25,6 @@ var Life = Life || {};
 				postsynapticPotential = life.synapseHandler.activate(synapse);
 
 				life.neuronHandler.add(neuronScope, neuronScope.neuron, 'postsynaptic-potential', null, postsynapticPotential);
-
-				/*graphics.activateSynapse(synapseKey);
-				graphics.addPostsynapticPotential(postsynapticPotential);*/
 			},
 
 			manage: function() {
@@ -41,7 +38,7 @@ var Life = Life || {};
 			 */
 			destruct: function() {
 
-				
+				postsynapticPotential = null;
 			}
 		}
 		return scope;

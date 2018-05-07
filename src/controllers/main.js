@@ -41,7 +41,7 @@ var Life = Life || {};
 
 		function manageCycles() {
 
-			cycleManager.manage(neuron);
+			cycleManager.manage(nScope);
 		}
 
 		/**
