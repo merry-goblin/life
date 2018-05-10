@@ -15,14 +15,14 @@ var Life = Life || {};
 
 		var maxSpeed = 32; // microsecondes
 
-		/*** Private static properties ***/
+		/*** Private properties ***/
 
 		var speed = 1; // microsecondes
 		var time = 0; // microsecondes
 		var isPlaying = false;
 		var isStepForwarding = false;
 
-		/*** Private static methods ***/
+		/*** Private methods ***/
 
 		function consumeStepForward() {
 
@@ -37,7 +37,7 @@ var Life = Life || {};
 
 		var scope = {
 
-			/*** Public static methods ***/
+			/*** Public methods ***/
 
 			/**
 			 * Manage interactions during current cycle
@@ -53,7 +53,7 @@ var Life = Life || {};
 				}
 				time += currentSpeed;
 
-				life.neuronManager.manage(nScope, currentSpeed);
+				nScope.manager.iterate(currentSpeed);
 			},
 
 				/* Getters */

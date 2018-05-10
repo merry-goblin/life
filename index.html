@@ -95,6 +95,7 @@
 	<script src="./src/elements/cycles/cycle.js"></script>
 	<script src="./src/elements/calculs/equation.js"></script>
 	<script src="./src/elements/utils/event.js"></script>
+	<script src="./src/services/utils.js"></script>
 	<script src="./src/services/handlers/neuron-handler.js"></script>
 	<script src="./src/services/handlers/ionic-channel-handler.js"></script>
 	<script src="./src/services/handlers/synapse-handler.js"></script>
@@ -108,8 +109,8 @@
 	<script src="./src/services/graphics/linear-neuron-graphic.js"></script>
 	<script src="./src/services/calculs/membrane-potential.js"></script>
 	<script src="./src/services/calculs/analytic-geometry.js"></script>
+	<script src="./src/services/calculs/arithmetic.js"></script>
 	<script src="./src/services/managers/cycle-manager.js"></script>
-	<script src="./src/services/managers/postsynaptic-potential-manager.js"></script>
 	<script src="./src/services/managers/neuron-manager.js"></script>
 	<script src="./src/controllers/main.js"></script>
 	<script>
@@ -118,13 +119,6 @@
 
 			var mainController = new life.Main();
 			mainController.init();
-
-			/*$(".synapse-action").click(function() {
-
-				var $element = $(this);
-				var synapseKey = $element.attr('data-synapse-key');
-				mainController.manualSynapseActivation(synapseKey);
-			});*/
 
 		})(jQuery, Life);
 

@@ -12,6 +12,7 @@ var Life = Life || {};
 	life.LinearNeuronGraphics = function(settings) {
 
 		/*** Private properties ***/
+
 		var settings = $.extend({}, settings);
 		var canvas = null;
 		var layer = null;
@@ -198,6 +199,23 @@ var Life = Life || {};
 			}
 		}
 
+		function updatePostsynapticPotentials() {
+
+			updatePostsynapticPotentialPositions();
+		}
+
+		function updatePostsynapticPotentialPositions() {
+
+			for (let i=0, nb=postsynapticPotentialList.length; i<nb; i++) {
+
+				postSynapticPotential = life.neuronHandler.get(nScope.neuron, 'postsynaptic-potential', i);
+				if (postSynapticPotential != null) {
+					let x = calculatePosition(postSynapticPotential.origin);
+					postsynapticPotentialList[i].moveTo(x, -16);
+				}
+			}
+		}
+
 		function displayPostSynapticPotential(postSynapticPotentialKey) {
 
 			postSynapticPotential = life.neuronHandler.get(nScope.neuron, 'postsynaptic-potential', postSynapticPotentialKey);
@@ -212,9 +230,18 @@ var Life = Life || {};
 				stroke: "1px #dd5500"
 			});
 
-			postsynapticPotentialList[postSynapticPotentialKey] = postSynapticPotential;
+			postsynapticPotentialList[postSynapticPotentialKey] = arc;
 
 			layer.addChild(arc);
+		}
+
+		function removePostSynapticPotential(postSynapticPotentialKey) {
+
+			//	Remove postsynaptic potential from canvas
+			layer.removeChild(postsynapticPotentialList[postSynapticPotentialKey]);
+
+			//	Update array accordingly
+			postsynapticPotentialList.splice(postSynapticPotentialKey, 1);
 		}
 
 		function addRuler(ruler, x1, x2, label) {
@@ -409,7 +436,7 @@ var Life = Life || {};
 
 			removePostsynapticPotential: function(postsynapticPotential) {
 
-				//	todo
+				removePostSynapticPotential(postsynapticPotential);
 			},
 
 			addSynapse: function(arg1) {
@@ -422,6 +449,7 @@ var Life = Life || {};
 				updateCycleUI();
 				if (nScope != null) {
 					updateSynapsesState(nScope.neuron.synapses);
+					updatePostsynapticPotentials();
 				}
 				canvas.redraw();
 			},

@@ -10,9 +10,9 @@
  */
 
 /** @namespace */
-var Life = CellPotential || {};
+var Life = Life || {};
 
-CellPotential.utils = (function($, cpot) {
+Life.utils = (function(life) {
 
 	/*** Private static properties ***/
 
@@ -87,8 +87,19 @@ CellPotential.utils = (function($, cpot) {
 		degreesToRadians: function(degrees) {
 
 			return degrees * (Math.PI / 180);
+		},
+
+		inArray: function(needle, haystack) {
+
+			var length = haystack.length;
+			for (var i = 0; i < length; i++) {
+				if (haystack[i] == needle) {
+					return true;
+				}
+			}
+			return false;
 		}
 	}
 	return scope;
 
-})(jQuery, CellPotential);
+})(Life);

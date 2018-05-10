@@ -28,11 +28,11 @@ Life.neuronHandler = (function(life) {
 
 	function removeEntityFromList(entities, key) {
 
-		delete entities[key];
-
 		if (listener != null) {
 			listener.remove(key);
 		}
+
+		delete entities[key];
 	}
 
 	//	Interactions
@@ -57,7 +57,7 @@ Life.neuronHandler = (function(life) {
 			listener.remove(index);
 		}
 
-		delete interactions[index];
+		interactions.splice(index, 1);
 	}
 
 	/**
@@ -126,11 +126,18 @@ Life.neuronHandler = (function(life) {
 
 	function initNeuronScope(scope, neuron) {
 
+		//	Entity
 		scope.neuron = neuron;
+
+		//	Services
 		scope.services.synapseListener = new life.SynapseListener();
 		scope.services.synapseListener.init(scope);
 		scope.services.postsynapticPotentialListener = new life.PostsynapticPotentialListener();
 		scope.services.postsynapticPotentialListener.init(scope);
+
+		//	Manager
+		scope.manager = new life.NeuronManager();
+		scope.manager.init(scope);
 	}
 
 	var scope = {
@@ -250,7 +257,8 @@ Life.neuronHandler = (function(life) {
 					removeInteractionFromList(neuron.actionPotentials, key); // key is an index here
 					break;
 				case 'postsynaptic-potential':
-					removeInteractionFromList(neuron.postsynapticPotentials, key); // key is an index here
+					listener = (scope != null) ? scope.services.postsynapticPotentialListener : null;
+					removeInteractionFromList(scope.neuron.postsynapticPotentials, key, listener); // key is an index here
 					break;
 			}
 		},

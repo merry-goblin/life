@@ -26,5 +26,6 @@ Life.config = {
 		Na: 1,
 		Cl: -1,
 		Ca: 2
-	}
+	},
+	potentialProximity: 12
 }

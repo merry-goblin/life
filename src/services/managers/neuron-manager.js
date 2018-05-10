@@ -7,37 +7,146 @@
 /** @namespace */
 var Life = Life || {};
 
-Life.neuronManager = (function(life) {
+(function(life) {
 
-	/*** Private static methods ***/
+	life.NeuronManager = function() {
 
-	function consumeActivations(nScope) {
+		/*** Private properties ***/
 
-		for (var key in nScope.neuron.synapses) {
-			life.synapseHandler.consumeActivation(nScope.neuron.synapses[key]);
-		}
-	}
+		var nScope = null;
+		var newPspIndexes = null; // List of postsynaptic potential indexes to test proximity with others postsynatpic potentials
 
-	var scope = {
+		/*** Private methods ***/
 
-		/*** Public static methods ***/
+		function consumeActivations() {
 
-		manage: function(nScope, timePassed) {
-
-			if (timePassed > 0) {
-				consumeActivations(nScope);
+			for (var key in nScope.neuron.synapses) {
+				life.synapseHandler.consumeActivation(nScope.neuron.synapses[key]);
 			}
-		},
-
-		/**
-		 * Free any pointer stored in an element
-		 * @return null
-		 */
-		destruct: function() {
-
-			
 		}
+
+		function checkNewPostsynapticPotentials() {
+
+			var pspList = nScope.neuron.postsynapticPotentials;
+			var pspIndexListToIgnore = new Array();
+			var pspToMerge = new Array();
+
+			if (newPspIndexes.length > 0) {
+
+				//	We have to check proximity with new postsynpatic potentials created and old ones
+				for (var i in newPspIndexes) {
+
+					var currentPspIndex = newPspIndexes[i];
+					for (var pspIndex in pspList) {
+
+						//	Ignore tests already done
+						if (pspIndex != currentPspIndex) {
+							if (!life.utils.inArray(pspIndex, pspIndexListToIgnore)) {
+
+								if (checkTwoPostsynapticPotentialsProximity(pspList[pspIndex], pspList[currentPspIndex])) {
+									pspToMerge.push([pspIndex, currentPspIndex]);
+								}
+							}
+						}
+
+					}
+					pspIndexListToIgnore.push(currentPspIndex);
+				}
+			}
+
+			handlePostsynapticPotentialsMerging(pspToMerge);
+
+			newPspIndexes = new Array();
+		}
+
+		function checkTwoPostsynapticPotentialsProximity(psp1, psp2) {
+
+			var distance = Life.arithmetic.getDistanceOnOneAxis(psp1.origin, psp2.origin);
+			if (distance <= life.config.potentialProximity) {
+				
+				return true;
+			}
+			return false;
+		}
+
+		function handlePostsynapticPotentialsMerging(pspIndexesToMerge) {
+
+			let pspListToDelete = new Array();
+
+			//	Merging
+			for (let i=0, nb=pspIndexesToMerge.length; i<nb; i++) {
+
+				//	We don't remove a postsynaptic potential twice
+				if (!life.utils.inArray(pspIndexesToMerge[i][1], pspListToDelete)) {
+					let psp = mergeTwoPostsynapticPotentials(pspIndexesToMerge[i][0], pspIndexesToMerge[i][1]);
+					pspListToDelete.push(pspIndexesToMerge[i][1]);
+				}
+			}
+
+			//	We want the last indexes to be removed before the first ones
+			pspListToDelete.sort(function(a, b) {
+				return (a < b) ? 1 : -1;
+			});
+
+			//	Removing
+			for (let i=0, nb=pspListToDelete.length; i<nb; i++) {
+			
+				life.neuronHandler.remove(nScope, 'postsynaptic-potential', pspListToDelete[i]);
+			}
+		}
+
+		function mergeTwoPostsynapticPotentials(psp1Index, psp2Index) {
+
+			let pspList = nScope.neuron.postsynapticPotentials;
+			let diff = pspList[psp2Index].potential - nScope.neuron.model.standByPotential;
+			let middle = life.arithmetic.getMiddleOnOneAxis(pspList[psp1Index].origin, pspList[psp2Index].origin);
+
+			//	First postsynaptic potential is modified
+			pspList[psp1Index].potential += diff;
+			pspList[psp1Index].origin = middle;
+
+			//	Second is deleted
+			pspList[psp2Index].delete = true;
+		}
+
+		var scope = {
+
+			/*** Public methods ***/
+
+			init: function(nScopeParam) {
+
+				nScope = nScopeParam;
+				newPspIndexes = new Array();
+			},
+
+			generatePostsynapticPotential: function(synapseKey) {
+
+				var synapse = life.neuronHandler.get(nScope.neuron, 'synapse', synapseKey);
+				postsynapticPotential = life.synapseHandler.activate(synapse);
+
+				var index = nScope.neuron.postsynapticPotentials.length;
+				life.neuronHandler.add(nScope, nScope.neuron, 'postsynaptic-potential', null, postsynapticPotential);
+				newPspIndexes.push(index);
+			},
+
+			iterate: function(timePassed) {
+
+				if (timePassed > 0) {
+					consumeActivations();
+					checkNewPostsynapticPotentials(timePassed);
+				}
+			},
+
+			/**
+			 * Free any pointer stored in an element
+			 * @return null
+			 */
+			destruct: function() {
+
+				
+			}
+		}
+		return scope;
 	}
-	return scope;
 
 })(Life);

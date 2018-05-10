@@ -15,4 +15,5 @@ Life.NeuronScope = function() {
 		postsynapticPotentialListener: null,
 		graphicsService: null
 	};
+	this.manager = null;
 }

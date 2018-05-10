@@ -12,7 +12,7 @@ Life.analyticGeometry = (function(life) {
 
 	var scope = {
 
-		/*** Public methods ***/
+		/*** Public static methods ***/
 
 		/**
 		 * Intersection: a1 * x + b1 = a2 * x + b2
@@ -25,10 +25,10 @@ Life.analyticGeometry = (function(life) {
 		 */
 		intersectionOfLines: function(a1, b1, a2, b2) {
 
-			var response = false;
+			let response = false;
 			if (a1 != a2) {
-				var x = (b2 - $b1) / (a1 - a2);
-				var y = (a1 * x) + b1;
+				let x = (b2 - $b1) / (a1 - a2);
+				let y = (a1 * x) + b1;
 
 				response = {
 					x: x,

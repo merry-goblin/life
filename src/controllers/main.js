@@ -14,13 +14,13 @@ var Life = Life || {};
 	life.Main = function(settings) {
 
 		/*** Private properties ***/
+
 		var self = null;
 		var settings = $.extend({}, settings);
 
 		var graphics = null;
 		var cycleManager = null;
 		var cycleListener = null;
-		var pspManagers = null;
 
 		var interval = null;
 
@@ -102,7 +102,7 @@ var Life = Life || {};
 			life.neuronHandler.add(nScope, neuron, 'synapse', 's3', life.synapseHandler.build(life.Models.synapseT1, -20, preNeurons.n3, neuron));
 			life.neuronHandler.add(nScope, neuron, 'synapse', 's4', life.synapseHandler.build(life.Models.synapseT1, 5000, preNeurons.n4, neuron));
 
-			nScope.services.synapseListener.registerService(self, {'activate': 'addPostsynapticPotentialManager'});
+			nScope.services.synapseListener.registerService(nScope.manager, {'activate': 'generatePostsynapticPotential'});
 
 			//	Postsynaptic potentiel 
 			nScope.services.postsynapticPotentialListener.registerService(graphics, {'add': 'addPostsynapticPotential'});
@@ -146,7 +146,6 @@ var Life = Life || {};
 
 				self = this;
 
-				pspManagers = new Array();
 				graphics = new life.LinearNeuronGraphics();
 				cycleManager = life.CycleManager();
 				cycleListener = life.CycleListener();
@@ -167,11 +166,6 @@ var Life = Life || {};
 
 				graphics.activateSynapse(synapseKey);
 				graphics.addPostsynapticPotential(postsynapticPotential);
-			},
-
-			addPostsynapticPotentialManager: function(pspManager) {
-
-				pspManagers.push(pspManager);
 			},
 
 			/**

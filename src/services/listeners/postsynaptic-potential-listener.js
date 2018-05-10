@@ -19,7 +19,7 @@ var Life = Life || {};
 
 		var scope = {
 
-			/*** Public static methods ***/
+			/*** Public methods ***/
 
 			/**
 			 * @param  Life.Neuron neuronParam

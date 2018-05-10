@@ -16,7 +16,7 @@ Life.membranePotential = (function(life) {
 
 	var scope = {
 
-		/*** Public methods ***/
+		/*** Public static methods ***/
 
 		/**
 		 * @param  array[object]

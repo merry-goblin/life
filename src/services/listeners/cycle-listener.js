@@ -11,16 +11,17 @@ var Life = Life || {};
 
 	life.CycleListener = function() {
 
-		/*** Private static properties ***/
+		/*** Private properties ***/
 
 		var events = null;
-		var eventNames = ['play', 'pause', 'forward', 'slower', 'faster'];
+		var autoEventNames = ['play', 'pause', 'forward', 'slower', 'faster'];
+		var eventNames = ['iterate'];
 
 		var cycleManager = null;
 
 		var scope = {
 
-			/*** Public static methods ***/
+			/*** Public methods ***/
 
 			/**
 			 * @param  Life.CycleManager cycleManagerService
@@ -31,8 +32,8 @@ var Life = Life || {};
 				cycleManager = cycleManagerService;
 				events = {};
 
-				for (var i=0, nb=eventNames.length; i<nb; i++) {
-					let eventName = eventNames[i];
+				for (var i=0, nb=autoEventNames.length; i<nb; i++) {
+					let eventName = autoEventNames[i];
 					event = life.eventHandler.build(eventName);
 					life.eventHandler.listen(event, cycleManager, eventName);
 
@@ -44,6 +45,22 @@ var Life = Life || {};
 
 				if (events[eventName] != null) {
 					life.eventHandler.trigger(events[eventName], args);
+				}
+			},
+
+			iterate: function(nScope, timePassed) {
+
+				var args = [nScope, timePassed];
+				this.trigger('iterate', args);
+			},
+
+			registerService: function(service, methodNames) {
+
+				for (var i=0, nb=eventNames.length; i<nb; i++) {
+					let eventName = eventNames[i];
+					if (methodNames[eventName] != null) {
+						life.eventHandler.listen(events[eventName], service, methodNames[eventName]);
+					}
 				}
 			},
 

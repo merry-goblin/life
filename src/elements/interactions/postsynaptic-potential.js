@@ -11,6 +11,6 @@ Life.PostsynapticPotential = function() {
 
 	this.origin = null;
 	this.startTime = null;
-	this.radius = 3;
+	this.radius = 3; // Maybe not useful here. Using "Life.config.potentialProximity" for now on
 	this.potential = null;
 }
