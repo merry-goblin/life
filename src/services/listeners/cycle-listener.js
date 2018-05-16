@@ -48,6 +48,15 @@ var Life = Life || {};
 				}
 			},
 
+			/**
+			 * Not used right now.
+			 * Iteration is handled by CycleManager without any event.
+			 * This event could be used to do any side treatment.
+			 *
+			 * @param  Life.NeuronScope  nScope
+			 * @param  integer           timePassed
+			 * @return null
+			 */
 			iterate: function(nScope, timePassed) {
 
 				var args = [nScope, timePassed];
