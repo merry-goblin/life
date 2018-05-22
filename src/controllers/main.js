@@ -79,7 +79,7 @@ var Life = Life || {};
 			preNeurons.n1 = new life.Neuron();
 			life.neuronHandler.init(null, preNeurons.n1, life.Models.neuronT1);
 			preNeurons.n2 = new life.Neuron();
-			life.neuronHandler.init(null, preNeurons.n2, life.Models.neuronT1);
+			life.neuronHandler.init(null, preNeurons.n2, life.Models.neuronT2);
 			preNeurons.n3 = new life.Neuron();
 			life.neuronHandler.init(null, preNeurons.n3, life.Models.neuronT2);
 			preNeurons.n4 = new life.Neuron();

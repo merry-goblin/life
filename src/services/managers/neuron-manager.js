@@ -131,7 +131,6 @@ var Life = Life || {};
 							potential = standByPotential;
 						}
 					}
-					console.log(potential);
 					pspList[pspIndex].potential = potential;
 				}
 			}

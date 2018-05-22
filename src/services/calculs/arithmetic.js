@@ -45,6 +45,34 @@ Life.arithmetic = (function(life) {
 			}
 
 			return m;
+		},
+
+		getRatioToHexa: function(value, max, reverse) {
+
+			let intRatio;
+			let hexa;
+
+			if (value < 0) {
+				value = -1.0 * value;
+			}
+			else if (value > max) {
+				value = max;
+			}
+
+			//	Ratio
+			if (value == 0) {
+				intRatio = (reverse) ? 1 : 0;
+			}
+			else {
+				intRatio = (reverse) ? (1 - (value / max)) : (value / max);
+			}
+
+			//	Make sure it is an integer
+			intRatio = parseInt(intRatio * 255, 10);
+
+			//	Hexa
+			hexa = intRatio.toString(16);
+			return hexa;
 		}
 	}
 	return scope;

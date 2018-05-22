@@ -201,32 +201,37 @@ var Life = Life || {};
 
 		function updatePostsynapticPotentials() {
 
-			updatePostsynapticPotentialPositions();
-		}
-
-		function updatePostsynapticPotentialPositions() {
-
 			for (let i=0, nb=postsynapticPotentialList.length; i<nb; i++) {
 
 				postSynapticPotential = life.neuronHandler.get(nScope.neuron, 'postsynaptic-potential', i);
 				if (postSynapticPotential != null) {
+					//	Position
 					let x = calculatePosition(postSynapticPotential.origin);
 					postsynapticPotentialList[i].moveTo(x, -16);
+
+					//	Color
+					let color = calculateColor(postSynapticPotential.potential);
+					postsynapticPotentialList[i].fill = color;
 				}
 			}
+
+			canvas.redraw();
+		}
+
+		function updatePostsynapticPotentialPositions() {
+
 		}
 
 		function displayPostSynapticPotential(postSynapticPotentialKey) {
 
 			postSynapticPotential = life.neuronHandler.get(nScope.neuron, 'postsynaptic-potential', postSynapticPotentialKey);
-
 			var arc = canvas.display.arc({
 				x: calculatePosition(postSynapticPotential.origin),
 				y: -16,
 				radius: 24,
 				start: 0,
 				end: 180,
-				fill: "#ff6600",
+				fill: calculateColor(postSynapticPotential.potential),//"#ff6600",
 				stroke: "1px #dd5500"
 			});
 
@@ -371,7 +376,7 @@ var Life = Life || {};
 
 		function calculatePosition(position) {
 
-			var x = 0;
+			let x = 0;
 			if (position < 0) {
 				x = (position / nScope.neuron.model.distances.dendrites) * (worldWith / 2);
 			}
@@ -380,6 +385,28 @@ var Life = Life || {};
 			}
 
 			return x;
+		}
+
+		function calculateColor(potential) {
+
+			let rgb;
+			let color;
+
+			if (potential == 0) {
+				rgb = "#ffffff";
+			}
+			else if (potential > 0) {
+				color = life.arithmetic.getRatioToHexa(potential, 0.08, true);
+				color = color.padStart(2, "0");
+				rgb =  "#ff" + color + color;
+			}
+			else {
+				color = life.arithmetic.getRatioToHexa(potential, 0.08, true);
+				color = color.padStart(2, "0");
+				rgb = "#" + color + color + "ff";
+			}
+
+			return rgb;
 		}
 
 		var scope = {
