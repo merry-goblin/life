@@ -28,7 +28,7 @@ Life.ionicChannelHandler = (function(life) {
 		 * 
 		 * @param  Life.IonicChannel channel
 		 * @param  float potential
-		 * @param  integer neurotransmitter [Life.Neurotransmitters.*]
+		 * @param  integer neurotransmitter [Life.neurotransmitters.*]
 		 * @return float
 		 */
 		getPermeability: function(channel, potential, neurotransmitter) {

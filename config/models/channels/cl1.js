@@ -9,7 +9,7 @@ Life.Models.channelCl1 = {
 			
 		),
 		neurotransmitterGated: [{
-			neurotransmitter: Life.Neurotransmitters.gaba,
+			neurotransmitter: Life.neurotransmitters.gaba,
 			permeability: 0.5
 		}]
 	},

@@ -25,7 +25,7 @@ var Life = Life || {};
 			}
 		}
 
-		function checkNewPostsynapticPotentials() {
+		function checkNewPostsynapticPotentials(timePassed) {
 
 			var pspList = nScope.neuron.postsynapticPotentials;
 			var pspIndexListToIgnore = new Array();
@@ -109,6 +109,34 @@ var Life = Life || {};
 			pspList[psp2Index].delete = true;
 		}
 
+		function postsynapticPotentialsDilution(timePassed) {
+
+			if (timePassed != 0) {
+
+				var pspList = nScope.neuron.postsynapticPotentials;
+				let standByPotential = nScope.neuron.model.standByPotential;
+
+				//	Postsynaptic potential get closer to neuron stand by potential
+				for (var pspIndex in pspList) {
+					let potential = pspList[pspIndex].potential;
+					if (potential > standByPotential) {
+						potential = potential - (life.globals.potentialDilution * timePassed);
+						if (potential < standByPotential) {
+							potential = standByPotential;
+						}
+					}
+					else {
+						potential = potential + (life.globals.potentialDilution * timePassed);
+						if (potential > standByPotential) {
+							potential = standByPotential;
+						}
+					}
+					console.log(potential);
+					pspList[pspIndex].potential = potential;
+				}
+			}
+		}
+
 		var scope = {
 
 			/*** Public methods ***/
@@ -134,6 +162,7 @@ var Life = Life || {};
 				if (timePassed > 0) {
 					consumeActivations();
 					checkNewPostsynapticPotentials(timePassed);
+					postsynapticPotentialsDilution(timePassed);
 				}
 			},
 

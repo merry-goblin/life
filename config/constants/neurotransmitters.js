@@ -2,7 +2,7 @@
 /** @namespace */
 var Life = Life || {};
 
-Life.Neurotransmitters = {
+Life.neurotransmitters = {
 	acetylcholine: 1,
 	dopamine: 2,
 	gaba: 3,
