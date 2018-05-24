@@ -33,6 +33,7 @@ var Life = Life || {};
 		//	JQuery
 		var $speed = null;
 		var $time = null;
+		var $potentialDetails = null;
 
 		//	Services
 		var cycleManager = null;
@@ -72,6 +73,11 @@ var Life = Life || {};
 			})
 			layer.move(canvasDimensions.w, canvasDimensions.h);
 			canvas.addChild(layer);
+		}
+
+		function initDetails() {
+
+			$potentialDetails = $(".potential-details tbody");
 		}
 
 		function buildNeuron(nScopeParam) {
@@ -224,7 +230,14 @@ var Life = Life || {};
 
 		function displayPostSynapticPotential(postSynapticPotentialKey) {
 
-			postSynapticPotential = life.neuronHandler.get(nScope.neuron, 'postsynaptic-potential', postSynapticPotentialKey);
+			var postSynapticPotential = life.neuronHandler.get(nScope.neuron, 'postsynaptic-potential', postSynapticPotentialKey);
+
+			displayPostSynapticPotentialCanvas(postSynapticPotential, postSynapticPotentialKey);
+			displayPostSynapticPotentialDetails(postSynapticPotential, postSynapticPotentialKey);
+		}
+
+		function displayPostSynapticPotentialCanvas(postSynapticPotential, postSynapticPotentialKey) {
+
 			var arc = canvas.display.arc({
 				x: calculatePosition(postSynapticPotential.origin),
 				y: -16,
@@ -240,6 +253,11 @@ var Life = Life || {};
 			layer.addChild(arc);
 		}
 
+		function displayPostSynapticPotentialDetails(postSynapticPotential, postSynapticPotentialKey) {
+
+			$potentialDetails.append('<tr class="potential-details-'+postSynapticPotentialKey+'"><th scope="row">'+postSynapticPotentialKey+'</th><td>'+postSynapticPotential.origin+'</td><td>'+postSynapticPotential.potential+'</td></tr>');
+		}
+
 		function removePostSynapticPotential(postSynapticPotentialKey) {
 
 			//	Remove postsynaptic potential from canvas
@@ -247,6 +265,9 @@ var Life = Life || {};
 
 			//	Update array accordingly
 			postsynapticPotentialList.splice(postSynapticPotentialKey, 1);
+
+			//	Remove table row from potential list
+			$potentialDetails.find('.potential-details-'+postSynapticPotentialKey).remove();
 		}
 
 		function addRuler(ruler, x1, x2, label) {
@@ -422,6 +443,7 @@ var Life = Life || {};
 			init: function(worldId, nScopeParam, cycleManager, cycleListener) {
 
 				initOCanvas(worldId);
+				initDetails();
 				buildNeuron(nScopeParam);
 				buildCycleInfos(cycleManager, cycleListener);
 				buildSynapseActivation(nScopeParam.services.synapseListener);
