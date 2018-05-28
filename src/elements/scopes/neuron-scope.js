@@ -16,4 +16,5 @@ Life.NeuronScope = function() {
 		graphicsService: null
 	};
 	this.manager = null;
+	this.lastId = 0;
 }

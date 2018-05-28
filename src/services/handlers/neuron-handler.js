@@ -36,28 +36,29 @@ Life.neuronHandler = (function(life) {
 	}
 
 	//	Interactions
-	function addInteractionToList(interactions, interaction, listener) {
+	function addInteractionToList(scope, interactions, interaction, listener) {
 
-		var index = interactions.length;
-		interactions.push(interaction);
+		var key = getUniqId(scope);
+		interaction.id = key;
+		interactions[key] = interaction;
 
 		if (listener != null) {
-			listener.add(index);
+			listener.add(key);
 		}
 	}
 
-	function getInteractionFromList(interactions, index) {
+	function getInteractionFromList(interactions, key) {
 
-		return interactions[index];
+		return interactions[key];
 	}
 
-	function removeInteractionFromList(interactions, index, listener) {
+	function removeInteractionFromList(interactions, key, listener) {
 
 		if (listener != null) {
-			listener.remove(index);
+			listener.remove(key);
 		}
 
-		interactions.splice(index, 1);
+		delete interactions[key];
 	}
 
 	/**
@@ -140,6 +141,12 @@ Life.neuronHandler = (function(life) {
 		scope.manager.init(scope);
 	}
 
+	function getUniqId(scope) {
+
+		scope.lastId++;
+		return scope.lastId;
+	}
+
 	var scope = {
 
 		/*** Public static methods ***/
@@ -152,8 +159,8 @@ Life.neuronHandler = (function(life) {
 			neuron.activeTransports = {};
 			neuron.synapses = {};
 
-			neuron.actionPotentials = new Array();
-			neuron.postsynapticPotentials = new Array();
+			neuron.actionPotentials = {};
+			neuron.postsynapticPotentials = {};
 			neuron.presynapticPotential = false;
 
 			//	Listeners
@@ -181,11 +188,11 @@ Life.neuronHandler = (function(life) {
 					addEntityToList(neuron.synapses, key, element, listener);
 					break;
 				case 'action-potential':
-					addInteractionToList(neuron.actionPotentials, element);
+					addInteractionToList(scope, neuron.actionPotentials, element);
 					break;
 				case 'postsynaptic-potential':
 					listener = (scope != null) ? scope.services.postsynapticPotentialListener : null;
-					addInteractionToList(neuron.postsynapticPotentials, element, listener);
+					addInteractionToList(scope, neuron.postsynapticPotentials, element, listener);
 					break;
 			}
 		},

@@ -89,7 +89,7 @@ var Life = Life || {};
 			addRuler(dendriteRuler, -580, -2, neuron.model.distances.dendrites + " micrometers");
 			addRuler(axonRuler, 2, 580, neuron.model.distances.axon + " micrometers");
 			addSynapses(neuron.synapses, neuron.model.distances.dendrites, neuron.model.distances.axon);
-			postsynapticPotentialList = new Array();
+			postsynapticPotentialList = {};
 		}
 
 		function addSoma() {
@@ -207,7 +207,7 @@ var Life = Life || {};
 
 		function updatePostsynapticPotentials() {
 
-			for (let i=0, nb=postsynapticPotentialList.length; i<nb; i++) {
+			for (var i in postsynapticPotentialList) {
 
 				postSynapticPotential = life.neuronHandler.get(nScope.neuron, 'postsynaptic-potential', i);
 				if (postSynapticPotential != null) {
@@ -218,14 +218,14 @@ var Life = Life || {};
 					//	Color
 					let color = calculateColor(postSynapticPotential.potential);
 					postsynapticPotentialList[i].fill = color;
+
+					//	Details
+					$potentialDetails.find('.potential-details-'+i+' .potential').text(postSynapticPotential.potential);
+					$potentialDetails.find('.potential-details-'+i+' .origin').text(postSynapticPotential.origin);
 				}
 			}
 
 			canvas.redraw();
-		}
-
-		function updatePostsynapticPotentialPositions() {
-
 		}
 
 		function displayPostSynapticPotential(postSynapticPotentialKey) {
@@ -255,7 +255,7 @@ var Life = Life || {};
 
 		function displayPostSynapticPotentialDetails(postSynapticPotential, postSynapticPotentialKey) {
 
-			$potentialDetails.append('<tr class="potential-details-'+postSynapticPotentialKey+'"><th scope="row">'+postSynapticPotentialKey+'</th><td>'+postSynapticPotential.origin+'</td><td>'+postSynapticPotential.potential+'</td></tr>');
+			$potentialDetails.append('<tr class="potential-details-'+postSynapticPotentialKey+'"><th scope="row">'+postSynapticPotentialKey+'</th><td class="origin">'+postSynapticPotential.origin+'</td><td class="potential">'+postSynapticPotential.potential+'</td></tr>');
 		}
 
 		function removePostSynapticPotential(postSynapticPotentialKey) {
@@ -264,7 +264,7 @@ var Life = Life || {};
 			layer.removeChild(postsynapticPotentialList[postSynapticPotentialKey]);
 
 			//	Update array accordingly
-			postsynapticPotentialList.splice(postSynapticPotentialKey, 1);
+			delete postsynapticPotentialList[postSynapticPotentialKey];
 
 			//	Remove table row from potential list
 			$potentialDetails.find('.potential-details-'+postSynapticPotentialKey).remove();

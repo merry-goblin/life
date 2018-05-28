@@ -151,9 +151,8 @@ var Life = Life || {};
 				var synapse = life.neuronHandler.get(nScope.neuron, 'synapse', synapseKey);
 				postsynapticPotential = life.synapseHandler.activate(synapse);
 
-				var index = nScope.neuron.postsynapticPotentials.length;
 				life.neuronHandler.add(nScope, nScope.neuron, 'postsynaptic-potential', null, postsynapticPotential);
-				newPspIndexes.push(index);
+				newPspIndexes.push(postsynapticPotential.id);
 			},
 
 			iterate: function(timePassed) {
