@@ -118,20 +118,27 @@ var Life = Life || {};
 
 				//	Postsynaptic potential get closer to neuron stand by potential
 				for (var pspIndex in pspList) {
+					let toRemove = false;
 					let potential = pspList[pspIndex].potential;
 					if (potential > standByPotential) {
 						potential = potential - (life.globals.potentialDilution * timePassed);
 						if (potential < standByPotential) {
 							potential = standByPotential;
+							toRemove = true;
 						}
 					}
 					else {
 						potential = potential + (life.globals.potentialDilution * timePassed);
 						if (potential > standByPotential) {
 							potential = standByPotential;
+							toRemove = true;
 						}
 					}
 					pspList[pspIndex].potential = potential;
+
+					if (toRemove) {
+						life.neuronHandler.remove(nScope, 'postsynaptic-potential', pspIndex)
+					}
 				}
 			}
 		}
