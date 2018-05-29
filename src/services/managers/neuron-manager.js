@@ -143,6 +143,18 @@ var Life = Life || {};
 			}
 		}
 
+		function checkNewActionPotentials(timePassed) {
+
+			if (timePassed != 0) {
+
+				var pspList = nScope.neuron.postsynapticPotentials;
+				for (var pspIndex in pspList) {
+
+					
+				}
+			}
+		}
+
 		var scope = {
 
 			/*** Public methods ***/
@@ -168,6 +180,7 @@ var Life = Life || {};
 					consumeActivations();
 					checkNewPostsynapticPotentials(timePassed);
 					postsynapticPotentialsDilution(timePassed);
+					checkNewActionPotentials(timePassed);
 				}
 			},
 
