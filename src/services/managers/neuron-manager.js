@@ -143,6 +143,13 @@ var Life = Life || {};
 			}
 		}
 
+		/**
+		 * We check each postsynaptic potentials in order to see 
+		 * if we have to replace them by an action potential
+		 * 
+		 * @param  integer timePassed
+		 * @return null
+		 */
 		function checkNewActionPotentials(timePassed) {
 
 			if (timePassed != 0) {
@@ -150,7 +157,7 @@ var Life = Life || {};
 				var pspList = nScope.neuron.postsynapticPotentials;
 				for (var pspIndex in pspList) {
 
-					
+					//	
 				}
 			}
 		}

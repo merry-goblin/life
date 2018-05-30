@@ -109,6 +109,12 @@ Life.neuronHandler = (function(life) {
 
 	function initNeuronModel(model) {
 
+		initStandByPotential();
+		initThreshold();
+	}
+
+	function initStandByPotential() {
+
 		if (model.standByPotential == null) {
 			var params = new Array();
 			for (var i=0, nb=model.channels.length; i<nb; i++) {
@@ -122,6 +128,13 @@ Life.neuronHandler = (function(life) {
 				});
 			}
 			model.standByPotential = life.membranePotential.goldmanEquation(params);
+		}
+	}
+
+	function initThreshold() {
+
+		if (model.threshold == null) {
+			
 		}
 	}
 

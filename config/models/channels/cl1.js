@@ -5,9 +5,10 @@ Life.Models = Life.Models || {};
 
 Life.Models.channelCl1 = {
 	sensibility: {
-		voltageGated: new Array(
-			
-		),
+		voltageGated: [{
+			threshold: 0.031,
+			permeability: 0.8
+		}],
 		neurotransmitterGated: [{
 			neurotransmitter: Life.neurotransmitters.gaba,
 			permeability: 0.5

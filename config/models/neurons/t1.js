@@ -15,5 +15,6 @@ Life.Models.neuronT1 = {
 		Life.Models.channelK1,
 		Life.Models.channelNa1
 	],
-	standByPotential: null
+	standByPotential: null,
+	threshold: null
 }

@@ -48,6 +48,19 @@ Life.ionicChannelHandler = (function(life) {
 		},
 
 		/**
+		 * Voltage is not handled yet
+		 * 
+		 * @param  Life.IonicChannel channel
+		 * @param  float potential
+		 * @param  integer neurotransmitter [Life.neurotransmitters.*]
+		 * @return float
+		 */
+		getThreshold: function(channel) {
+
+			
+		},
+
+		/**
 		 * Free any pointer stored in an element
 		 * @return null
 		 */
