@@ -109,11 +109,11 @@ Life.neuronHandler = (function(life) {
 
 	function initNeuronModel(model) {
 
-		initStandByPotential();
-		initThreshold();
+		initStandByPotential(model);
+		initThreshold(model);
 	}
 
-	function initStandByPotential() {
+	function initStandByPotential(model) {
 
 		if (model.standByPotential == null) {
 			var params = new Array();
@@ -131,10 +131,11 @@ Life.neuronHandler = (function(life) {
 		}
 	}
 
-	function initThreshold() {
+	function initThreshold(model) {
 
 		if (model.threshold == null) {
-			
+			//	Todo : threshold need to be calculated
+			model.threshold = 0.03;
 		}
 	}
 

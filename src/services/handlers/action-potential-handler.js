@@ -26,7 +26,7 @@ Life.actionPotentialHandler = (function(life) {
 			actionPotential.startTime = startTime;
 			actionPotential.impulses = new Array();
 
-			buildEquations(actionPotential, impulseSpeed);
+			this.buildEquations(actionPotential, impulseSpeed);
 
 			return actionPotential;
 		},
@@ -35,8 +35,8 @@ Life.actionPotentialHandler = (function(life) {
 
 			var gradient = 1/impulseSpeed;
 
-			var equation1 = buildEquation(actionPotential, gradient);
-			var equation2 = buildEquation(actionPotential, (-1 * gradient));
+			var equation1 = this.buildEquation(actionPotential, gradient);
+			var equation2 = this.buildEquation(actionPotential, (-1 * gradient));
 
 			actionPotential.impulses.push(equation1);
 			actionPotential.impulses.push(equation2);

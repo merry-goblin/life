@@ -137,7 +137,7 @@ var Life = Life || {};
 					pspList[pspIndex].potential = potential;
 
 					if (toRemove) {
-						life.neuronHandler.remove(nScope, 'postsynaptic-potential', pspIndex)
+						life.neuronHandler.remove(nScope, 'postsynaptic-potential', pspIndex);
 					}
 				}
 			}
@@ -154,12 +154,27 @@ var Life = Life || {};
 
 			if (timePassed != 0) {
 
-				var pspList = nScope.neuron.postsynapticPotentials;
-				for (var pspIndex in pspList) {
+				let threshold = nScope.neuron.model.threshold;
+				let pspList = nScope.neuron.postsynapticPotentials;
+				for (let pspIndex in pspList) {
 
-					//	
+					let psp = pspList[pspIndex];
+					//	todo : this test is too much simplified ... should be a range test instead
+					if (psp.potential > threshold) {
+						convertPostSynapticPotentialToActionPotential(psp);
+					}
 				}
 			}
+		}
+
+		function convertPostSynapticPotentialToActionPotential(psp) {
+
+			//	Add an action potential
+			let actionPotential = life.actionPotentialHandler.build(psp.origin, 0, 1);
+			life.neuronHandler.add(nScope, nScope.neuron, 'action-potential', actionPotential);
+
+			//	Remove a postsynaptic pontential
+			life.neuronHandler.remove(nScope, 'postsynaptic-potential', psp);
 		}
 
 		var scope = {
