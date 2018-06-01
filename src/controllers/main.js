@@ -104,9 +104,13 @@ var Life = Life || {};
 
 			nScope.services.synapseListener.registerService(nScope.manager, {'activate': 'generatePostsynapticPotential'});
 
-			//	Postsynaptic potentiel 
+			//	Postsynaptic potentials
 			nScope.services.postsynapticPotentialListener.registerService(graphics, {'add': 'addPostsynapticPotential'});
 			nScope.services.postsynapticPotentialListener.registerService(graphics, {'remove': 'removePostsynapticPotential'});
+
+			//	Action potentials
+			nScope.services.actionPotentialListener.registerService(graphics, {'add': 'addActionPotential'});
+			nScope.services.actionPotentialListener.registerService(graphics, {'remove': 'removeActionPotential'});
 		}
 
 		function testACalculation() {

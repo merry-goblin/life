@@ -171,10 +171,10 @@ var Life = Life || {};
 
 			//	Add an action potential
 			let actionPotential = life.actionPotentialHandler.build(psp.origin, 0, 1);
-			life.neuronHandler.add(nScope, nScope.neuron, 'action-potential', actionPotential);
+			life.neuronHandler.add(nScope, nScope.neuron, 'action-potential', null, actionPotential);
 
 			//	Remove a postsynaptic pontential
-			life.neuronHandler.remove(nScope, 'postsynaptic-potential', psp);
+			life.neuronHandler.remove(nScope, 'postsynaptic-potential', psp.id);
 		}
 
 		var scope = {

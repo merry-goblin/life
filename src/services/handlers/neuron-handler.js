@@ -147,6 +147,8 @@ Life.neuronHandler = (function(life) {
 		//	Services
 		scope.services.synapseListener = new life.SynapseListener();
 		scope.services.synapseListener.init(scope);
+		scope.services.actionPotentialListener = new life.ActionPotentialListener();
+		scope.services.actionPotentialListener.init(scope);
 		scope.services.postsynapticPotentialListener = new life.PostsynapticPotentialListener();
 		scope.services.postsynapticPotentialListener.init(scope);
 
@@ -202,7 +204,8 @@ Life.neuronHandler = (function(life) {
 					addEntityToList(neuron.synapses, key, element, listener);
 					break;
 				case 'action-potential':
-					addInteractionToList(scope, neuron.actionPotentials, element);
+					listener = (scope != null) ? scope.services.actionPotentialListener : null;
+					addInteractionToList(scope, neuron.actionPotentials, element, listener);
 					break;
 				case 'postsynaptic-potential':
 					listener = (scope != null) ? scope.services.postsynapticPotentialListener : null;
@@ -275,7 +278,8 @@ Life.neuronHandler = (function(life) {
 					removeEntityFromList(neuron.synapses, key, listener);
 					break;
 				case 'action-potential':
-					removeInteractionFromList(neuron.actionPotentials, key); // key is an index here
+					listener = (scope != null) ? scope.services.actionPotentialListener : null;
+					removeInteractionFromList(neuron.actionPotentials, key, listener); // key is an index here
 					break;
 				case 'postsynaptic-potential':
 					listener = (scope != null) ? scope.services.postsynapticPotentialListener : null;

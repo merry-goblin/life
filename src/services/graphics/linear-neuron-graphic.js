@@ -488,6 +488,16 @@ var Life = Life || {};
 				removePostSynapticPotential(postsynapticPotential);
 			},
 
+			addActionPotential: function(actionPotentialKey) {
+
+				console.log("addActionPotential");
+			},
+
+			removeActionPotential: function(actionPotentialKey) {
+
+				console.log("addActionPotential");
+			},
+
 			addSynapse: function(arg1) {
 
 			},

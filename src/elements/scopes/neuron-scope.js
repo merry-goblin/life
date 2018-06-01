@@ -12,6 +12,7 @@ Life.NeuronScope = function() {
 	this.neuron = null;
 	this.services = {
 		synapseListener: null,
+		actionPotentialListener: null,
 		postsynapticPotentialListener: null,
 		graphicsService: null
 	};
