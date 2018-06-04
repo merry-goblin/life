@@ -1,0 +1,18 @@
+
+*** Class types ***
+
+Controller : 
+
+	This class is used to launch a program. It initializes object and it is the start point of any cycle.
+	This class is only a disptacher and has no skill at all, to do something, a service has to be called.
+
+Element :
+
+	Elements represent a specific object in the program. 
+	An element has no function associated. It has got only properties describing itself.
+	There is elements of many kind but the main ones are entities and interactions.
+	An entity is a persistant object (ex: synapse) while an interaction is a short-live object (ex: action potential).
+
+Service - Handler :
+
+	
