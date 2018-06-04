@@ -29,6 +29,7 @@ var Life = Life || {};
 		var synapseLayer = null;
 		var synapseList = null;
 		var postsynapticPotentialList = null;
+		var actionPotentialList = null;
 
 		//	JQuery
 		var $speed = null;
@@ -90,6 +91,7 @@ var Life = Life || {};
 			addRuler(axonRuler, 2, 580, neuron.model.distances.axon + " micrometers");
 			addSynapses(neuron.synapses, neuron.model.distances.dendrites, neuron.model.distances.axon);
 			postsynapticPotentialList = {};
+			actionPotentialList = {};
 		}
 
 		function addSoma() {
@@ -268,6 +270,32 @@ var Life = Life || {};
 
 			//	Remove table row from potential list
 			$potentialDetails.find('.potential-details-'+postSynapticPotentialKey).remove();
+		}
+
+		function displayActionPotential(actionPotentialKey) {
+
+			let actionPotential = life.neuronHandler.get(nScope.neuron, 'action-potential', actionPotentialKey);
+			let w = 4;
+			let oActionPotential = canvas.display.rectangle({
+				x: calculatePosition(actionPotential.origin) - w,
+				y: -16,
+				width: w*2,
+				height: 32,
+				fill: "red"
+			});
+
+			actionPotentialList[actionPotentialKey] = oActionPotential;
+
+			layer.addChild(oActionPotential);
+		}
+
+		function removeActionPotential(actionPotentialKey) {
+
+			//	Remove postsynaptic potential from canvas
+			layer.removeChild(actionPotentialList[actionPotentialKey]);
+
+			//	Update array accordingly
+			delete actionPotentialList[actionPotentialKey];
 		}
 
 		function addRuler(ruler, x1, x2, label) {
@@ -490,12 +518,12 @@ var Life = Life || {};
 
 			addActionPotential: function(actionPotentialKey) {
 
-				console.log("addActionPotential");
+				displayActionPotential(actionPotentialKey);
 			},
 
 			removeActionPotential: function(actionPotentialKey) {
 
-				console.log("addActionPotential");
+				removeActionPotential(actionPotentialKey);
 			},
 
 			addSynapse: function(arg1) {

@@ -53,7 +53,7 @@ var Life = Life || {};
 				}
 				time += currentSpeed;
 
-				nScope.manager.iterate(currentSpeed);
+				nScope.manager.iterate(time, currentSpeed);
 			},
 
 				/* Getters */

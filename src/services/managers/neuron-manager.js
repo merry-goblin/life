@@ -150,7 +150,7 @@ var Life = Life || {};
 		 * @param  integer timePassed
 		 * @return null
 		 */
-		function checkNewActionPotentials(timePassed) {
+		function checkNewActionPotentials(time, timePassed) {
 
 			if (timePassed != 0) {
 
@@ -161,20 +161,34 @@ var Life = Life || {};
 					let psp = pspList[pspIndex];
 					//	todo : this test is too much simplified ... should be a range test instead
 					if (psp.potential > threshold) {
-						convertPostSynapticPotentialToActionPotential(psp);
+						convertPostSynapticPotentialToActionPotential(psp, time);
 					}
 				}
 			}
 		}
 
-		function convertPostSynapticPotentialToActionPotential(psp) {
+		function convertPostSynapticPotentialToActionPotential(psp, time) {
 
 			//	Add an action potential
-			let actionPotential = life.actionPotentialHandler.build(psp.origin, 0, 1);
+			let actionPotential = life.actionPotentialHandler.build(psp.origin, time, nScope.neuron.model.impulseSpeed);
 			life.neuronHandler.add(nScope, nScope.neuron, 'action-potential', null, actionPotential);
 
 			//	Remove a postsynaptic pontential
 			life.neuronHandler.remove(nScope, 'postsynaptic-potential', psp.id);
+		}
+
+		function moveActionPotentials(timePassed) {
+
+			for (var actionPotentialIndex in nScope.neuron.actionPotentials) {
+
+				var actionPotential = nScope.neuron.actionPotentials[actionPotentialIndex];
+				moveActionPotential(actionPotential, timePassed)
+			}
+		}
+
+		function moveActionPotential(actionPotential, timePassed) {
+
+
 		}
 
 		var scope = {
@@ -196,13 +210,14 @@ var Life = Life || {};
 				newPspIndexes.push(postsynapticPotential.id);
 			},
 
-			iterate: function(timePassed) {
+			iterate: function(time, timePassed) {
 
 				if (timePassed > 0) {
 					consumeActivations();
 					checkNewPostsynapticPotentials(timePassed);
 					postsynapticPotentialsDilution(timePassed);
-					checkNewActionPotentials(timePassed);
+					checkNewActionPotentials(time, timePassed);
+					moveActionPotentials(timePassed);
 				}
 			},
 
