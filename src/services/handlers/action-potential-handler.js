@@ -26,20 +26,29 @@ Life.actionPotentialHandler = (function(life) {
 			actionPotential.startTime = startTime;
 			actionPotential.impulses = new Array();
 
-			this.buildEquations(actionPotential, impulseSpeed);
+			this.buildImpulses(origin, actionPotential, impulseSpeed);
 
 			return actionPotential;
 		},
 
-		buildEquations: function(actionPotential, impulseSpeed) {
+		buildImpulses: function(origin, actionPotential, impulseSpeed) {
 
 			var gradient = 1/impulseSpeed;
 
-			var equation1 = this.buildEquation(actionPotential, gradient);
-			var equation2 = this.buildEquation(actionPotential, (-1 * gradient));
+			//	Impulses
+			var impulse1 = new life.Impulse();
+			var impulse2 = new life.Impulse();
 
-			actionPotential.impulses.push(equation1);
-			actionPotential.impulses.push(equation2);
+			//	Origin
+			impulse1.origin = origin;
+			impulse2.origin = origin;
+
+			//	Equations
+			impulse1.equation = this.buildEquation(actionPotential, gradient);
+			impulse2.equation2 = this.buildEquation(actionPotential, (-1 * gradient));
+
+			actionPotential.impulses.push(impulse1);
+			actionPotential.impulses.push(impulse2);
 		},
 
 		buildEquation: function(actionPotential, gradient) {
@@ -58,7 +67,10 @@ Life.actionPotentialHandler = (function(life) {
 		 */
 		destruct: function(actionPotential) {
 
-			
+			for (var i=0,nb=actionPotential.impulses.length; nb<i; i++) {
+				actionPotential.impulses[i].equation = null;
+				actionPotential.impulses[i] = null;
+			}
 		}
 	}
 	return scope;

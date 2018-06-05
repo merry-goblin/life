@@ -13,6 +13,25 @@ Element :
 	There is elements of many kind but the main ones are entities and interactions.
 	An entity is a persistant object (ex: synapse) while an interaction is a short-live object (ex: action potential).
 
-Service - Handler :
+Service - Graphic :
 
-	
+	Anything related to display has to be in this class.
+
+Service - Handler (static) :
+
+	A handler purpose is to handle an element to build, add, remove or get. 
+	It provides any basic treatment you need to do on an element without any business logic.
+
+Service - Listener :
+
+	All classes need to communicate with others at some point. 
+	To achieve this goal a listener is the perfect tool.
+	A listener has got a list of events on which ones a method can listen and another one can trigger.
+	If a graphic service want to know when an action potential is created it will listen on the "add" event of the action potential listener.
+	When a class create an action potential this class will trigger an "add" event on the action potential listener.
+
+Service - Manager :
+
+	Business logic is in thoses classes. 
+	Any business logic which could be put in a controller should be put in a manager. 
+	A controller has to dispatch only.

@@ -173,6 +173,8 @@ var Life = Life || {};
 			let actionPotential = life.actionPotentialHandler.build(psp.origin, time, nScope.neuron.model.impulseSpeed);
 			life.neuronHandler.add(nScope, nScope.neuron, 'action-potential', null, actionPotential);
 
+			console.log(actionPotential);
+
 			//	Remove a postsynaptic pontential
 			life.neuronHandler.remove(nScope, 'postsynaptic-potential', psp.id);
 		}
