@@ -11,4 +11,5 @@ Life.Impulse = function() {
 
 	this.origin = null; // position x
 	this.equation = null;
+	this.direction = null; // 1|-1
 }

@@ -211,7 +211,7 @@ var Life = Life || {};
 
 			for (var i in postsynapticPotentialList) {
 
-				postSynapticPotential = life.neuronHandler.get(nScope.neuron, 'postsynaptic-potential', i);
+				let postSynapticPotential = life.neuronHandler.get(nScope.neuron, 'postsynaptic-potential', i);
 				if (postSynapticPotential != null) {
 					//	Position
 					let x = calculatePosition(postSynapticPotential.origin);
@@ -226,8 +226,24 @@ var Life = Life || {};
 					$potentialDetails.find('.potential-details-'+i+' .origin').text(postSynapticPotential.origin);
 				}
 			}
+		}
 
-			canvas.redraw();
+		function updateActionPotentials() {
+
+			for (var i in actionPotentialList) {
+
+				let actionPotential = life.neuronHandler.get(nScope.neuron, 'action-potential', i);
+				if (actionPotential != null) { 
+
+					/*for (var impKey in actionPotential.impulses) {*/
+
+						let impulse = actionPotential.impulses[0];
+						//	Position
+						let x = calculatePosition(impulse.origin);
+						actionPotentialList[i].moveTo(x, -16);
+					/*}*/
+				}
+			}
 		}
 
 		function displayPostSynapticPotential(postSynapticPotentialKey) {
@@ -537,6 +553,7 @@ var Life = Life || {};
 				if (nScope != null) {
 					updateSynapsesState(nScope.neuron.synapses);
 					updatePostsynapticPotentials();
+					updateActionPotentials();
 				}
 				canvas.redraw();
 			},

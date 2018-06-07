@@ -173,8 +173,6 @@ var Life = Life || {};
 			let actionPotential = life.actionPotentialHandler.build(psp.origin, time, nScope.neuron.model.impulseSpeed);
 			life.neuronHandler.add(nScope, nScope.neuron, 'action-potential', null, actionPotential);
 
-			console.log(actionPotential);
-
 			//	Remove a postsynaptic pontential
 			life.neuronHandler.remove(nScope, 'postsynaptic-potential', psp.id);
 		}
@@ -184,13 +182,18 @@ var Life = Life || {};
 			for (var actionPotentialIndex in nScope.neuron.actionPotentials) {
 
 				var actionPotential = nScope.neuron.actionPotentials[actionPotentialIndex];
-				moveActionPotential(actionPotential, timePassed)
+				moveActionPotential(actionPotential, timePassed);
 			}
 		}
 
 		function moveActionPotential(actionPotential, timePassed) {
 
+			for (var i in actionPotential.impulses) {
 
+				let impulse = actionPotential.impulses[i];
+				let step = nScope.neuron.model.impulseSpeed * timePassed * impulse.direction;
+				impulse.origin += step;
+			}
 		}
 
 		var scope = {

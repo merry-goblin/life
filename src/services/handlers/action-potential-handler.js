@@ -43,9 +43,13 @@ Life.actionPotentialHandler = (function(life) {
 			impulse1.origin = origin;
 			impulse2.origin = origin;
 
+			//	Direction
+			impulse1.direction = 1;
+			impulse2.direction = -1;
+
 			//	Equations
-			impulse1.equation = this.buildEquation(actionPotential, gradient);
-			impulse2.equation2 = this.buildEquation(actionPotential, (-1 * gradient));
+			impulse1.equation = this.buildEquation(actionPotential, impulse1.direction * gradient);
+			impulse2.equation2 = this.buildEquation(actionPotential, impulse2.direction * gradient);
 
 			actionPotential.impulses.push(impulse1);
 			actionPotential.impulses.push(impulse2);
