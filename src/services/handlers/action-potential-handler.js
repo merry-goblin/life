@@ -19,18 +19,19 @@ Life.actionPotentialHandler = (function(life) {
 
 		/*** Public static methods ***/
 
-		build: function(origin, startTime, impulseSpeed) {
+		build: function(origin, startTime, direction) {
 
 			var actionPotential = new life.ActionPotential();
 			actionPotential.origin = origin;
 			actionPotential.startTime = startTime;
-			actionPotential.impulses = new Array();
+			actionPotential.direction = direction;
 
-			this.buildImpulses(origin, actionPotential, impulseSpeed);
+			//this.buildImpulses(origin, actionPotential, impulseSpeed);
 
 			return actionPotential;
 		},
 
+		//	Not used anymore
 		buildImpulses: function(origin, actionPotential, impulseSpeed) {
 
 			var gradient = 1/impulseSpeed;
@@ -55,6 +56,7 @@ Life.actionPotentialHandler = (function(life) {
 			actionPotential.impulses.push(impulse2);
 		},
 
+		//	Not used anymore
 		buildEquation: function(actionPotential, gradient) {
 
 			var equation = new life.Equation();
@@ -71,10 +73,10 @@ Life.actionPotentialHandler = (function(life) {
 		 */
 		destruct: function(actionPotential) {
 
-			for (var i=0,nb=actionPotential.impulses.length; nb<i; i++) {
+			/*for (var i=0,nb=actionPotential.impulses.length; nb<i; i++) {
 				actionPotential.impulses[i].equation = null;
 				actionPotential.impulses[i] = null;
-			}
+			}*/
 		}
 	}
 	return scope;

@@ -170,8 +170,11 @@ var Life = Life || {};
 		function convertPostSynapticPotentialToActionPotential(psp, time) {
 
 			//	Add an action potential
-			let actionPotential = life.actionPotentialHandler.build(psp.origin, time, nScope.neuron.model.impulseSpeed);
-			life.neuronHandler.add(nScope, nScope.neuron, 'action-potential', null, actionPotential);
+			let actionPotentialRight = life.actionPotentialHandler.build(psp.origin, time, 1);
+			let actionPotentialLeft = life.actionPotentialHandler.build(psp.origin, time, -1);
+
+			life.neuronHandler.add(nScope, nScope.neuron, 'action-potential', null, actionPotentialRight);
+			life.neuronHandler.add(nScope, nScope.neuron, 'action-potential', null, actionPotentialLeft);
 
 			//	Remove a postsynaptic pontential
 			life.neuronHandler.remove(nScope, 'postsynaptic-potential', psp.id);
@@ -188,12 +191,8 @@ var Life = Life || {};
 
 		function moveActionPotential(actionPotential, timePassed) {
 
-			for (var i in actionPotential.impulses) {
-
-				let impulse = actionPotential.impulses[i];
-				let step = nScope.neuron.model.impulseSpeed * timePassed * impulse.direction;
-				impulse.origin += step;
-			}
+			let step = nScope.neuron.model.impulseSpeed * timePassed * actionPotential.direction;
+			actionPotential.origin += step;
 		}
 
 		var scope = {
@@ -221,8 +220,8 @@ var Life = Life || {};
 					consumeActivations();
 					checkNewPostsynapticPotentials(timePassed);
 					postsynapticPotentialsDilution(timePassed);
-					checkNewActionPotentials(time, timePassed);
 					moveActionPotentials(timePassed);
+					checkNewActionPotentials(time, timePassed);
 				}
 			},
 
