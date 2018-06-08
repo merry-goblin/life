@@ -279,7 +279,7 @@ Life.neuronHandler = (function(life) {
 					break;
 				case 'action-potential':
 					listener = (scope != null) ? scope.services.actionPotentialListener : null;
-					removeInteractionFromList(neuron.actionPotentials, key, listener); // key is an index here
+					removeInteractionFromList(scope.neuron.actionPotentials, key, listener); // key is an index here
 					break;
 				case 'postsynaptic-potential':
 					listener = (scope != null) ? scope.services.postsynapticPotentialListener : null;

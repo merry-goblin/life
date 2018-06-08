@@ -193,6 +193,29 @@ var Life = Life || {};
 
 			let step = nScope.neuron.model.impulseSpeed * timePassed * actionPotential.direction;
 			actionPotential.origin += step;
+
+			checkEndReachedForActionPotential(actionPotential);
+		}
+
+		/**
+		 * If actionPotential is out of dendrite of axon we have to delete it
+		 * @param  Life.ActionPotential actionPotentia
+		 * @return null
+		 */
+		function checkEndReachedForActionPotential(actionPotential) {
+
+			if (actionPotential.direction == -1) {
+				// Dendrite
+				if (actionPotential.origin < -1*nScope.neuron.model.distances.dendrites) {
+					life.neuronHandler.remove(nScope, 'action-potential', actionPotential.id);
+				}
+			}
+			else {
+				// Axon
+				if (actionPotential.origin > nScope.neuron.model.distances.axon) {
+					life.neuronHandler.remove(nScope, 'action-potential', actionPotential.id);
+				}
+			}
 		}
 
 		var scope = {
