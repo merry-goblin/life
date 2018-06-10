@@ -86,9 +86,9 @@ var Life = Life || {};
 			nScope = nScopeParam;
 			var neuron = nScope.neuron;
 			addSoma();
-			addCytoplasm(-580, 580);
-			addRuler(dendriteRuler, -580, -2, neuron.model.distances.dendrites + " micrometers");
-			addRuler(axonRuler, 2, 580, neuron.model.distances.axon + " micrometers");
+			addCytoplasm(calculatePosition(-100), calculatePosition(10000));
+			dendriteRuler = addRuler(calculatePosition(-100), -2, neuron.model.distances.dendrites + " micrometers");
+			axonRuler = addRuler(2, calculatePosition(10000), neuron.model.distances.axon + " micrometers");
 			addSynapses(neuron.synapses, neuron.model.distances.dendrites, neuron.model.distances.axon);
 			postsynapticPotentialList = {};
 			actionPotentialList = {};
@@ -234,7 +234,7 @@ var Life = Life || {};
 
 				let actionPotential = life.neuronHandler.get(nScope.neuron, 'action-potential', i);
 				if (actionPotential != null) { 
-
+console.log(actionPotential.origin);
 					//	Position
 					let x = calculatePosition(actionPotential.origin);
 					actionPotentialList[i].moveTo(x, -16);
@@ -310,7 +310,7 @@ var Life = Life || {};
 			delete actionPotentialList[actionPotentialKey];
 		}
 
-		function addRuler(ruler, x1, x2, label) {
+		function addRuler(x1, x2, label) {
 
 			//	A group to easily select all children
 			ruler = canvas.display.rectangle({
@@ -353,6 +353,8 @@ var Life = Life || {};
 			ruler.addChild(line2);
 			ruler.addChild(line3);
 			ruler.addChild(text);
+
+			return ruler;
 		}
 
 		function buildCycleInfos(cycleManagerService, cycleListenerService) {
@@ -439,10 +441,10 @@ var Life = Life || {};
 
 			let x = 0;
 			if (position < 0) {
-				x = (position / nScope.neuron.model.distances.dendrites) * (worldWith / 2);
+				x = (position / nScope.neuron.model.distances.dendrites) * ((worldWith-2) / 2);
 			}
 			else if (position > 0) {
-				x = (position / nScope.neuron.model.distances.axon) * (worldWith / 2);
+				x = (position / nScope.neuron.model.distances.axon) * ((worldWith-2) / 2);
 			}
 
 			return x;

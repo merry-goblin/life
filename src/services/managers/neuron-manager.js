@@ -214,6 +214,7 @@ var Life = Life || {};
 				// Axon
 				if (actionPotential.origin > nScope.neuron.model.distances.axon) {
 					life.neuronHandler.remove(nScope, 'action-potential', actionPotential.id);
+					nScope.neuron.presynapticPotentialActivation = true;
 				}
 			}
 		}

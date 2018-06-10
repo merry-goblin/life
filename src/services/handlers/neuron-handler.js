@@ -177,7 +177,7 @@ Life.neuronHandler = (function(life) {
 
 			neuron.actionPotentials = {};
 			neuron.postsynapticPotentials = {};
-			neuron.presynapticPotential = false;
+			neuron.presynapticPotentialActivation = false;
 
 			//	Listeners
 			if (scope != null) {
