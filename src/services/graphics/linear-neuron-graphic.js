@@ -234,7 +234,7 @@ var Life = Life || {};
 
 				let actionPotential = life.neuronHandler.get(nScope.neuron, 'action-potential', i);
 				if (actionPotential != null) { 
-console.log(actionPotential.origin);
+
 					//	Position
 					let x = calculatePosition(actionPotential.origin);
 					actionPotentialList[i].moveTo(x, -16);

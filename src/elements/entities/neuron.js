@@ -21,5 +21,5 @@ Life.Neuron = function() {
 	this.postsynapticPotentials = null;
 
 	//	States
-	this.presynapticPotentialActivation = false; // todo : It is a state, this property name has to be changed
+	this.presynapticPotentialActivation = false;
 }
