@@ -118,6 +118,11 @@ var Life = Life || {};
 
 				//	Postsynaptic potential get closer to neuron stand by potential
 				for (var pspIndex in pspList) {
+					if (!pspList[pspIndex].new) {
+						//	First iteration is ignore (no dilution)
+						pspList[pspIndex].new = true;
+						continue;
+					}
 					let toRemove = false;
 					let potential = pspList[pspIndex].potential;
 					if (potential > standByPotential) {
@@ -156,8 +161,8 @@ var Life = Life || {};
 
 				let threshold = nScope.neuron.model.threshold;
 				let pspList = nScope.neuron.postsynapticPotentials;
-				for (let pspIndex in pspList) {
 
+				for (let pspIndex in pspList) {
 					let psp = pspList[pspIndex];
 					//	todo : this test is too much simplified ... should be a range test instead
 					if (psp.potential > threshold) {
@@ -247,11 +252,15 @@ var Life = Life || {};
 
 				if (timePassed > 0) {
 					consumeActivations(); // todo : maybe not the best way to proceed. A neuron manager has to modify a neuron and not other neurons
-					checkNewPostsynapticPotentials(timePassed);
-					postsynapticPotentialsDilution(timePassed);
+
+					//	Action potentials
 					checkActionPotentialCollisions(timePassed);
 					moveActionPotentials(timePassed);
 					checkNewActionPotentials(time, timePassed);
+
+					//	Postsynaptic potentials
+					checkNewPostsynapticPotentials(timePassed);
+					postsynapticPotentialsDilution(timePassed);
 				}
 			},
 
