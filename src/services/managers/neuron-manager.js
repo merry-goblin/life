@@ -180,6 +180,11 @@ var Life = Life || {};
 			life.neuronHandler.remove(nScope, 'postsynaptic-potential', psp.id);
 		}
 
+		function checkActionPotentialCollisions(timePassed) {
+
+			
+		}
+
 		function moveActionPotentials(timePassed) {
 
 			for (var actionPotentialIndex in nScope.neuron.actionPotentials) {
@@ -241,9 +246,10 @@ var Life = Life || {};
 			iterate: function(time, timePassed) {
 
 				if (timePassed > 0) {
-					consumeActivations();
+					consumeActivations(); // todo : maybe not the best way to proceed. A neuron manager has to modify a neuron and not other neurons
 					checkNewPostsynapticPotentials(timePassed);
 					postsynapticPotentialsDilution(timePassed);
+					checkActionPotentialCollisions(timePassed);
 					moveActionPotentials(timePassed);
 					checkNewActionPotentials(time, timePassed);
 				}

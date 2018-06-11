@@ -5,12 +5,11 @@ Life.Models = Life.Models || {};
 
 Life.Models.channelNa1 = {
 	sensibility: {
-		voltageGated: new Array(
-			
-		),
-		neurotransmitterGated: new Array(
-		
-		)
+		voltageGated: [{
+			threshold: 0.06,
+			permeability: 0.8
+		}],
+		neurotransmitterGated: []
 	},
 	permeability: {
 		default: 0.001,

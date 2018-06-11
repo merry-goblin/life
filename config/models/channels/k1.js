@@ -5,12 +5,11 @@ Life.Models = Life.Models || {};
 
 Life.Models.channelK1 = {
 	sensibility: {
-		voltageGated: new Array(
-			
-		),
-		neurotransmitterGated: new Array(
-		
-		)
+		voltageGated: [],
+		neurotransmitterGated: [{
+			neurotransmitter: Life.neurotransmitters.glutamate,
+			permeability: 0.2
+		}]
 	},
 	permeability: {
 		default: 0.05,
