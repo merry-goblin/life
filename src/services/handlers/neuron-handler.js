@@ -111,6 +111,7 @@ Life.neuronHandler = (function(life) {
 
 		initStandByPotential(model);
 		initThreshold(model);
+		initGradient(model);
 	}
 
 	function initStandByPotential(model) {
@@ -136,6 +137,18 @@ Life.neuronHandler = (function(life) {
 		if (model.threshold == null) {
 			//	Todo : threshold need to be calculated
 			model.threshold = 0.03;
+		}
+	}
+
+	function initGradient(model) {
+
+		if (model.gradient == null) {
+			if (model.impulseSpeed > 0) {
+				model.gradient = 1 / model.impulseSpeed;
+			}
+			else {
+				model.gradient = 0;
+			}
 		}
 	}
 

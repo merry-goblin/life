@@ -193,12 +193,12 @@ var Life = Life || {};
 				let ignoreList = [];
 
 				for (let apIndex in apList) {
-					ignoreList[] = apIndex;
+					ignoreList.push(apIndex);
 
 					//	Action potentials
 					for (let apIndex2 in apList) {
 						//	We don't check an action potential twice
-						if (!inArray(apIndex, ignoreList)) {
+						if (!life.utils.inArray(apIndex, ignoreList)) {
 							let isCollided = checkCollisionBetweenTwoActionPotentials(apList[apIndex], apList[apIndex2]);
 							life.neuronHandler.remove(nScope, 'action-potential', apIndex);
 							life.neuronHandler.remove(nScope, 'action-potential', apIndex2);
@@ -217,10 +217,17 @@ var Life = Life || {};
 		function checkCollisionBetweenTwoActionPotentials(ap1, ap2) {
 
 			let isCollided = false;
+			let gradient = nScope.neuron.model.gradient;
 
-			
+			let a1 = ap1.direction * gradient;
+			let a2 = ap2.direction * gradient;
+			let b1 = ap2.startTime;
+			let b2 = ap2.startTime;
 
-			return isCollided;
+			let intersection = life.analyticGeometry.intersectionOfLines(a1, b1, a2, b2);
+			console.log(intersection);
+
+			return (intersection === false) ? false : true;
 		}
 
 		function checkCollisionBetweenActionPotentialAndPostsynapticPotential(ap, psp) {
