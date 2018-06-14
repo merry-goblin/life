@@ -187,7 +187,49 @@ var Life = Life || {};
 
 		function checkActionPotentialCollisions(timePassed) {
 
+			if (timePassed != 0) {
+				let apList = nScope.neuron.actionPotentials;
+				let pspList = nScope.neuron.postsynapticPotentials;
+				let ignoreList = [];
+
+				for (let apIndex in apList) {
+					ignoreList[] = apIndex;
+
+					//	Action potentials
+					for (let apIndex2 in apList) {
+						//	We don't check an action potential twice
+						if (!inArray(apIndex, ignoreList)) {
+							let isCollided = checkCollisionBetweenTwoActionPotentials(apList[apIndex], apList[apIndex2]);
+							life.neuronHandler.remove(nScope, 'action-potential', apIndex);
+							life.neuronHandler.remove(nScope, 'action-potential', apIndex2);
+						}
+					}
+
+					//	Postsynaptic potentials
+					for (let pspIndex in pspList) {
+						let isCollided = checkCollisionBetweenActionPotentialAndPostsynapticPotential(apList[apIndex], pspList[pspIndex]);
+						life.neuronHandler.remove(nScope, 'postsynaptic-potential', pspIndex);
+					}
+				}
+			}
+		}
+
+		function checkCollisionBetweenTwoActionPotentials(ap1, ap2) {
+
+			let isCollided = false;
+
 			
+
+			return isCollided;
+		}
+
+		function checkCollisionBetweenActionPotentialAndPostsynapticPotential(ap, psp) {
+
+			let isCollided = false;
+
+
+
+			return isCollided;
 		}
 
 		function moveActionPotentials(timePassed) {
