@@ -173,10 +173,10 @@ var Life = Life || {};
 		}
 
 		function convertPostSynapticPotentialToActionPotential(psp, time) {
-
+console.log("new pa");
 			//	Add an action potential
-			let actionPotentialRight = life.actionPotentialHandler.build(psp.origin, time, 1);
-			let actionPotentialLeft = life.actionPotentialHandler.build(psp.origin, time, -1);
+			let actionPotentialRight = life.actionPotentialHandler.build(psp.origin+1, time, 1);
+			let actionPotentialLeft = life.actionPotentialHandler.build(psp.origin-1, time, -1);
 
 			life.neuronHandler.add(nScope, nScope.neuron, 'action-potential', null, actionPotentialRight);
 			life.neuronHandler.add(nScope, nScope.neuron, 'action-potential', null, actionPotentialLeft);
@@ -198,17 +198,26 @@ var Life = Life || {};
 					//	Action potentials
 					for (let apIndex2 in apList) {
 						//	We don't check an action potential twice
-						if (!life.utils.inArray(apIndex, ignoreList)) {
+						if (!life.utils.inArray(apIndex2, ignoreList)) {
+							console.log(apIndex, apIndex2);
 							let isCollided = checkCollisionBetweenTwoActionPotentials(apList[apIndex], apList[apIndex2]);
-							life.neuronHandler.remove(nScope, 'action-potential', apIndex);
-							life.neuronHandler.remove(nScope, 'action-potential', apIndex2);
+							if (isCollided) {
+								console.log("collision pa/pa");
+								life.neuronHandler.remove(nScope, 'action-potential', apIndex);
+								life.neuronHandler.remove(nScope, 'action-potential', apIndex2);
+								ignoreList.push(apIndex2);
+								break; // index "apIndex" doesn't exist anymore
+							}
 						}
 					}
 
 					//	Postsynaptic potentials
 					for (let pspIndex in pspList) {
 						let isCollided = checkCollisionBetweenActionPotentialAndPostsynapticPotential(apList[apIndex], pspList[pspIndex]);
-						life.neuronHandler.remove(nScope, 'postsynaptic-potential', pspIndex);
+						if (isCollided) {
+							console.log("collision pa/psp");
+							life.neuronHandler.remove(nScope, 'postsynaptic-potential', pspIndex);
+						}
 					}
 				}
 			}
@@ -221,8 +230,9 @@ var Life = Life || {};
 
 			let a1 = ap1.direction * gradient;
 			let a2 = ap2.direction * gradient;
-			let b1 = ap2.startTime;
+			let b1 = ap1.startTime;
 			let b2 = ap2.startTime;
+			console.log(a1, b1, a2, b2);
 
 			let intersection = life.analyticGeometry.intersectionOfLines(a1, b1, a2, b2);
 			console.log(intersection);

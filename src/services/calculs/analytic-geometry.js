@@ -27,7 +27,7 @@ Life.analyticGeometry = (function(life) {
 
 			let response = false;
 			if (a1 != a2) {
-				let x = (b2 - $b1) / (a1 - a2);
+				let x = (b2 - b1) / (a1 - a2);
 				let y = (a1 * x) + b1;
 
 				response = {
