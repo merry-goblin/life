@@ -166,14 +166,14 @@ var Life = Life || {};
 					let psp = pspList[pspIndex];
 					//	todo : this test is too much simplified ... should be a range test instead
 					if (psp.potential > threshold) {
-						convertPostSynapticPotentialToActionPotential(psp, time);
+						convertPostSynapticPotentialToActionPotential(psp, time, timePassed);
 					}
 				}
 			}
 		}
 
-		function convertPostSynapticPotentialToActionPotential(psp, time) {
-console.log("new pa");
+		function convertPostSynapticPotentialToActionPotential(psp, time, timePassed) {
+
 			//	Add an action potential
 			let actionPotentialRight = life.actionPotentialHandler.build(nScope, psp.origin, time, 1);
 			let actionPotentialLeft = life.actionPotentialHandler.build(nScope, psp.origin, time, -1);
@@ -199,7 +199,6 @@ console.log("new pa");
 					for (let apIndex2 in apList) {
 						//	We don't check an action potential twice
 						if (!life.utils.inArray(apIndex2, ignoreList)) {
-							console.log(apIndex, apIndex2);
 							let isCollided = checkCollisionBetweenTwoActionPotentials(time, timePassed, apList[apIndex], apList[apIndex2]);
 							if (isCollided) {
 								life.neuronHandler.remove(nScope, 'action-potential', apIndex);
@@ -215,7 +214,6 @@ console.log("new pa");
 					for (let pspIndex in pspList) {
 						let isCollided = checkCollisionBetweenActionPotentialAndPostsynapticPotential(apList[apIndex], pspList[pspIndex]);
 						if (isCollided) {
-							console.log("collision pa/psp");
 							life.neuronHandler.remove(nScope, 'postsynaptic-potential', pspIndex);
 						}
 					}
@@ -227,10 +225,12 @@ console.log("new pa");
 
 			let isCollided = false;
 			let gradient = nScope.neuron.model.gradient;
-
 			let intersection = life.analyticGeometry.intersectionOfLines(ap1.a, ap1.b, ap2.a, ap2.b);
-			if (intersection.y > time && intersection.y <= (time+timePassed)) {
-				isCollided = true;
+
+			if (intersection !== false) {
+				if (intersection.y > time && intersection.y <= (time+timePassed)) {
+					isCollided = true;
+				}
 			}
 
 			return isCollided;

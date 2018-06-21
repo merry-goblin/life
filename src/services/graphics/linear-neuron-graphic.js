@@ -34,7 +34,8 @@ var Life = Life || {};
 		//	JQuery
 		var $speed = null;
 		var $time = null;
-		var $potentialDetails = null;
+		var $postsynapticPotentialDetails = null;
+		var $actionPotentialDetails = null;
 
 		//	Services
 		var cycleManager = null;
@@ -78,7 +79,8 @@ var Life = Life || {};
 
 		function initDetails() {
 
-			$potentialDetails = $(".potential-details tbody");
+			$postsynapticPotentialDetails = $(".postsynaptic-potential-details tbody");
+			$actionPotentialDetails = $(".action-potential-details tbody");
 		}
 
 		function buildNeuron(nScopeParam) {
@@ -222,8 +224,8 @@ var Life = Life || {};
 					postsynapticPotentialList[i].fill = color;
 
 					//	Details
-					$potentialDetails.find('.potential-details-'+i+' .potential').text(postSynapticPotential.potential);
-					$potentialDetails.find('.potential-details-'+i+' .origin').text(postSynapticPotential.origin);
+					$postsynapticPotentialDetails.find('.postsynaptic-potential-details-'+i+' .potential').text(postSynapticPotential.potential);
+					$postsynapticPotentialDetails.find('.postsynaptic-potential-details-'+i+' .origin').text(postSynapticPotential.origin);
 				}
 			}
 		}
@@ -238,6 +240,9 @@ var Life = Life || {};
 					//	Position
 					let x = calculatePosition(actionPotential.origin);
 					actionPotentialList[i].moveTo(x, -16);
+
+					//	Details
+					$actionPotentialDetails.find('.action-potential-details-'+i+' .origin').text(actionPotential.origin);
 				}
 			}
 		}
@@ -269,7 +274,7 @@ var Life = Life || {};
 
 		function displayPostSynapticPotentialDetails(postSynapticPotential, postSynapticPotentialKey) {
 
-			$potentialDetails.append('<tr class="potential-details-'+postSynapticPotentialKey+'"><th scope="row">'+postSynapticPotentialKey+'</th><td class="origin">'+postSynapticPotential.origin+'</td><td class="potential">'+postSynapticPotential.potential+'</td></tr>');
+			$postsynapticPotentialDetails.append('<tr class="postsynaptic-potential-details-'+postSynapticPotentialKey+'"><th scope="row">'+postSynapticPotentialKey+'</th><td class="origin">'+postSynapticPotential.origin+'</td><td class="potential">'+postSynapticPotential.potential+'</td></tr>');
 		}
 
 		function removePostSynapticPotential(postSynapticPotentialKey) {
@@ -281,12 +286,20 @@ var Life = Life || {};
 			delete postsynapticPotentialList[postSynapticPotentialKey];
 
 			//	Remove table row from potential list
-			$potentialDetails.find('.potential-details-'+postSynapticPotentialKey).remove();
+			$postsynapticPotentialDetails.find('.postsynaptic-potential-details-'+postSynapticPotentialKey).remove();
 		}
 
 		function displayActionPotential(actionPotentialKey) {
 
 			let actionPotential = life.neuronHandler.get(nScope.neuron, 'action-potential', actionPotentialKey);
+			
+			displayActionPotentialCanvas(actionPotential, actionPotentialKey);
+			displayActionPotentialDetails(actionPotential, actionPotentialKey);
+			
+		}
+
+		function displayActionPotentialCanvas(actionPotential, actionPotentialKey) {
+
 			let w = 4;
 			let oActionPotential = canvas.display.rectangle({
 				x: calculatePosition(actionPotential.origin) - w,
@@ -301,6 +314,11 @@ var Life = Life || {};
 			layer.addChild(oActionPotential);
 		}
 
+		function displayActionPotentialDetails(actionPotential, actionPotentialKey) {
+
+			$actionPotentialDetails.append('<tr class="action-potential-details-'+actionPotentialKey+'"><th scope="row">'+actionPotentialKey+'</th><td class="origin">'+actionPotential.origin+'</td></tr>');
+		}
+
 		function removeActionPotential(actionPotentialKey) {
 
 			//	Remove postsynaptic potential from canvas
@@ -308,6 +326,9 @@ var Life = Life || {};
 
 			//	Update array accordingly
 			delete actionPotentialList[actionPotentialKey];
+
+			//	Remove table row from potential list
+			$actionPotentialDetails.find('.action-potential-details-'+actionPotentialKey).remove();
 		}
 
 		function addRuler(x1, x2, label) {
