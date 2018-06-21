@@ -15,56 +15,36 @@ Life.actionPotentialHandler = (function(life) {
 
 	/*** Private static methods ***/
 
+	/**
+	 * x = impulseStartPosition
+	 * y = impulseStartTime
+	 * a = 1/neuronImpulseSpeed * impulseDirection
+	 * b = y - a * x
+	 *
+	 * @param  Life.NeuronScope nScope
+	 * @param  Life.ActionPotential actionPotential
+	 * @return null
+	 */
+	function buildEquation(nScope, ap) {
+
+		ap.a = nScope.neuron.model.gradient * ap.direction;
+		ap.b = ap.startTime - ap.a * ap.origin;
+	}
+
 	var scope = {
 
 		/*** Public static methods ***/
 
-		build: function(origin, startTime, direction) {
+		build: function(nScope, origin, startTime, direction) {
 
 			var actionPotential = new life.ActionPotential();
 			actionPotential.origin = origin;
 			actionPotential.startTime = startTime;
 			actionPotential.direction = direction;
 
-			//this.buildImpulses(origin, actionPotential, impulseSpeed);
+			buildEquation(nScope, actionPotential);
 
 			return actionPotential;
-		},
-
-		//	Not used anymore
-		buildImpulses: function(origin, actionPotential, impulseSpeed) {
-
-			var gradient = 1/impulseSpeed;
-
-			//	Impulses
-			var impulse1 = new life.Impulse();
-			var impulse2 = new life.Impulse();
-
-			//	Origin
-			impulse1.origin = origin;
-			impulse2.origin = origin;
-
-			//	Direction
-			impulse1.direction = 1;
-			impulse2.direction = -1;
-
-			//	Equations
-			impulse1.equation = this.buildEquation(actionPotential, impulse1.direction * gradient);
-			impulse2.equation2 = this.buildEquation(actionPotential, impulse2.direction * gradient);
-
-			actionPotential.impulses.push(impulse1);
-			actionPotential.impulses.push(impulse2);
-		},
-
-		//	Not used anymore
-		buildEquation: function(actionPotential, gradient) {
-
-			var equation = new life.Equation();
-			equation.a = gradient;
-			equation.b = actionPotential.startTime;
-			equation.c = actionPotential.origin;
-
-			return equation;
 		},
 
 		/**

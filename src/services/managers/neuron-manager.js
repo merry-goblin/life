@@ -203,10 +203,10 @@ console.log("new pa");
 							let isCollided = checkCollisionBetweenTwoActionPotentials(apList[apIndex], apList[apIndex2]);
 							if (isCollided) {
 								console.log("collision pa/pa");
-								life.neuronHandler.remove(nScope, 'action-potential', apIndex);
+								/*life.neuronHandler.remove(nScope, 'action-potential', apIndex);
 								life.neuronHandler.remove(nScope, 'action-potential', apIndex2);
 								ignoreList.push(apIndex2);
-								break; // index "apIndex" doesn't exist anymore
+								break; // index "apIndex" doesn't exist anymore*/
 							}
 						}
 					}
