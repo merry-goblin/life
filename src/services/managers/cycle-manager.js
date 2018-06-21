@@ -47,13 +47,14 @@ var Life = Life || {};
 			 */
 			manage: function(nScope) {
 
-				var currentSpeed = consumeStepForward();
+				let initialTime = time;
+				let currentSpeed = consumeStepForward();
 				if (isPlaying) {
 					currentSpeed = speed;
 				}
 				time += currentSpeed;
 
-				nScope.manager.iterate(time, currentSpeed);
+				nScope.manager.iterate(initialTime, currentSpeed);
 			},
 
 				/* Getters */

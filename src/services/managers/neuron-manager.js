@@ -175,8 +175,8 @@ var Life = Life || {};
 		function convertPostSynapticPotentialToActionPotential(psp, time) {
 console.log("new pa");
 			//	Add an action potential
-			let actionPotentialRight = life.actionPotentialHandler.build(psp.origin+1, time, 1);
-			let actionPotentialLeft = life.actionPotentialHandler.build(psp.origin-1, time, -1);
+			let actionPotentialRight = life.actionPotentialHandler.build(nScope, psp.origin, time, 1);
+			let actionPotentialLeft = life.actionPotentialHandler.build(nScope, psp.origin, time, -1);
 
 			life.neuronHandler.add(nScope, nScope.neuron, 'action-potential', null, actionPotentialRight);
 			life.neuronHandler.add(nScope, nScope.neuron, 'action-potential', null, actionPotentialLeft);
@@ -185,7 +185,7 @@ console.log("new pa");
 			life.neuronHandler.remove(nScope, 'postsynaptic-potential', psp.id);
 		}
 
-		function checkActionPotentialCollisions(timePassed) {
+		function checkActionPotentialCollisions(time, timePassed) {
 
 			if (timePassed != 0) {
 				let apList = nScope.neuron.actionPotentials;
@@ -200,13 +200,13 @@ console.log("new pa");
 						//	We don't check an action potential twice
 						if (!life.utils.inArray(apIndex2, ignoreList)) {
 							console.log(apIndex, apIndex2);
-							let isCollided = checkCollisionBetweenTwoActionPotentials(apList[apIndex], apList[apIndex2]);
+							let isCollided = checkCollisionBetweenTwoActionPotentials(time, timePassed, apList[apIndex], apList[apIndex2]);
 							if (isCollided) {
-								console.log("collision pa/pa");
-								/*life.neuronHandler.remove(nScope, 'action-potential', apIndex);
+								life.neuronHandler.remove(nScope, 'action-potential', apIndex);
 								life.neuronHandler.remove(nScope, 'action-potential', apIndex2);
+								ignoreList.push(apIndex);
 								ignoreList.push(apIndex2);
-								break; // index "apIndex" doesn't exist anymore*/
+								break;
 							}
 						}
 					}
@@ -223,21 +223,17 @@ console.log("new pa");
 			}
 		}
 
-		function checkCollisionBetweenTwoActionPotentials(ap1, ap2) {
+		function checkCollisionBetweenTwoActionPotentials(time, timePassed, ap1, ap2) {
 
 			let isCollided = false;
 			let gradient = nScope.neuron.model.gradient;
 
-			let a1 = ap1.direction * gradient;
-			let a2 = ap2.direction * gradient;
-			let b1 = ap1.startTime;
-			let b2 = ap2.startTime;
-			console.log(a1, b1, a2, b2);
+			let intersection = life.analyticGeometry.intersectionOfLines(ap1.a, ap1.b, ap2.a, ap2.b);
+			if (intersection.y > time && intersection.y <= (time+timePassed)) {
+				isCollided = true;
+			}
 
-			let intersection = life.analyticGeometry.intersectionOfLines(a1, b1, a2, b2);
-			console.log(intersection);
-
-			return (intersection === false) ? false : true;
+			return isCollided;
 		}
 
 		function checkCollisionBetweenActionPotentialAndPostsynapticPotential(ap, psp) {
@@ -307,15 +303,20 @@ console.log("new pa");
 				newPspIndexes.push(postsynapticPotential.id);
 			},
 
+			/**
+			 * @param  integer time [Initial time without time passed applied]
+			 * @param  integer timePassed
+			 * @return null
+			 */
 			iterate: function(time, timePassed) {
 
 				if (timePassed > 0) {
 					consumeActivations(); // todo : maybe not the best way to proceed. A neuron manager has to modify a neuron and not other neurons
 
 					//	Action potentials
-					checkActionPotentialCollisions(timePassed);
-					moveActionPotentials(timePassed);
 					checkNewActionPotentials(time, timePassed);
+					checkActionPotentialCollisions(time, timePassed);
+					moveActionPotentials(timePassed);
 
 					//	Postsynaptic potentials
 					checkNewPostsynapticPotentials(timePassed);
