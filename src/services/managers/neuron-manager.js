@@ -193,6 +193,7 @@ var Life = Life || {};
 				let ignoreList = [];
 
 				for (let apIndex in apList) {
+					let endThisIteration = false;
 					ignoreList.push(apIndex);
 
 					//	Action potentials
@@ -205,14 +206,19 @@ var Life = Life || {};
 								life.neuronHandler.remove(nScope, 'action-potential', apIndex2);
 								ignoreList.push(apIndex);
 								ignoreList.push(apIndex2);
+								endThisIteration = true;
 								break;
 							}
 						}
 					}
 
+					if (endThisIteration) {
+						continue;
+					}
+
 					//	Postsynaptic potentials
 					for (let pspIndex in pspList) {
-						let isCollided = checkCollisionBetweenActionPotentialAndPostsynapticPotential(apList[apIndex], pspList[pspIndex]);
+						let isCollided = checkCollisionBetweenActionPotentialAndPostsynapticPotential(time, timePassed, apList[apIndex], pspList[pspIndex]);
 						if (isCollided) {
 							life.neuronHandler.remove(nScope, 'postsynaptic-potential', pspIndex);
 						}
@@ -224,7 +230,6 @@ var Life = Life || {};
 		function checkCollisionBetweenTwoActionPotentials(time, timePassed, ap1, ap2) {
 
 			let isCollided = false;
-			let gradient = nScope.neuron.model.gradient;
 			let intersection = life.analyticGeometry.intersectionOfLines(ap1.a, ap1.b, ap2.a, ap2.b);
 
 			if (intersection !== false) {
@@ -236,11 +241,16 @@ var Life = Life || {};
 			return isCollided;
 		}
 
-		function checkCollisionBetweenActionPotentialAndPostsynapticPotential(ap, psp) {
+		function checkCollisionBetweenActionPotentialAndPostsynapticPotential(time, timePassed, ap, psp) {
 
-			let isCollided = false;
+			let isCollided = true;
+			let radius = life.config.potentialProximity;
+			let intersection = life.analyticGeometry.intersectionOfLineInRange(ap.a, ap.b, psp.origin - radius, psp.origin + radius);
 
-
+			let end = time + timePassed;
+			if ((time <= intersection.y1 && end <= intersection.y1) || (time > intersection.y2 && end > intersection.y2)) {
+				isCollided = false;
+			}
 
 			return isCollided;
 		}
