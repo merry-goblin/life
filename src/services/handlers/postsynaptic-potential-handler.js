@@ -21,6 +21,7 @@ Life.postsynapticPotentialHandler = (function(life) {
 			postsynapticPotential.origin = synapse.x;
 			postsynapticPotential.startTime = startTime;
 			postsynapticPotential.potential = potential;
+			postsynapticPotential.synapse = synapse;
 
 			return postsynapticPotential;
 		},

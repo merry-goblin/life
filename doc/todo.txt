@@ -1,7 +1,7 @@
 
 1. Calcul of post-synaptic potentials must be changed :
 
-- Keep a link between a post-synaptic potential and his synapse
+- done // Keep a link between a post-synaptic potential and his synapse
 - Count number of neurotransmitters thrown When a presynaptic button is activated
 - Change permeability according to the number of neurotransmitters still present in synapse
 - Remove disolution on post-synaptic potentials
