@@ -44,13 +44,35 @@ Life.synapseHandler = (function(life) {
 			synapse.x = x;
 			synapse.preNeuron = preNeuron;
 			synapse.postNeuron = postNeuron;
+			synapse.exocytoses = {};
 
 			return synapse;
 		},
 
 		/**
+		 * Neurotransmi
+		 * @param  Life.Synapse synapse
+		 * @return Life.PostsynapticPotential
+		 */
+		activateNew: function(synapse) {
+
+			synapse.isActive = true;
+
+			let neurotransmitters = [];
+			neurotransmitters.push({
+				type: synapse.preNeuron.model.neurotransmitter,
+				number: 5000000 
+			});
+
+			let exocytose = life.exocytoseHandler.build(synapse, neurotransmitters); 
+
+			return exocytose;
+		},
+
+		/**
 		 *	An activation changes channels permeability
 		 *	We call it a post synaptic potential
+		 *	todo : I will be removed because postsynaptic potential is not generated instantly
 		 *	@param  Life.Synapse synapse
 		 *	@return Life.PostsynapticPotential
 		 */
@@ -59,12 +81,12 @@ Life.synapseHandler = (function(life) {
 			synapse.isActive = true;
 
 			//	Calculate new local membrane potential
-			var potential = calculatePotentialOnSynapseActivation(synapse);
+			let potential = calculatePotentialOnSynapseActivation(synapse);
 
 			//	Build post synaptic potential
-			var start = new Date();
-			var startTime = start.getTime();
-			var postsynapticPotential = life.postsynapticPotentialHandler.build(synapse, startTime, potential);
+			let start = new Date();
+			let startTime = start.getTime();
+			let postsynapticPotential = life.postsynapticPotentialHandler.build(synapse, startTime, potential);
 
 			return postsynapticPotential;
 		},
@@ -86,6 +108,7 @@ Life.synapseHandler = (function(life) {
 			synapse.model = null;
 			synapse.previousNeuron = null;
 			synapse.postNeuron = null;
+			synapse.exocytoses = null;
 		}
 	}
 	return scope;

@@ -306,11 +306,15 @@ var Life = Life || {};
 
 			generatePostsynapticPotential: function(synapseKey) {
 
-				var synapse = life.neuronHandler.get(nScope.neuron, 'synapse', synapseKey);
-				postsynapticPotential = life.synapseHandler.activate(synapse);
+				let synapse = life.neuronHandler.get(nScope.neuron, 'synapse', synapseKey);
 
+				//	todo : to remove
+				let postsynapticPotential = life.synapseHandler.activate(synapse);
 				life.neuronHandler.add(nScope, nScope.neuron, 'postsynaptic-potential', null, postsynapticPotential);
 				newPspIndexes.push(postsynapticPotential.id);
+
+				let exocytose = life.synapseHandler.activateNew(synapse);
+				life.neuronHandler.add(nScope, synapse, 'exocytose', null, exocytose);
 			},
 
 			/**

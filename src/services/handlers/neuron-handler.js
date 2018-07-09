@@ -224,6 +224,11 @@ Life.neuronHandler = (function(life) {
 					listener = (scope != null) ? scope.services.postsynapticPotentialListener : null;
 					addInteractionToList(scope, neuron.postsynapticPotentials, element, listener);
 					break;
+				case 'exocytose':
+					let synapse = neuron;
+					listener = (scope != null) ? scope.services.exocytoseListener : null;
+					addInteractionToList(scope, synapse.exocytoses, element, listener);
+					break;
 			}
 		},
 

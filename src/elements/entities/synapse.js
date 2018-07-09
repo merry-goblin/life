@@ -13,4 +13,5 @@ Life.Synapse = function() {
 	this.isActive = false;
 	this.preNeuron = null;
 	this.postNeuron = null;
+	this.exocytoses = null;
 }

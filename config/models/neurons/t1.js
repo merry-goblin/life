@@ -17,5 +17,8 @@ Life.Models.neuronT1 = {
 		Life.Models.channelNa1
 	],
 	standByPotential: null,
-	threshold: null
+	threshold: null,
+	exocytose: {
+		duration: 2000
+	}
 }
