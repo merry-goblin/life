@@ -15,7 +15,7 @@ var Life = Life || {};
 
 		var nScope = null;
 		var events = null;
-		var eventNames = ['add', 'remove', 'activate'];
+		var eventNames = ['add', 'remove', 'activate', 'binding'];
 
 		/*** Private methods ***/
 
@@ -66,6 +66,11 @@ var Life = Life || {};
 			activate: function(synapseKey) {
 
 				this.trigger('activate', synapseKey);
+			},
+
+			binding: function(synapseKey, exocytoseKey) {
+
+				this.trigger('binding', [synapseKey, exocytoseKey]);
 			},
 
 			registerService: function(service, methodNames) {

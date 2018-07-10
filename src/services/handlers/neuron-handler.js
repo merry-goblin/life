@@ -14,9 +14,11 @@ Life.neuronHandler = (function(life) {
 	//	Entities
 	function addEntityToList(entities, key, entity, listener) {
 
+		entity.id = key;
 		entities[key] = entity;
 
 		if (listener != null) {
+
 			listener.add(key);
 		}
 	}
@@ -201,55 +203,58 @@ Life.neuronHandler = (function(life) {
 			initNeuronModel(model);
 		},
 
-		add: function(scope, neuron, type, key, element) {
+		add: function(scope, parent, type, key, element) {
 
 			var listener = null;
 			switch (type) {
 				case 'ionic-channel':
-					addEntityToList(neuron.ionChannels, key, element);
+					addEntityToList(parent.ionChannels, key, element);
 					break;
 				case 'active-transport':
-					neuron.
-					addEntityToList(neuron.activeTransports, key, element);
+					addEntityToList(parent.activeTransports, key, element);
 					break;
 				case 'synapse':
 					listener = (scope != null) ? scope.services.synapseListener : null;
-					addEntityToList(neuron.synapses, key, element, listener);
+					addEntityToList(parent.synapses, key, element, listener);
 					break;
 				case 'action-potential':
 					listener = (scope != null) ? scope.services.actionPotentialListener : null;
-					addInteractionToList(scope, neuron.actionPotentials, element, listener);
+					addInteractionToList(scope, parent.actionPotentials, element, listener);
 					break;
 				case 'postsynaptic-potential':
 					listener = (scope != null) ? scope.services.postsynapticPotentialListener : null;
-					addInteractionToList(scope, neuron.postsynapticPotentials, element, listener);
+					addInteractionToList(scope, parent.postsynapticPotentials, element, listener);
 					break;
 				case 'exocytose':
-					let synapse = neuron;
+					let synapse = parent;
 					listener = (scope != null) ? scope.services.exocytoseListener : null;
 					addInteractionToList(scope, synapse.exocytoses, element, listener);
 					break;
 			}
 		},
 
-		get: function(neuron, type, key) {
+		get: function(parent, type, key) {
 
 			var element = null;
 			switch (type) {
 				case 'ionic-channel':
-					element = getEntityFromList(neuron.ionChannels, key);
+					element = getEntityFromList(parent.ionChannels, key);
 					break;
 				case 'active-transport':
-					element = getEntityFromList(neuron.activeTransports, key);
+					element = getEntityFromList(parent.activeTransports, key);
 					break;
 				case 'synapse':
-					element = getEntityFromList(neuron.synapses, key);
+					element = getEntityFromList(parent.synapses, key);
 					break;
 				case 'action-potential':
-					element = getInteractionFromList(neuron.actionPotentials, key); // key is an index here
+					element = getInteractionFromList(parent.actionPotentials, key); // key is an index here
 					break;
 				case 'postsynaptic-potential':
-					element = getInteractionFromList(neuron.postsynapticPotentials, key); // key is an index here
+					element = getInteractionFromList(parent.postsynapticPotentials, key); // key is an index here
+					break;
+				case 'exocytose':
+					let synapse = parent; // do you believe in magic ?
+					element = getInteractionFromList(synapse.exocytoses, key); // key is an index here
 					break;
 			}
 			return element;
@@ -258,30 +263,33 @@ Life.neuronHandler = (function(life) {
 		/**
 		 *	Don't remember why i though i needed that function ...
 		 */
-		getList: function(neuron, type) {
+		getList: function(parent, type) {
 
 			var list = null;
 			switch (type) {
 				case 'ionic-channel':
-					list = neuron.ionChannels;
+					list = parent.ionChannels;
 					break;
 				case 'active-transport':
-					list = neuron.activeTransports;
+					list = parent.activeTransports;
 					break;
 				case 'synapse':
-					list = neuron.synapses;
+					list = parent.synapses;
 					break;
 				case 'action-potential':
-					list = neuron.actionPotentials;
+					list = parent.actionPotentials;
 					break;
 				case 'postsynaptic-potential':
-					list = neuron.postsynapticPotentials;
+					list = parent.postsynapticPotentials;
+					break;
+				case 'exocytose':
+					list = parent.exocytoses;
 					break;
 			}
 			return list;
 		},
 
-		remove: function(scope, type, key) {
+		remove: function(scope, type, key, parent) {
 
 			var listener = null;
 			switch (type) {
@@ -302,6 +310,10 @@ Life.neuronHandler = (function(life) {
 				case 'postsynaptic-potential':
 					listener = (scope != null) ? scope.services.postsynapticPotentialListener : null;
 					removeInteractionFromList(scope.neuron.postsynapticPotentials, key, listener); // key is an index here
+					break;
+				case 'exocytose':
+					let synapse = parent;
+					removeInteractionFromList(synapse.exocytoses, key); // key is an index here
 					break;
 			}
 		},

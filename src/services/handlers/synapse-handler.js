@@ -100,24 +100,26 @@ Life.synapseHandler = (function(life) {
 		},
 
 		/**
-		 * Will transform an exocytose into a postsynaptic potential
+		 * Returns each exocytose which are binding
 		 * 
 		 * @param  Life.Synapse
 		 * @param  integer timePassed
-		 * @return null
+		 * @return array[Life.Exocytose]
 		 */
-		consumeExocytoses: function(synapse, timePassed;) {
+		consumeExocytoses: function(synapse, timePassed) {
+
+			let bindingExocytoses = new Array();
 
 			for (var key in synapse.exocytoses) {
 				let exocytose = synapse.exocytoses[key];
 				exocytose.timeLeft -= timePassed;
 				if (exocytose.timeLeft <= 0) {
 
-					//	todo : generate a postsynaptic potential
+					bindingExocytoses.push(exocytose);
 				}
 			}
 
-			return null;
+			return bindingExocytoses;
 		},
 
 		/**

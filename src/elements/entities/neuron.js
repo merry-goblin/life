@@ -9,6 +9,7 @@ var Life = Life || {};
 
 Life.Neuron = function() {
 
+	this.id = null;
 	this.model = null;
 
 	//	Entities

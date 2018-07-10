@@ -19,6 +19,6 @@ Life.Models.neuronT2 = {
 	standByPotential: null,
 	threshold: null,
 	exocytose: {
-		duration: 2000
+		duration: 20
 	}
 }

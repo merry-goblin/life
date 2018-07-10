@@ -9,6 +9,7 @@ var Life = Life || {};
 
 Life.ActionPotential = function() {
 
+	this.id = null;
 	this.origin = null; // position x
 	this.startTime = null; // creation time
 	this.direction = null;

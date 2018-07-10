@@ -102,7 +102,9 @@ var Life = Life || {};
 			life.neuronHandler.add(nScope, neuron, 'synapse', 's3', life.synapseHandler.build(life.Models.synapseT1, -20, preNeurons.n3, neuron));
 			life.neuronHandler.add(nScope, neuron, 'synapse', 's4', life.synapseHandler.build(life.Models.synapseT1, 5000, preNeurons.n4, neuron));
 
-			nScope.services.synapseListener.registerService(nScope.manager, {'activate': 'generatePostsynapticPotential'});
+			//	Steps of synapse activity
+			nScope.services.synapseListener.registerService(nScope.manager, {'activate': 'generateExocytose'});
+			nScope.services.synapseListener.registerService(nScope.manager, {'binding': 'generatePostsynapticPotential'});
 
 			//	Postsynaptic potentials
 			nScope.services.postsynapticPotentialListener.registerService(graphics, {'add': 'addPostsynapticPotential'});

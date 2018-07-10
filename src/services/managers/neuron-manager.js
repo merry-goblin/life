@@ -27,8 +27,16 @@ var Life = Life || {};
 
 		function consumeExocytoses(time, timePassed) {
 
-			for (var key in nScope.neuron.synapses) {
-				life.synapseHandler.consumeExocytoses(nScope.neuron.synapses[key], timePassed);
+			for (let key in nScope.neuron.synapses) {
+
+				let synapse = nScope.neuron.synapses[key];
+
+				let bindingExocytoses = life.synapseHandler.consumeExocytoses(synapse, timePassed);
+				for (let index in bindingExocytoses) {
+
+					let exocytose = bindingExocytoses[index];
+					nScope.services.synapseListener.binding(synapse.id, exocytose.id);
+				}
 			}
 		}
 
@@ -44,6 +52,9 @@ var Life = Life || {};
 				for (var i in newPspIndexes) {
 
 					var currentPspIndex = newPspIndexes[i];
+					if (pspList[currentPspIndex] == undefined) {
+						console.log("error: why is it still there ! Damned server fairies !")
+					}
 					for (var pspIndex in pspList) {
 
 						//	Ignore tests already done
@@ -311,17 +322,27 @@ var Life = Life || {};
 				newPspIndexes = new Array();
 			},
 
-			generatePostsynapticPotential: function(synapseKey) {
+			generateExocytose: function(synapseKey) {
 
 				let synapse = life.neuronHandler.get(nScope.neuron, 'synapse', synapseKey);
 
-				//	todo : to remove
+				let exocytose = life.synapseHandler.activateNew(synapse);
+				life.neuronHandler.add(nScope, synapse, 'exocytose', null, exocytose);
+			},
+
+			generatePostsynapticPotential: function(args) {
+
+				let synapseKey = args[0];
+				let exocytoseKey = args[1];
+
+				let synapse = life.neuronHandler.get(nScope.neuron, 'synapse', synapseKey);
+				let exocytose = life.neuronHandler.get(synapse, 'exocytose', exocytoseKey);
+
 				let postsynapticPotential = life.synapseHandler.activate(synapse);
 				life.neuronHandler.add(nScope, nScope.neuron, 'postsynaptic-potential', null, postsynapticPotential);
 				newPspIndexes.push(postsynapticPotential.id);
 
-				let exocytose = life.synapseHandler.activateNew(synapse);
-				life.neuronHandler.add(nScope, synapse, 'exocytose', null, exocytose);
+				life.neuronHandler.remove(nScope, "exocytose", exocytoseKey, synapse);
 			},
 
 			/**
