@@ -25,6 +25,13 @@ var Life = Life || {};
 			}
 		}
 
+		function consumeExocytoses(time, timePassed) {
+
+			for (var key in nScope.neuron.synapses) {
+				life.synapseHandler.consumeExocytoses(nScope.neuron.synapses[key], timePassed);
+			}
+		}
+
 		function checkNewPostsynapticPotentials(timePassed) {
 
 			var pspList = nScope.neuron.postsynapticPotentials;
@@ -326,6 +333,9 @@ var Life = Life || {};
 
 				if (timePassed > 0) {
 					consumeActivations(); // todo : maybe not the best way to proceed. A neuron manager has to modify a neuron and not other neurons
+
+					//	Exocytose
+					consumeExocytoses(time, timePassed);
 
 					//	Action potentials
 					checkNewActionPotentials(time, timePassed);

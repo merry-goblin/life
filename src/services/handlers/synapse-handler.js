@@ -100,6 +100,27 @@ Life.synapseHandler = (function(life) {
 		},
 
 		/**
+		 * Will transform an exocytose into a postsynaptic potential
+		 * 
+		 * @param  Life.Synapse
+		 * @param  integer timePassed
+		 * @return null
+		 */
+		consumeExocytoses: function(synapse, timePassed;) {
+
+			for (var key in synapse.exocytoses) {
+				let exocytose = synapse.exocytoses[key];
+				exocytose.timeLeft -= timePassed;
+				if (exocytose.timeLeft <= 0) {
+
+					//	todo : generate a postsynaptic potential
+				}
+			}
+
+			return null;
+		},
+
+		/**
 		 * Free any pointer stored in an element
 		 * @return null
 		 */
