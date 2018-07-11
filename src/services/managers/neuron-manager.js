@@ -52,9 +52,12 @@ var Life = Life || {};
 				for (var i in newPspIndexes) {
 
 					var currentPspIndex = newPspIndexes[i];
+					//	newPspIndexes is not reliable
 					if (pspList[currentPspIndex] == undefined) {
-						console.log("error: why is it still there ! Damned server fairies !")
+						delete pspList[currentPspIndex];
+						continue;
 					}
+
 					for (var pspIndex in pspList) {
 
 						//	Ignore tests already done

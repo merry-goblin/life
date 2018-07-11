@@ -28,7 +28,7 @@ Life.neuronHandler = (function(life) {
 		return entities[key];
 	}
 
-	function removeEntityFromList(entities, key) {
+	function removeEntityFromList(entities, key, listener) {
 
 		if (listener != null) {
 			listener.remove(key);
@@ -313,7 +313,8 @@ Life.neuronHandler = (function(life) {
 					break;
 				case 'exocytose':
 					let synapse = parent;
-					removeInteractionFromList(synapse.exocytoses, key); // key is an index here
+					listener = (scope != null) ? scope.services.exocytoseListener : null;
+					removeInteractionFromList(synapse.exocytoses, key, listener); // key is an index here
 					break;
 			}
 		},
