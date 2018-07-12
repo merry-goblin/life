@@ -20,6 +20,7 @@ Life.exocytoseHandler = (function(life) {
 			var exocytose = new life.Exocytose();
 			exocytose.timeLeft = synapse.preNeuron.model.exocytose.duration;
 			exocytose.neurotransmitters = neurotransmitters;
+			exocytose.synapse = synapse;
 
 			return exocytose;
 		},

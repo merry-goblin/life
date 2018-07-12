@@ -329,7 +329,7 @@ var Life = Life || {};
 
 				let synapse = life.neuronHandler.get(nScope.neuron, 'synapse', synapseKey);
 
-				let exocytose = life.synapseHandler.activateNew(synapse);
+				let exocytose = life.synapseHandler.activate(synapse);
 				life.neuronHandler.add(nScope, synapse, 'exocytose', null, exocytose);
 			},
 
@@ -341,7 +341,7 @@ var Life = Life || {};
 				let synapse = life.neuronHandler.get(nScope.neuron, 'synapse', synapseKey);
 				let exocytose = life.neuronHandler.get(synapse, 'exocytose', exocytoseKey);
 
-				let postsynapticPotential = life.synapseHandler.activate(synapse);
+				let postsynapticPotential = life.synapseHandler.binding(exocytose);
 				life.neuronHandler.add(nScope, nScope.neuron, 'postsynaptic-potential', null, postsynapticPotential);
 				newPspIndexes.push(postsynapticPotential.id);
 

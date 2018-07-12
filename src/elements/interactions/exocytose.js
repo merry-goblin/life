@@ -12,4 +12,5 @@ Life.Exocytose = function() {
 	this.id = null;
 	this.timeLeft = null;
 	this.neurotransmitters = null; // Array of types and quantities
+	this.synapse = null;
 }

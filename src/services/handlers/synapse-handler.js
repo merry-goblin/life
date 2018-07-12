@@ -33,6 +33,29 @@ Life.synapseHandler = (function(life) {
 		return potential;
 	}
 
+	function calculatePotentialOnNeurotransmittersBinding(exocytose) {
+
+		let synapse = exocytose.synapse;
+		var potential = 0;
+		var neurotransmitter = synapse.preNeuron.model.neurotransmitter;
+		var model = synapse.postNeuron.model;
+
+		var params = new Array();
+		for (var i=0, nb=model.channels.length; i<nb; i++) {
+			var channel = model.channels[i];
+			var ion = channel.permeability.ion;
+			params.push({
+				valance: life.config.valence[ion],
+				extra: life.config.extra[ion],
+				intra: life.config.intra[ion],
+				permeability: life.ionicChannelHandler.getPermeability(channel, potential, neurotransmitter)
+			});
+		}
+		potential = life.membranePotential.goldmanEquation(params);
+
+		return potential;
+	}
+
 	var scope = {
 
 		/*** Public static methods ***/
@@ -54,7 +77,7 @@ Life.synapseHandler = (function(life) {
 		 * @param  Life.Synapse synapse
 		 * @return Life.PostsynapticPotential
 		 */
-		activateNew: function(synapse) {
+		activate: function(synapse) {
 
 			synapse.isActive = true;
 
@@ -76,12 +99,13 @@ Life.synapseHandler = (function(life) {
 		 *	@param  Life.Synapse synapse
 		 *	@return Life.PostsynapticPotential
 		 */
-		activate: function(synapse) {
+		binding: function(exocytose) {
 
-			synapse.isActive = true;
+			let synapse = exocytose.synapse;
 
 			//	Calculate new local membrane potential
-			let potential = calculatePotentialOnSynapseActivation(synapse);
+			//let potential = calculatePotentialOnSynapseActivation(synapse);
+			let potential = calculatePotentialOnNeurotransmittersBinding(exocytose);
 
 			//	Build post synaptic potential
 			let start = new Date();
