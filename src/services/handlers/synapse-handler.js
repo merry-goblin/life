@@ -33,7 +33,19 @@ Life.synapseHandler = (function(life) {
 		return potential;
 	}
 
-	function calculatePotentialOnNeurotransmittersBinding(exocytose) {
+	function bindExoctyoseToPostsynapticButton(exocytose) {
+
+		let synapse = exocytose.synapse;
+		
+		for (let key in exocytose.neurotransmitters) {
+			if (synapse.neurotransmitters[key] == null) {
+				synapse.neurotransmitters[key] = 0;
+			}
+			synapse.neurotransmitters[key] += exocytose.neurotransmitters[key];
+		}
+	}
+
+	function calculatePotentialOnNeurotransmittersBindingOld(exocytose) {
 
 		let synapse = exocytose.synapse;
 		var potential = 0;
@@ -68,6 +80,7 @@ Life.synapseHandler = (function(life) {
 			synapse.preNeuron = preNeuron;
 			synapse.postNeuron = postNeuron;
 			synapse.exocytoses = {};
+			synapse.neurotransmitters = {};
 
 			return synapse;
 		},
@@ -81,11 +94,8 @@ Life.synapseHandler = (function(life) {
 
 			synapse.isActive = true;
 
-			let neurotransmitters = [];
-			neurotransmitters.push({
-				type: synapse.preNeuron.model.neurotransmitter,
-				number: 5000000 
-			});
+			let neurotransmitters = {};
+			neurotransmitters[synapse.preNeuron.model.neurotransmitter] = 5000000;
 
 			let exocytose = life.exocytoseHandler.build(synapse, neurotransmitters); 
 
@@ -103,9 +113,11 @@ Life.synapseHandler = (function(life) {
 
 			let synapse = exocytose.synapse;
 
+			bindExoctyoseToPostsynapticButton(exocytose);
+
 			//	Calculate new local membrane potential
 			//let potential = calculatePotentialOnSynapseActivation(synapse);
-			let potential = calculatePotentialOnNeurotransmittersBinding(exocytose);
+			let potential = calculatePotentialOnNeurotransmittersBindingOld(exocytose);
 
 			//	Build post synaptic potential
 			let start = new Date();

@@ -15,4 +15,5 @@ Life.Synapse = function() {
 	this.preNeuron = null;
 	this.postNeuron = null;
 	this.exocytoses = null;
+	this.neurotransmetteurs = null;
 }
