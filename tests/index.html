@@ -2,19 +2,25 @@
 <html lang="fr">
 <head>
 
-	<title>Unit testes</title>
+	<title>Unit tests</title>
 	<meta charset="utf-8" />
 
 	<script src="./../vendor/jsunit/app/jsUnitCore.js"></script>
 
 	<script>
 
-        function testFailure() {
-            assertTrue(false);
+        function coreSuite() {
+
+            var result = new JsUnitTestSuite();
+            result.addTestPage("tests/services/calculs/analytic-geometry/testIntersectionOfLines.html");
+            return result;
         }
 
-        function testError() {
-            nonExistantFunction();
+        function suite() {
+
+            var newsuite = new JsUnitTestSuite();
+            newsuite.addTestSuite(coreSuite());
+            return newsuite;
         }
 
 	</script>

@@ -375,6 +375,11 @@ function assertObjectEquals() {
     if (var1 === var2)
         return;
 
+    //  Improvments
+    if (_.isEqual(var1, var2)) {
+        return;
+    }
+
     var isEqual = false;
 
     var typeOfVar1 = JsUnit._trueTypeOf(var1);

@@ -1,0 +1,31 @@
+<!doctype  html>
+<html lang="fr">
+<head>
+
+	<title>Unit testes</title>
+	<meta charset="utf-8" />
+
+    <script src="./../../../../src/services/calculs/analytic-geometry.js"></script>
+
+	<script src="./../../../../vendor/underscorejs/underscore-min.js"></script>
+	<script src="./../../../../vendor/jsunit/app/jsUnitCore.js"></script>
+
+	<script>
+
+        function testIntersectionOfLinesWithMissingParameters() {
+
+        	console.log(Life.analyticGeometry.intersectionOfLines(1));
+
+            assertFalse("Life.analyticGeometry.intersectionOfLines() should be false", Life.analyticGeometry.intersectionOfLines());
+            assertObjectEquals("Life.analyticGeometry.intersectionOfLines(1) should be {x:NaN, y:NaN}", {x:NaN, y:NaN}, Life.analyticGeometry.intersectionOfLines(1));
+            assertObjectEquals("Life.analyticGeometry.intersectionOfLines(1, 2) should be {x:NaN, y:NaN}", {x:NaN, y:NaN}, Life.analyticGeometry.intersectionOfLines(1, 2));
+            assertObjectEquals("Life.analyticGeometry.intersectionOfLines(1, 2, 3) should be {x:NaN, y:NaN}", {x:NaN, y:NaN}, Life.analyticGeometry.intersectionOfLines(1, 2, 3));
+        }
+
+	</script>
+
+</head>
+<body>
+
+</body>
+</html>
