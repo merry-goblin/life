@@ -2,8 +2,8 @@
 1. Calcul of post-synaptic potentials must be changed :
 
 - [done] Keep a link between a post-synaptic potential and his synapse
-- Synapse activation takes time to generate a postsynaptic potential (2ms ?)
-- Count number of neurotransmitters thrown When a presynaptic button is activated
+- [done] Synapse activation takes time to generate a postsynaptic potential (2ms ?)
+- Count number of neurotransmitters thrown when a presynaptic button is activated
 - Change permeability according to the number of neurotransmitters still present in synapse
 - Remove disolution on post-synaptic potentials
 - Decrease number of neurotransmitters in a synapse over time

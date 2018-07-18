@@ -14,12 +14,49 @@
 
         function testIntersectionOfLinesWithMissingParameters() {
 
-        	console.log(Life.analyticGeometry.intersectionOfLines(1));
-
             assertFalse("Life.analyticGeometry.intersectionOfLines() should be false", Life.analyticGeometry.intersectionOfLines());
             assertObjectEquals("Life.analyticGeometry.intersectionOfLines(1) should be {x:NaN, y:NaN}", {x:NaN, y:NaN}, Life.analyticGeometry.intersectionOfLines(1));
             assertObjectEquals("Life.analyticGeometry.intersectionOfLines(1, 2) should be {x:NaN, y:NaN}", {x:NaN, y:NaN}, Life.analyticGeometry.intersectionOfLines(1, 2));
             assertObjectEquals("Life.analyticGeometry.intersectionOfLines(1, 2, 3) should be {x:NaN, y:NaN}", {x:NaN, y:NaN}, Life.analyticGeometry.intersectionOfLines(1, 2, 3));
+        }
+
+        function testIntersectionOfLinesWithNullParameters() {
+
+            assertFalse("Life.analyticGeometry.intersectionOfLines() should be false", Life.analyticGeometry.intersectionOfLines(null, null, null, null));
+            assertFalse("Life.analyticGeometry.intersectionOfLines() should be false", Life.analyticGeometry.intersectionOfLines(null));
+            assertFalse("Life.analyticGeometry.intersectionOfLines() should be false", Life.analyticGeometry.intersectionOfLines(null, null));
+            assertFalse("Life.analyticGeometry.intersectionOfLines() should be false", Life.analyticGeometry.intersectionOfLines(null, null, null));
+        }
+
+        function testIntersectionOfLinesWithStringParameters() {
+
+            assertFalse("Life.analyticGeometry.intersectionOfLines('doodads', 'doodads', 'doodads', 'doodads') should be false", Life.analyticGeometry.intersectionOfLines("doodads", "doodads", "doodads", "doodads"));
+            assertObjectEquals("Life.analyticGeometry.intersectionOfLines('doodads', 'teddy bear', 'cactus', 'peach muffin') should be {x:NaN, y:'NaNteddy bear'}", {x:NaN, y:"NaNteddy bear"}, Life.analyticGeometry.intersectionOfLines("doodads", "teddy bear", "cactus", "peach muffin"));
+            assertObjectEquals("Life.analyticGeometry.intersectionOfLines('doodads', 'teddy bear', 'cactus') should be {x:NaN, y:'NaNteddy bear'}", {x:NaN, y:"NaNteddy bear"}, Life.analyticGeometry.intersectionOfLines("doodads", "teddy bear", "cactus"));
+            assertObjectEquals("Life.analyticGeometry.intersectionOfLines('doodads', 'teddy bear') should be {x:NaN, y:'NaNteddy bear'}", {x:NaN, y:"NaNteddy bear"}, Life.analyticGeometry.intersectionOfLines("doodads", "teddy bear"));
+            assertObjectEquals("Life.analyticGeometry.intersectionOfLines('doodads') should be {x:NaN, y:NaN}", {x:NaN, y:NaN}, Life.analyticGeometry.intersectionOfLines("doodads"));
+            assertObjectEquals("Life.analyticGeometry.intersectionOfLines('doodads', NaN, 'cactus', 'peach muffin') should be {x:NaN, y:NaN}", {x:NaN, y:NaN}, Life.analyticGeometry.intersectionOfLines("doodads", NaN, "cactus", "peach muffin"));
+            assertObjectEquals("Life.analyticGeometry.intersectionOfLines('doodads', NaN, 'cactus', 'peach muffin') should be {x:NaN, y:'NaNteddy bear'}", {x:NaN, y:"NaNteddy bear"}, Life.analyticGeometry.intersectionOfLines(NaN, "teddy bear", "cactus", "peach muffin"));
+        }
+
+        function testIntersectionOfLinesWithSameGradients() {
+
+            assertFalse("Life.analyticGeometry.intersectionOfLines() should be false", Life.analyticGeometry.intersectionOfLines(0, 0, 0, 0));
+            assertFalse("Life.analyticGeometry.intersectionOfLines() should be false", Life.analyticGeometry.intersectionOfLines(2, 0, 2, 0));
+            assertFalse("Life.analyticGeometry.intersectionOfLines() should be false", Life.analyticGeometry.intersectionOfLines(2, 0, 2, 1));
+            assertFalse("Life.analyticGeometry.intersectionOfLines() should be false", Life.analyticGeometry.intersectionOfLines(2, 0, 2, -1));
+            assertFalse("Life.analyticGeometry.intersectionOfLines() should be false", Life.analyticGeometry.intersectionOfLines(0.0001, 10, 0.0001, -10));
+        }
+
+        function testIntersectionOfLinesWithDifferentGradients() {
+
+            assertObjectEquals("Life.analyticGeometry.intersectionOfLines(0, 1, 1, -1) should be {x:2, y:1}", {x:2, y:1}, Life.analyticGeometry.intersectionOfLines(0, 1, 1, -1));
+            assertObjectEquals("Life.analyticGeometry.intersectionOfLines(1, 0, 0, 0) should be {x:0, y:0}", {x:0, y:0}, Life.analyticGeometry.intersectionOfLines(1, 0, 0, 0));
+            assertObjectEquals("Life.analyticGeometry.intersectionOfLines(1, 1, 0, -1) should be {x:-2, y:-1}", {x:-2, y:-1}, Life.analyticGeometry.intersectionOfLines(1, 1, 0, -1));
+            assertObjectEquals("Life.analyticGeometry.intersectionOfLines(0, 0, 1, 0) should be {x:-0, y:0}", {x:-0, y:0}, Life.analyticGeometry.intersectionOfLines(0, 0, 1, 0));
+            assertObjectEquals("Life.analyticGeometry.intersectionOfLines(0, 1, 1, -1) should be {x:2, y:1}", {x:2, y:1}, Life.analyticGeometry.intersectionOfLines(0, 1, 1, -1));
+            assertObjectEquals("Life.analyticGeometry.intersectionOfLines(0.00001, 0, 0, 5) should be {x: 499999.99999999994, y:5}", {x: 499999.99999999994, y:5}, Life.analyticGeometry.intersectionOfLines(0.00001, 0, 0, 5));
+            assertObjectEquals("Life.analyticGeometry.intersectionOfLines(0, 0, 0.00001, 5) should be {x: -499999.99999999994, y:0}", {x: -499999.99999999994, y:0}, Life.analyticGeometry.intersectionOfLines(0, 0, 0.00001, 5));
         }
 
 	</script>
