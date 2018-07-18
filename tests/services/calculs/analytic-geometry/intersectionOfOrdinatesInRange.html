@@ -1,0 +1,122 @@
+<!doctype  html>
+<html lang="fr">
+<head>
+
+	<title>Unit testes</title>
+	<meta charset="utf-8" />
+
+    <script src="./../../../../src/services/calculs/analytic-geometry.js"></script>
+
+	<script src="./../../../../vendor/underscorejs/underscore-min.js"></script>
+	<script src="./../../../../vendor/jsunit/app/jsUnitCore.js"></script>
+
+	<script>
+
+        function testIntersectionOfOrdinatesInRangeWithMissingParameters() {
+
+            assertObjectEquals("Life.analyticGeometry.intersectionOfOrdinatesInRange() should be {x:NaN, y:NaN}", {y1:NaN, y2:NaN}, Life.analyticGeometry.intersectionOfOrdinatesInRange());
+            assertObjectEquals("Life.analyticGeometry.intersectionOfOrdinatesInRange(1) should be {x:NaN, y:NaN}", {y1:NaN, y2:NaN}, Life.analyticGeometry.intersectionOfOrdinatesInRange(1));
+            assertObjectEquals("Life.analyticGeometry.intersectionOfOrdinatesInRange(1, 2) should be {x:NaN, y:NaN}", {y1:NaN, y2:NaN}, Life.analyticGeometry.intersectionOfOrdinatesInRange(1, 2));
+            assertObjectEquals("Life.analyticGeometry.intersectionOfOrdinatesInRange(1, 2, 3) should be {y1:5, y2:NaN}", {y1:5, y2:NaN}, Life.analyticGeometry.intersectionOfOrdinatesInRange(1, 2, 3));
+        }
+
+        function testIntersectionOfOrdinatesInRangeWithNullParameters() {
+
+            assertObjectEquals("Life.analyticGeometry.intersectionOfOrdinatesInRange(null, null, null, null) should be {y1:0, y2:0}", {y1:0, y2:0}, Life.analyticGeometry.intersectionOfOrdinatesInRange(null, null, null, null));
+            assertObjectEquals("Life.analyticGeometry.intersectionOfOrdinatesInRange(null) should be {y1:NaN, y2:NaN}", {y1:NaN, y2:NaN}, Life.analyticGeometry.intersectionOfOrdinatesInRange(null));
+            assertObjectEquals("Life.analyticGeometry.intersectionOfOrdinatesInRange(null, null) should be {y1:NaN, y2:NaN}", {y1:NaN, y2:NaN}, Life.analyticGeometry.intersectionOfOrdinatesInRange(null, null));
+            assertObjectEquals("Life.analyticGeometry.intersectionOfOrdinatesInRange(null, null, null) should be {y1:0, y2:NaN}", {y1:0, y2:NaN}, Life.analyticGeometry.intersectionOfOrdinatesInRange(null, null, null));
+        }
+
+        function testIntersectionOfOrdinatesInRangeWithStringParameters() {
+
+            assertObjectEquals('Life.analyticGeometry.intersectionOfOrdinatesInRange("doodads", "doodads", "doodads", "doodads") should be { y1: "NaNdoodads", y2: "NaNdoodads" }', { y1: "NaNdoodads", y2: "NaNdoodads" }, Life.analyticGeometry.intersectionOfOrdinatesInRange("doodads", "doodads", "doodads", "doodads"));
+            assertObjectEquals('Life.analyticGeometry.intersectionOfOrdinatesInRange("doodads", "teddy bear", "cactus", "peach muffin") should be { y1: "NaNteddy bear", y2: "NaNteddy bear" }', { y1: "NaNteddy bear", y2: "NaNteddy bear" }, Life.analyticGeometry.intersectionOfOrdinatesInRange("doodads", "teddy bear", "cactus", "peach muffin"));
+            assertObjectEquals('Life.analyticGeometry.intersectionOfOrdinatesInRange("doodads", "teddy bear", "cactus") should be { y1: "NaNteddy bear", y2: "NaNteddy bear" }', { y1: "NaNteddy bear", y2: "NaNteddy bear" }, Life.analyticGeometry.intersectionOfOrdinatesInRange("doodads", "teddy bear", "cactus"));
+            assertObjectEquals('Life.analyticGeometry.intersectionOfOrdinatesInRange("doodads", "teddy bear") should be { y1: "NaNteddy bear", y2: "NaNteddy bear" }', { y1: "NaNteddy bear", y2: "NaNteddy bear" }, Life.analyticGeometry.intersectionOfOrdinatesInRange("doodads", "teddy bear"));
+            assertObjectEquals('Life.analyticGeometry.intersectionOfOrdinatesInRange("doodads") should be { y1: NaN, y2: NaN }', { y1: NaN, y2: NaN }, Life.analyticGeometry.intersectionOfOrdinatesInRange("doodads"));
+            assertObjectEquals('Life.analyticGeometry.intersectionOfOrdinatesInRange("doodads", NaN, "cactus", "peach muffin") should be { y1: NaN, y2: NaN }', { y1: NaN, y2: NaN }, Life.analyticGeometry.intersectionOfOrdinatesInRange("doodads", NaN, "cactus", "peach muffin"));
+            assertObjectEquals('Life.analyticGeometry.intersectionOfOrdinatesInRange(NaN, teddy bear", "cactus", "peach muffin") should be { y1: "NaNteddy bear", y2: "NaNteddy bear" }', { y1: "NaNteddy bear", y2: "NaNteddy bear" }, Life.analyticGeometry.intersectionOfOrdinatesInRange(NaN, "teddy bear", "cactus", "peach muffin"));
+        }
+
+        function testIntersectionOfOrdinatesInRangeWithSameXPosition() {
+
+            let expected = new Array();
+            expected.push({ y1: 0, y2: 0 });
+            expected.push({ y1: 1, y2: 1 });
+            expected.push({ y1: -2, y2: -2 });
+            expected.push({ y1: -10, y2: -10 });
+            expected.push({ y1: -9, y2: -9 });
+            expected.push({ y1: -12, y2: -12 });
+            expected.push({ y1: -0.0004, y2: -0.0004 });
+            expected.push({ y1: 0, y2: 0 });
+            expected.push({ y1: 1, y2: 1 });
+            expected.push({ y1: -2, y2: -2 });
+            expected.push({ y1: 0, y2: 0 });
+            expected.push({ y1: 1, y2: 1 });
+            expected.push({ y1: -2, y2: -2 });
+            expected.push({ y1: 0.0001, y2: 0.0001 });
+            expected.push({ y1: 0, y2: 0 });
+            expected.push({ y1: 1, y2: 1 });
+            expected.push({ y1: -2, y2: -2 });
+            expected.push({ y1: 10, y2: 10 });
+            expected.push({ y1: 11, y2: 11 });
+            expected.push({ y1: 8, y2: 8 });
+            expected.push({ y1: 0.0006000000000000001, y2: 0.0006000000000000001 });
+
+            let line = new Array();
+            line.push({a:0, b:0});
+            line.push({a:0, b:1});
+            line.push({a:0, b:-2});
+            line.push({a:2, b:0});
+            line.push({a:2, b:1});
+            line.push({a:2, b:-2});
+            line.push({a:0.0001, b:0.0001});
+
+            let i = 0;
+            for (let x=-5; x<=5; x+=5) {
+
+                for (let t=0; t<=6; t++) {
+                    let a = line[t].a;
+                    let b = line[t].b;
+                    let y1 = expected[i].y1;
+                    let y2 = expected[i].y2;
+                    assertObjectEquals("Life.analyticGeometry.intersectionOfOrdinatesInRange("+a+", "+b+", "+x+", "+x+") should be { y1: "+y1+", y2: "+y2+"}", {'y1':y1, 'y2':y2}, Life.analyticGeometry.intersectionOfOrdinatesInRange(a, b, x, x));
+                    i++;
+                }
+            }
+
+        }
+
+        function testIntersectionOfOrdinatesInRangeWithDifferentXPosition() {
+
+            assertObjectEquals("Life.analyticGeometry.intersectionOfOrdinatesInRange(2, 0, 2, 0) should be { y1: 0, y2: 4 }", { y1: 0, y2: 4 }, Life.analyticGeometry.intersectionOfOrdinatesInRange(2, 0, 2, 0));
+            assertObjectEquals("Life.analyticGeometry.intersectionOfOrdinatesInRange(2, 0, 2, 1) should be { y1: 2, y2: 4 }", { y1: 2, y2: 4 }, Life.analyticGeometry.intersectionOfOrdinatesInRange(2, 0, 2, 1));
+            assertObjectEquals("Life.analyticGeometry.intersectionOfOrdinatesInRange(2, 0, 2, -1) should be { y1: -2, y2: 4 }", { y1: -2, y2: 4 }, Life.analyticGeometry.intersectionOfOrdinatesInRange(2, 0, 2, -1));
+            assertObjectEquals("Life.analyticGeometry.intersectionOfOrdinatesInRange(0.0001, 10, 0.0001, -10) should be { y1: 9.999, y2: 10.00000001 }", { y1: 9.999, y2: 10.00000001 }, Life.analyticGeometry.intersectionOfOrdinatesInRange(0.0001, 10, 0.0001, -10));
+        }
+
+        function testIntersectionOfOrdinatesInRangeWithInversedRange() {
+
+            assertObjectEquals("Life.analyticGeometry.intersectionOfOrdinatesInRange(0, 1, 1, 0) should be { y1: 1, y2: 1 }", { y1: 1, y2: 1 }, Life.analyticGeometry.intersectionOfOrdinatesInRange(0, 1, 1, 0));
+            assertObjectEquals("Life.analyticGeometry.intersectionOfOrdinatesInRange(0, 1, 0, -1) should be { y1: 1, y2: 1 }", { y1: 1, y2: 1 }, Life.analyticGeometry.intersectionOfOrdinatesInRange(0, 1, 0, -1));
+            assertObjectEquals("Life.analyticGeometry.intersectionOfOrdinatesInRange(0, 1, 1, -1) should be { y1: 1, y2: 1 }", { y1: 1, y2: 1 }, Life.analyticGeometry.intersectionOfOrdinatesInRange(0, 1, 1, -1));
+            assertObjectEquals("Life.analyticGeometry.intersectionOfOrdinatesInRange(1, 1, 1, -1) should be { y1: 0, y2: 2 }", { y1: 0, y2: 2 }, Life.analyticGeometry.intersectionOfOrdinatesInRange(1, 1, 1, -1));
+            assertObjectEquals("Life.analyticGeometry.intersectionOfOrdinatesInRange(1, -1, 1, -1) should be { y1: -2, y2: 0 }", { y1: -2, y2: 0 }, Life.analyticGeometry.intersectionOfOrdinatesInRange(1, -1, 1, -1));
+            assertObjectEquals("Life.analyticGeometry.intersectionOfOrdinatesInRange(0.0001, 0.0001, 0.0001, -0.0001) should be { y1: 0.00009999000000000001, y2: 0.00010001 }", { y1: 0.00009999000000000001, y2: 0.00010001 }, Life.analyticGeometry.intersectionOfOrdinatesInRange(0.0001, 0.0001, 0.0001, -0.0001));
+        }
+
+        function testIntersectionOfOrdinatesInRangeWithInversedRangeAndNegativeGradient() {
+
+            assertObjectEquals("Life.analyticGeometry.intersectionOfOrdinatesInRange(-1, 1, 1, -1) should be { y1: 0, y2: 2 }", { y1: 0, y2: 2 }, Life.analyticGeometry.intersectionOfOrdinatesInRange(-1, 1, 1, -1));
+            assertObjectEquals("Life.analyticGeometry.intersectionOfOrdinatesInRange(-1, -1, 1, -1) should be { y1: -2, y2: 0 }", { y1: -2, y2: 0 }, Life.analyticGeometry.intersectionOfOrdinatesInRange(-1, -1, 1, -1));
+            assertObjectEquals("Life.analyticGeometry.intersectionOfOrdinatesInRange(-0.0001, 0.0001, 0.0001, -0.0001) should be { y1: 0.00009999000000000001, y2: 0.00010001 }", { y1: 0.00009999000000000001, y2: 0.00010001 }, Life.analyticGeometry.intersectionOfOrdinatesInRange(-0.0001, 0.0001, 0.0001, -0.0001));
+        }
+
+	</script>
+
+</head>
+<body>
+
+</body>
+</html>

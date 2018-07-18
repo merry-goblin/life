@@ -1,0 +1,53 @@
+<!doctype  html>
+<html lang="fr">
+<head>
+
+	<title>Unit testes</title>
+	<meta charset="utf-8" />
+
+    <script src="./../../../../src/services/calculs/analytic-geometry.js"></script>
+
+	<script src="./../../../../vendor/underscorejs/underscore-min.js"></script>
+	<script src="./../../../../vendor/jsunit/app/jsUnitCore.js"></script>
+
+	<script>
+
+        function testGradientOfALineWithMissingParameter() {
+
+            assertNaN("Life.analyticGeometry.gradientOfALine() should be NaN", Life.analyticGeometry.gradientOfALine());
+        }
+
+        function testGradientOfALineWithNaNParameter() {
+
+            assertNaN("Life.analyticGeometry.gradientOfALine() should be NaN", Life.analyticGeometry.gradientOfALine(NaN));
+        }
+
+        function testGradientOfALineWithNullParameter() {
+
+            assertObjectEquals("Life.analyticGeometry.gradientOfALine(null) should be Infinity", Infinity, Life.analyticGeometry.gradientOfALine(null));
+        }
+
+        function testGradientOfALineWithStringParameter() {
+
+            assertEquals("Life.analyticGeometry.gradientOfALine('') should be 0", 0, Life.analyticGeometry.gradientOfALine(''));
+            assertNaN("Life.analyticGeometry.gradientOfALine('doodads') should be NaN", Life.analyticGeometry.gradientOfALine('doodads'));
+        }
+
+        function testGradientOfALineWithNumberParameter() {
+
+            assertEquals("Life.analyticGeometry.gradientOfALine(0) should be 0", 0, Life.analyticGeometry.gradientOfALine(0));
+            assertEquals("Life.analyticGeometry.gradientOfALine(1) should be 1", 1, Life.analyticGeometry.gradientOfALine(1));
+            assertEquals("Life.analyticGeometry.gradientOfALine(5) should be 0.2", 0.2, Life.analyticGeometry.gradientOfALine(5));
+            assertEquals("Life.analyticGeometry.gradientOfALine(-5) should be -0.2", -0.2, Life.analyticGeometry.gradientOfALine(-5));
+            assertEquals("Life.analyticGeometry.gradientOfALine(-1) should be -1", -1, Life.analyticGeometry.gradientOfALine(-1));
+            assertEquals("Life.analyticGeometry.gradientOfALine(0.000001) should be 1000000", 1000000, Life.analyticGeometry.gradientOfALine(0.000001));
+            assertEquals("Life.analyticGeometry.gradientOfALine(-0.000001) should be -1000000", -1000000, Life.analyticGeometry.gradientOfALine(-0.000001));
+        }
+
+	</script>
+
+</head>
+<body>
+
+</body>
+</html>
