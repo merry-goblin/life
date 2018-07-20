@@ -19,7 +19,12 @@
 
         function testGradientOfALineWithNaNParameter() {
 
-            assertNaN("Life.analyticGeometry.gradientOfALine() should be NaN", Life.analyticGeometry.gradientOfALine(NaN));
+            assertNaN("Life.analyticGeometry.gradientOfALine(NaN) should be NaN", Life.analyticGeometry.gradientOfALine(NaN));
+        }
+
+        function testGradientOfALineWithUndefinedParameter() {
+
+            assertNaN("Life.analyticGeometry.gradientOfALine(undefined) should be NaN", Life.analyticGeometry.gradientOfALine(undefined));
         }
 
         function testGradientOfALineWithNullParameter() {
@@ -31,6 +36,11 @@
 
             assertEquals("Life.analyticGeometry.gradientOfALine('') should be 0", 0, Life.analyticGeometry.gradientOfALine(''));
             assertNaN("Life.analyticGeometry.gradientOfALine('doodads') should be NaN", Life.analyticGeometry.gradientOfALine('doodads'));
+        }
+
+        function testGradientOfALineWithObjectParameter() {
+
+            assertNaN("Life.analyticGeometry.gradientOfALine({}) should be NaN", Life.analyticGeometry.gradientOfALine({}));
         }
 
         function testGradientOfALineWithNumberParameter() {

@@ -1,0 +1,69 @@
+<!doctype  html>
+<html lang="fr">
+<head>
+
+	<title>Unit testes</title>
+	<meta charset="utf-8" />
+
+    <script src="./../../../../src/services/calculs/arithmetic.js"></script>
+
+	<script src="./../../../../vendor/underscorejs/underscore-min.js"></script>
+	<script src="./../../../../vendor/jsunit/app/jsUnitCore.js"></script>
+
+	<script>
+
+        function testGetRatioToHexaWithMissingParameters() {
+
+            assertNaN("Life.arithmetic.getRatioToHexa() should be NaN", Life.arithmetic.getRatioToHexa());
+            assertNaN("Life.arithmetic.getRatioToHexa(5) should be NaN", Life.arithmetic.getRatioToHexa(5));
+            assertEquals("Life.arithmetic.getRatioToHexa(5, 10) should be '7f'", '7f', Life.arithmetic.getRatioToHexa(5, 10));
+        }
+
+        function testGetRatioToHexaWithNullNaNUndefinedParameters() {
+
+            assertNaN("Life.arithmetic.getRatioToHexa(null, null, null) should be NaN", Life.arithmetic.getRatioToHexa(null, null, null));
+            assertNaN("Life.arithmetic.getRatioToHexa(NaN, NaN, NaN) should be NaN", Life.arithmetic.getRatioToHexa(NaN, NaN, NaN));
+            assertNaN("Life.arithmetic.getRatioToHexa(undefined, undefined, undefined) should be NaN", Life.arithmetic.getRatioToHexa(undefined, undefined, undefined));
+        }
+
+        function testGetRatioToHexaWithMaxParameterEqualsToZero() {
+
+            assertEquals("Life.arithmetic.getRatioToHexa(0, 0, false) should be '0'", '0', Life.arithmetic.getRatioToHexa(0, 0, false));
+            assertEquals("Life.arithmetic.getRatioToHexa(0, 0, true) should be 'ff'", 'ff', Life.arithmetic.getRatioToHexa(0, 0, true));
+            assertEquals("Life.arithmetic.getRatioToHexa(100, 0, false) should be '0'", '0', Life.arithmetic.getRatioToHexa(100, 0, false));
+            assertEquals("Life.arithmetic.getRatioToHexa(100, 0, true) should be 'ff'", 'ff', Life.arithmetic.getRatioToHexa(100, 0, true));
+        }
+
+        function testGetRatioToHexaWithMaxParameterEqualsToZero() {
+
+            assertEquals("Life.arithmetic.getRatioToHexa(100, 99, false) should be 'ff'", 'ff', Life.arithmetic.getRatioToHexa(100, 99, false));
+            assertEquals("Life.arithmetic.getRatioToHexa(100, 0.00001, false) should be 'ff'", 'ff', Life.arithmetic.getRatioToHexa(100, 0.00001, false));
+            assertEquals("Life.arithmetic.getRatioToHexa(100, 0, false) should be '0'", '0', Life.arithmetic.getRatioToHexa(100, 0, false));
+            assertEquals("Life.arithmetic.getRatioToHexa(100, -50, false) should be 'ff'", 'ff', Life.arithmetic.getRatioToHexa(100, -50, false));
+        }
+
+        function testGetRatioToHexaWithExpectedParameters() {
+
+            assertEquals("Life.arithmetic.getRatioToHexa(0, 100, false) should be '0'", '0', Life.arithmetic.getRatioToHexa(0, 100, false));
+            assertEquals("Life.arithmetic.getRatioToHexa(0.0001, 100, false) should be '0'", '0', Life.arithmetic.getRatioToHexa(0.0001, 100, false));
+            assertEquals("Life.arithmetic.getRatioToHexa(50, 100, false) should be '7f'", '7f', Life.arithmetic.getRatioToHexa(50, 100, false));
+            assertEquals("Life.arithmetic.getRatioToHexa(99.9999, 100, false) should be 'fe'", 'fe', Life.arithmetic.getRatioToHexa(99.9999, 100, false));
+            assertEquals("Life.arithmetic.getRatioToHexa(100, 100, false) should be 'ff'", 'ff', Life.arithmetic.getRatioToHexa(100, 100, false));
+        }
+
+        function testGetRatioToHexaWithExpectedAndReverseParameters() {
+
+            assertEquals("Life.arithmetic.getRatioToHexa(0, 100, true) should be 'ff'", 'ff', Life.arithmetic.getRatioToHexa(0, 100, true));
+            assertEquals("Life.arithmetic.getRatioToHexa(0.0001, 100, true) should be 'fe'", 'fe', Life.arithmetic.getRatioToHexa(0.0001, 100, true));
+            assertEquals("Life.arithmetic.getRatioToHexa(50, 100, true) should be '7f'", '7f', Life.arithmetic.getRatioToHexa(50, 100, true));
+            assertEquals("Life.arithmetic.getRatioToHexa(99.9999, 100, true) should be '0'", '0', Life.arithmetic.getRatioToHexa(99.9999, 100, true));
+            assertEquals("Life.arithmetic.getRatioToHexa(100, 100, true) should be '0'", '0', Life.arithmetic.getRatioToHexa(100, 100, true));
+        }
+
+	</script>
+
+</head>
+<body>
+
+</body>
+</html>

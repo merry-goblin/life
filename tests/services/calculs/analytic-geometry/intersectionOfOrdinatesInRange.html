@@ -39,6 +39,17 @@
             assertObjectEquals('Life.analyticGeometry.intersectionOfOrdinatesInRange(NaN, teddy bear", "cactus", "peach muffin") should be { y1: "NaNteddy bear", y2: "NaNteddy bear" }', { y1: "NaNteddy bear", y2: "NaNteddy bear" }, Life.analyticGeometry.intersectionOfOrdinatesInRange(NaN, "teddy bear", "cactus", "peach muffin"));
         }
 
+        function testIntersectionOfOrdinatesInRangeWithObjectParameters() {
+
+            assertObjectEquals('Life.analyticGeometry.intersectionOfOrdinatesInRange("doodads", "doodads", "doodads", "doodads") should be { y1: "NaNdoodads", y2: "NaNdoodads" }', { y1: "NaNdoodads", y2: "NaNdoodads" }, Life.analyticGeometry.intersectionOfOrdinatesInRange("doodads", "doodads", "doodads", "doodads"));
+            assertObjectEquals('Life.analyticGeometry.intersectionOfOrdinatesInRange("doodads", "teddy bear", "cactus", "peach muffin") should be { y1: "NaNteddy bear", y2: "NaNteddy bear" }', { y1: "NaNteddy bear", y2: "NaNteddy bear" }, Life.analyticGeometry.intersectionOfOrdinatesInRange("doodads", "teddy bear", "cactus", "peach muffin"));
+            assertObjectEquals('Life.analyticGeometry.intersectionOfOrdinatesInRange("doodads", "teddy bear", "cactus") should be { y1: "NaNteddy bear", y2: "NaNteddy bear" }', { y1: "NaNteddy bear", y2: "NaNteddy bear" }, Life.analyticGeometry.intersectionOfOrdinatesInRange("doodads", "teddy bear", "cactus"));
+            assertObjectEquals('Life.analyticGeometry.intersectionOfOrdinatesInRange("doodads", "teddy bear") should be { y1: "NaNteddy bear", y2: "NaNteddy bear" }', { y1: "NaNteddy bear", y2: "NaNteddy bear" }, Life.analyticGeometry.intersectionOfOrdinatesInRange("doodads", "teddy bear"));
+            assertObjectEquals('Life.analyticGeometry.intersectionOfOrdinatesInRange("doodads") should be { y1: NaN, y2: NaN }', { y1: NaN, y2: NaN }, Life.analyticGeometry.intersectionOfOrdinatesInRange("doodads"));
+            assertObjectEquals('Life.analyticGeometry.intersectionOfOrdinatesInRange("doodads", NaN, "cactus", "peach muffin") should be { y1: NaN, y2: NaN }', { y1: NaN, y2: NaN }, Life.analyticGeometry.intersectionOfOrdinatesInRange("doodads", NaN, "cactus", "peach muffin"));
+            assertObjectEquals('Life.analyticGeometry.intersectionOfOrdinatesInRange(NaN, teddy bear", "cactus", "peach muffin") should be { y1: "NaNteddy bear", y2: "NaNteddy bear" }', { y1: "NaNteddy bear", y2: "NaNteddy bear" }, Life.analyticGeometry.intersectionOfOrdinatesInRange(NaN, "teddy bear", "cactus", "peach muffin"));
+        }
+
         function testIntersectionOfOrdinatesInRangeWithSameXPosition() {
 
             let expected = new Array();
