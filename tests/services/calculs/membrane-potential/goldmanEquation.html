@@ -1,0 +1,191 @@
+<!doctype  html>
+<html lang="fr">
+<head>
+
+	<title>Unit testes</title>
+	<meta charset="utf-8" />
+
+    <script src="./../../../../src/services/calculs/membrane-potential.js"></script>
+    <script src="./../../../../config/app.js"></script>
+
+	<script src="./../../../../vendor/underscorejs/underscore-min.js"></script>
+	<script src="./../../../../vendor/jsunit/app/jsUnitCore.js"></script>
+
+	<script>
+
+        function testGoldmanEquationWithMissingParameters() {
+
+            try {
+                Life.membranePotential.goldmanEquation();
+                fail("Life.membranePotential.goldmanEquation() should throw an Exception");
+            } catch (e) {
+                assertEquals("Life.membranePotential.goldmanEquation() should throw an Exception", true, true);
+            }
+        }
+
+        function testGoldmanEquationWithNullNaNUndefinedParameters() {
+
+            try {
+                Life.membranePotential.goldmanEquation(null);
+                fail("Life.membranePotential.goldmanEquation(null) should throw an Exception");
+            } catch (e) {
+                assertEquals("Life.membranePotential.goldmanEquation(null) should throw an Exception", true, true);
+            }
+            try {
+                Life.membranePotential.goldmanEquation(NaN);
+                fail("Life.membranePotential.goldmanEquation(NaN) should throw an Exception");
+            } catch (e) {
+                assertEquals("Life.membranePotential.goldmanEquation(NaN) should throw an Exception", true, true);
+            }
+            try {
+                Life.membranePotential.goldmanEquation(undefined);
+                fail("Life.membranePotential.goldmanEquation(undefined) should throw an Exception");
+            } catch (e) {
+                assertEquals("Life.membranePotential.goldmanEquation(undefined) should throw an Exception", true, true);
+            }
+        }
+
+        function testGoldmanEquationWithEmptyArrayParameters() {
+
+            assertNaN("Life.membranePotential.goldmanEquation(new Array()) should be NaN", Life.membranePotential.goldmanEquation(new Array()));
+            assertNaN("Life.membranePotential.goldmanEquation({}) should be NaN", Life.membranePotential.goldmanEquation({}));
+        }
+
+        function testGoldmanEquationWithAnArrayAndFirstIndexWithMissingParameters() {
+
+            assertNaN("Life.membranePotential.goldmanEquation(new Array({})) should be NaN", Life.membranePotential.goldmanEquation(new Array({})));
+        }
+
+        function testGoldmanEquationWithAnArrayAndFirstIndexWithMissingParameters() {
+
+            assertNaN("Life.membranePotential.goldmanEquation(new Array({})) should be NaN", Life.membranePotential.goldmanEquation(new Array({})));
+
+            var params;
+            params = new Array();
+            params.push({
+                valance: 1,
+            });
+            assertNaN("Life.membranePotential.goldmanEquation(params) should be NaN", Life.membranePotential.goldmanEquation(params));
+
+            params = new Array();
+            params.push({
+                valance: 1,
+                extra: 5,
+            });
+            assertNaN("Life.membranePotential.goldmanEquation(params) should be NaN", Life.membranePotential.goldmanEquation(params));
+
+            params = new Array();
+            params.push({
+                valance: 1,
+                extra: 5,
+                intra: 140,
+            });
+            assertNaN("Life.membranePotential.goldmanEquation(params) should be NaN", Life.membranePotential.goldmanEquation(params));
+        }
+
+        function testGoldmanEquationWithAnArrayAndFirstIndexWithOneParameterEqualToZero() {
+
+            var params;
+            params = new Array();
+            params.push({
+                valance: 1,
+                extra: 5,
+                intra: 0,
+                permeability: 1
+            });
+            assertEquals("Life.membranePotential.goldmanEquation(params) with index intra = 0 should be Infinity", Infinity, Life.membranePotential.goldmanEquation(params));
+
+            var params;
+            params = new Array();
+            params.push({
+                valance: 1,
+                extra: 0,
+                intra: 140,
+                permeability: 1
+            });
+            assertEquals("Life.membranePotential.goldmanEquation(params) with index extra = 0 should be -Infinity", -Infinity, Life.membranePotential.goldmanEquation(params));
+
+            var params;
+            params = new Array();
+            params.push({
+                valance: 0,
+                extra: 5,
+                intra: 140,
+                permeability: 1
+            });
+            assertEquals("Life.membranePotential.goldmanEquation(params) with index valence = 0 should be -0.08901497993946617", -0.08901497993946617, Life.membranePotential.goldmanEquation(params));
+
+            var params;
+            params = new Array();
+            params.push({
+                valance: 1,
+                extra: 5,
+                intra: 140,
+                permeability: 0
+            });
+            assertNaN("Life.membranePotential.goldmanEquation(params) with index permeability = 0 should be NaN", Life.membranePotential.goldmanEquation(params));
+
+        }
+
+           /* params = new Array();
+            params.push({
+                valance: 1,
+                extra: 5,
+                intra: 0,
+                permeability: 1
+            });
+            console.log(Life.membranePotential.goldmanEquation(params));
+
+            params = new Array();
+            params.push({
+                valance: 1,
+                extra: 0,
+                intra: 140,
+                permeability: 1
+            });
+            console.log(Life.membranePotential.goldmanEquation(params));
+
+            params = new Array();
+            params.push({
+                valance: 0,
+                extra: 5,
+                intra: 140,
+                permeability: 1
+            });
+            console.log(Life.membranePotential.goldmanEquation(params));
+
+            params = new Array();
+            params.push({
+                valance: 1,
+                extra: 5,
+                intra: 140,
+                permeability: 0
+            });
+            console.log(Life.membranePotential.goldmanEquation(params));
+*/
+
+        /*    params.push({
+                valance: 1,
+                extra: 5,
+                intra: 140,
+                permeability: life.Models.channelK1.permeability.default
+            });
+            params.push({
+                valance: 1,
+                extra: 140,
+                intra: 14,
+                permeability: life.Models.channelNa1.permeability.default
+            });
+            params.push({
+                valance: -1,
+                extra: 147,
+                intra: 14,
+                permeability: life.Models.channelCl1.permeability.default
+            });*/
+	</script>
+
+</head>
+<body>
+
+</body>
+</html>
