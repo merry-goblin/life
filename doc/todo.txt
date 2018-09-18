@@ -1,6 +1,10 @@
 
 1. Calcul of post-synaptic potentials must be changed :
 
+Note : The way we calculate membrane potential is changed.
+We do not cumulate local potentials anymore (is not a real behavior) 
+All calcul will be done through goldmann equation, only constants will change
+
 - [done] Keep a link between a post-synaptic potential and his synapse
 - [done] Synapse activation takes time to generate a postsynaptic potential (2ms ?)
 - Count number of neurotransmitters thrown when a presynaptic button is activated
@@ -11,6 +15,14 @@
 
 2. Modelise refractory period
 
+-
 
+3. Allow setting modification since user interface
 
+- Concentrations of neurotransmitter intra and extra
 
+4. Unit testing
+
+- services/calculs/analytic-geometry.js : ok
+- services/calculs/arithmetic.js : ok
+- services/calculs/membrane-potential.js : ok

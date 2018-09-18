@@ -6,7 +6,99 @@
 	<meta charset="utf-8" />
 
     <script src="./../../../../src/services/calculs/membrane-potential.js"></script>
-    <script src="./../../../../config/app.js"></script>
+
+    <script>
+//  config/app.js
+Life.config = {
+    loopInterval: 41,
+    timeSpeed: 1.0,
+    temperature: 310, // ° Kelvin,
+    potentialConstant: -0.00019842, // ("perfect gas constant" * "ln to log conversion") / "Faraday constant" = (8.3145 * 2.302586641) / 96485
+    intra: {
+        K: 140,
+        Na: 14,
+        Cl: 14,
+        Ca: 0.0004,
+        A: 125 // Organic anions
+    },
+    extra: {
+        K: 5,
+        Na: 140,
+        Cl: 147,
+        Ca: 1,
+        A: 0
+    },
+    valence: {
+        K: 1,
+        Na: 1,
+        Cl: -1,
+        Ca: 2
+    },
+    potentialProximity: 12
+};
+
+//  config/constants/neurotransmitters.js
+Life.neurotransmitters = {
+    acetylcholine: 1,
+    dopamine: 2,
+    gaba: 3,
+    glutamate: 4,
+    noradrenalin: 5,
+    serotonin: 6
+}
+
+Life.Models = Life.Models || {};
+
+//  config/models/channels/cl1.js
+Life.Models.channelCl1 = {
+    sensibility: {
+        voltageGated: [{
+            threshold: 0.031,
+            permeability: 0.8
+        }],
+        neurotransmitterGated: [{
+            neurotransmitter: Life.neurotransmitters.gaba,
+            permeability: 0.01
+        }]
+    },
+    permeability: {
+        default: 0.000,
+        ion: "Cl",
+    }
+}
+
+//  config/models/channels/k1.js
+Life.Models.channelK1 = {
+    sensibility: {
+        voltageGated: [],
+        neurotransmitterGated: [{
+            neurotransmitter: Life.neurotransmitters.glutamate,
+            permeability: 0.2
+        }]
+    },
+    permeability: {
+        default: 0.05,
+        ion: "K"
+    }
+}
+
+//  config/models/channels/na1.js
+Life.Models.channelNa1 = {
+    sensibility: {
+        voltageGated: [],
+        neurotransmitterGated: [{
+            neurotransmitter: Life.neurotransmitters.glutamate,
+            permeability: 0.2
+        }]
+    },
+    permeability: {
+        default: 0.05,
+        ion: "K"
+    }
+}
+
+    </script>
+
 
 	<script src="./../../../../vendor/underscorejs/underscore-min.js"></script>
 	<script src="./../../../../vendor/jsunit/app/jsUnitCore.js"></script>
@@ -127,61 +219,50 @@
 
         }
 
-           /* params = new Array();
+        function testGoldmanEquationWithExpectedValues() {
+
+            var params;
+            params = new Array();
             params.push({
                 valance: 1,
-                extra: 5,
-                intra: 0,
+                extra: 1,
+                intra: 1,
                 permeability: 1
             });
-            console.log(Life.membranePotential.goldmanEquation(params));
+            assertEquals("Life.membranePotential.goldmanEquation(params)", 0, Life.membranePotential.goldmanEquation(params));
 
             params = new Array();
             params.push({
                 valance: 1,
-                extra: 0,
-                intra: 140,
-                permeability: 1
+                extra: 1,
+                intra: 10,
+                permeability: 0.5
             });
-            console.log(Life.membranePotential.goldmanEquation(params));
-
-            params = new Array();
-            params.push({
-                valance: 0,
-                extra: 5,
-                intra: 140,
-                permeability: 1
-            });
-            console.log(Life.membranePotential.goldmanEquation(params));
+            assertEquals("Life.membranePotential.goldmanEquation(params)", -0.061510199999999994, Life.membranePotential.goldmanEquation(params));
 
             params = new Array();
             params.push({
                 valance: 1,
                 extra: 5,
                 intra: 140,
-                permeability: 0
-            });
-            console.log(Life.membranePotential.goldmanEquation(params));
-*/
-
-        /*    params.push({
-                valance: 1,
-                extra: 5,
-                intra: 140,
-                permeability: life.Models.channelK1.permeability.default
+                permeability: Life.Models.channelK1.permeability.default
             });
             params.push({
                 valance: 1,
                 extra: 140,
                 intra: 14,
-                permeability: life.Models.channelNa1.permeability.default
+                permeability: Life.Models.channelNa1.permeability.default
             });
             params.push({
                 valance: -1,
                 extra: 147,
                 intra: 14,
-                permeability: life.Models.channelCl1.permeability.default
-            });*/
+                permeability: Life.Models.channelCl1.permeability.default
+            });
+            assertEquals("Life.membranePotential.goldmanEquation(params)", -0.0016086589517212608, Life.membranePotential.goldmanEquation(params));
+
+        }
+
 	</script>
 
 </head>
