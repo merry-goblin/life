@@ -1,0 +1,107 @@
+<!doctype  html>
+<html lang="fr">
+<head>
+
+	<title>Unit testes</title>
+	<meta charset="utf-8" />
+
+    <script src="./../../../../src/elements/scopes/neuron-scope.js"></script>
+    <script src="./../../../../src/elements/interactions/action-potential.js"></script>
+    <script src="./../../../../src/services/handlers/action-potential-handler.js"></script>
+
+	<script src="./../../../../vendor/underscorejs/underscore-min.js"></script>
+	<script src="./../../../../vendor/jsunit/app/jsUnitCore.js"></script>
+
+	<script>
+
+        function testBuildWithMissingParameter() {
+
+            try {
+                Life.actionPotentialHandler.build();
+                fail("Life.actionPotentialHandler.build() should throw an Exception");
+            } 
+            catch (e) {
+                assertEquals("Life.actionPotentialHandler.build() should throw an Exception", true, true);
+            }
+
+            //  todo 
+        }
+
+        function testBuildWithNaNParameter() {
+
+            try {
+                Life.actionPotentialHandler.build(NaN);
+                fail("Life.actionPotentialHandler.build(NaN) should throw an Exception");
+            } 
+            catch (e) {
+                assertEquals("Life.actionPotentialHandler.build(NaN) should throw an Exception", true, true);
+            }
+
+            //  todo 
+        }
+
+        function testBuildWithUndefinedParameter() {
+
+            try {
+                Life.actionPotentialHandler.build(undefined);
+                fail("Life.actionPotentialHandler.build(undefined) should throw an Exception");
+            } 
+            catch (e) {
+                assertEquals("Life.actionPotentialHandler.build(undefined) should throw an Exception", true, true);
+            }
+
+            //  todo 
+        }
+
+        function testBuildWithNullParameter() {
+
+            try {
+                Life.actionPotentialHandler.build(null);
+                fail("Life.actionPotentialHandler.build(null) should throw an Exception");
+            } 
+            catch (e) {
+                assertEquals("Life.actionPotentialHandler.build(null) should throw an Exception", true, true);
+            }
+
+            //  todo 
+        }
+
+        /*function testGradientOfALineWithUndefinedParameter() {
+
+            assertNaN("Life.analyticGeometry.gradientOfALine(undefined) should be NaN", Life.analyticGeometry.gradientOfALine(undefined));
+        }
+
+        function testGradientOfALineWithNullParameter() {
+
+            assertObjectEquals("Life.analyticGeometry.gradientOfALine(null) should be Infinity", Infinity, Life.analyticGeometry.gradientOfALine(null));
+        }
+
+        function testGradientOfALineWithStringParameter() {
+
+            assertEquals("Life.analyticGeometry.gradientOfALine('') should be 0", 0, Life.analyticGeometry.gradientOfALine(''));
+            assertNaN("Life.analyticGeometry.gradientOfALine('doodads') should be NaN", Life.analyticGeometry.gradientOfALine('doodads'));
+        }
+
+        function testGradientOfALineWithObjectParameter() {
+
+            assertNaN("Life.analyticGeometry.gradientOfALine({}) should be NaN", Life.analyticGeometry.gradientOfALine({}));
+        }
+
+        function testGradientOfALineWithNumberParameter() {
+
+            assertEquals("Life.analyticGeometry.gradientOfALine(0) should be 0", 0, Life.analyticGeometry.gradientOfALine(0));
+            assertEquals("Life.analyticGeometry.gradientOfALine(1) should be 1", 1, Life.analyticGeometry.gradientOfALine(1));
+            assertEquals("Life.analyticGeometry.gradientOfALine(5) should be 0.2", 0.2, Life.analyticGeometry.gradientOfALine(5));
+            assertEquals("Life.analyticGeometry.gradientOfALine(-5) should be -0.2", -0.2, Life.analyticGeometry.gradientOfALine(-5));
+            assertEquals("Life.analyticGeometry.gradientOfALine(-1) should be -1", -1, Life.analyticGeometry.gradientOfALine(-1));
+            assertEquals("Life.analyticGeometry.gradientOfALine(0.000001) should be 1000000", 1000000, Life.analyticGeometry.gradientOfALine(0.000001));
+            assertEquals("Life.analyticGeometry.gradientOfALine(-0.000001) should be -1000000", -1000000, Life.analyticGeometry.gradientOfALine(-0.000001));
+        }*/
+
+	</script>
+
+</head>
+<body>
+
+</body>
+</html>
