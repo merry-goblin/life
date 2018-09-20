@@ -5,12 +5,129 @@
 	<title>Unit testes</title>
 	<meta charset="utf-8" />
 
+    <script src="./../../../../src/elements/entities/neuron.js"></script>
+    <script src="./../../../../src/elements/utils/event.js"></script>
     <script src="./../../../../src/elements/scopes/neuron-scope.js"></script>
     <script src="./../../../../src/elements/interactions/action-potential.js"></script>
+    <script src="./../../../../src/services/calculs/membrane-potential.js"></script>
+    <script src="./../../../../src/services/handlers/event-handler.js"></script>
     <script src="./../../../../src/services/handlers/action-potential-handler.js"></script>
+    <script src="./../../../../src/services/handlers/neuron-handler.js"></script>
+    <script src="./../../../../src/services/listeners/synapse-listener.js"></script>
+    <script src="./../../../../src/services/listeners/action-potential-listener.js"></script>
+    <script src="./../../../../src/services/listeners/postsynaptic-potential-listener.js"></script>
+    <script src="./../../../../src/services/managers/neuron-manager.js"></script>
 
 	<script src="./../../../../vendor/underscorejs/underscore-min.js"></script>
 	<script src="./../../../../vendor/jsunit/app/jsUnitCore.js"></script>
+
+    <script>
+
+        Life.config = {
+            loopInterval: 41,
+            timeSpeed: 1.0,
+            temperature: 310, // ° Kelvin,
+            potentialConstant: -0.00019842, // ("perfect gas constant" * "ln to log conversion") / "Faraday constant" = (8.3145 * 2.302586641) / 96485
+            intra: {
+                K: 140,
+                Na: 14,
+                Cl: 14,
+                Ca: 0.0004,
+                A: 125 // Organic anions
+            },
+            extra: {
+                K: 5,
+                Na: 140,
+                Cl: 147,
+                Ca: 1,
+                A: 0
+            },
+            valence: {
+                K: 1,
+                Na: 1,
+                Cl: -1,
+                Ca: 2
+            },
+            potentialProximity: 12
+        }
+
+        Life.neurotransmitters = {
+            acetylcholine: 1,
+            dopamine: 2,
+            gaba: 3,
+            glutamate: 4,
+            noradrenalin: 5,
+            serotonin: 6
+        };
+
+        Life.Models = Life.Models || {};
+
+        Life.Models.channelCl1 = {
+            sensibility: {
+                voltageGated: [{
+                    threshold: 0.031,
+                    permeability: 0.8
+                }],
+                neurotransmitterGated: [{
+                    neurotransmitter: Life.neurotransmitters.gaba,
+                    permeability: 0.01
+                }]
+            },
+            permeability: {
+                default: 0.000,
+                ion: "Cl",
+            }
+        };
+
+        Life.Models.channelK1 = {
+            sensibility: {
+                voltageGated: [],
+                neurotransmitterGated: [{
+                    neurotransmitter: Life.neurotransmitters.glutamate,
+                    permeability: 0.2
+                }]
+            },
+            permeability: {
+                default: 0.05,
+                ion: "K"
+            }
+        };
+
+        Life.Models.channelNa1 = {
+            sensibility: {
+                voltageGated: [{
+                    threshold: 0.06,
+                    permeability: 0.8
+                }],
+                neurotransmitterGated: []
+            },
+            permeability: {
+                default: 0.001,
+                ion: "Na"
+            }
+        };
+
+        Life.Models.neuronT1 = {
+            distances: {
+                dendrites: 100, // 100 microns | 0.1 millimeters
+                axon: 10000
+            },
+            impulseSpeed: 12, // micrometers / microsecondes
+            gradient: null, // equation
+            neurotransmitter: Life.neurotransmitters.gaba, // (Produced by the neuron) In biology some neurons can produce more than one neurotransmitter. Let s keep it simple.
+            channels: [
+                Life.Models.channelCl1,
+                Life.Models.channelK1,
+                Life.Models.channelNa1
+            ],
+            standByPotential: null,
+            threshold: null,
+            exocytose: {
+                duration: 10 //2000
+            }
+        };
+
+    </script>
 
 	<script>
 
@@ -24,7 +141,10 @@
                 assertEquals("Life.actionPotentialHandler.build() should throw an Exception", true, true);
             }
 
-            //  todo 
+            var nScope = new Life.NeuronScope();
+            neuron = new Life.Neuron();
+            Life.neuronHandler.init(nScope, neuron, Life.Models.neuronT1);
+            assertObjectEquals("Life.actionPotentialHandler.build(nScope) should be { id: null, origin: undefined, startTime: undefined, direction: undefined, a: NaN, b: NaN }", { id: null, origin: undefined, startTime: undefined, direction: undefined, a: NaN, b: NaN }, Life.actionPotentialHandler.build(nScope));
         }
 
         function testBuildWithNaNParameter() {
@@ -37,7 +157,13 @@
                 assertEquals("Life.actionPotentialHandler.build(NaN) should throw an Exception", true, true);
             }
 
-            //  todo 
+            try {
+                Life.actionPotentialHandler.build(NaN, NaN);
+                fail("Life.actionPotentialHandler.build(NaN, NaN) should throw an Exception");
+            } 
+            catch (e) {
+                assertEquals("Life.actionPotentialHandler.build(NaN, NaN) should throw an Exception", true, true);
+            }
         }
 
         function testBuildWithUndefinedParameter() {
@@ -50,7 +176,13 @@
                 assertEquals("Life.actionPotentialHandler.build(undefined) should throw an Exception", true, true);
             }
 
-            //  todo 
+            try {
+                Life.actionPotentialHandler.build(undefined, undefined);
+                fail("Life.actionPotentialHandler.build(undefined, undefined) should throw an Exception");
+            } 
+            catch (e) {
+                assertEquals("Life.actionPotentialHandler.build(undefined, undefined) should throw an Exception", true, true);
+            }
         }
 
         function testBuildWithNullParameter() {
@@ -63,19 +195,16 @@
                 assertEquals("Life.actionPotentialHandler.build(null) should throw an Exception", true, true);
             }
 
-            //  todo 
+            try {
+                Life.actionPotentialHandler.build(null, null);
+                fail("Life.actionPotentialHandler.build(null, null) should throw an Exception");
+            } 
+            catch (e) {
+                assertEquals("Life.actionPotentialHandler.build(null, null) should throw an Exception", true, true);
+            }
         }
 
-        /*function testGradientOfALineWithUndefinedParameter() {
-
-            assertNaN("Life.analyticGeometry.gradientOfALine(undefined) should be NaN", Life.analyticGeometry.gradientOfALine(undefined));
-        }
-
-        function testGradientOfALineWithNullParameter() {
-
-            assertObjectEquals("Life.analyticGeometry.gradientOfALine(null) should be Infinity", Infinity, Life.analyticGeometry.gradientOfALine(null));
-        }
-
+        /*
         function testGradientOfALineWithStringParameter() {
 
             assertEquals("Life.analyticGeometry.gradientOfALine('') should be 0", 0, Life.analyticGeometry.gradientOfALine(''));
