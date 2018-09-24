@@ -145,6 +145,8 @@
             neuron = new Life.Neuron();
             Life.neuronHandler.init(nScope, neuron, Life.Models.neuronT1);
             assertObjectEquals("Life.actionPotentialHandler.build(nScope) should be { id: null, origin: undefined, startTime: undefined, direction: undefined, a: NaN, b: NaN }", { id: null, origin: undefined, startTime: undefined, direction: undefined, a: NaN, b: NaN }, Life.actionPotentialHandler.build(nScope));
+            assertObjectEquals("Life.actionPotentialHandler.build(nScope, -50) should be { id: null, origin: -50, startTime: undefined, direction: undefined, a: NaN, b: NaN }", { id: null, origin: -50, startTime: undefined, direction: undefined, a: NaN, b: NaN }, Life.actionPotentialHandler.build(nScope, -50));
+            assertObjectEquals("Life.actionPotentialHandler.build(nScope, -50, 250) should be { id: null, origin: -50, startTime: 250, direction: undefined, a: NaN, b: NaN }", { id: null, origin: -50, startTime: 250, direction: undefined, a: NaN, b: NaN }, Life.actionPotentialHandler.build(nScope, -50, 250));
         }
 
         function testBuildWithNaNParameter() {
@@ -163,6 +165,22 @@
             } 
             catch (e) {
                 assertEquals("Life.actionPotentialHandler.build(NaN, NaN) should throw an Exception", true, true);
+            }
+
+            try {
+                Life.actionPotentialHandler.build(NaN, NaN, NaN);
+                fail("Life.actionPotentialHandler.build(NaN, NaN, NaN) should throw an Exception");
+            } 
+            catch (e) {
+                assertEquals("Life.actionPotentialHandler.build(NaN, NaN, NaN) should throw an Exception", true, true);
+            }
+
+            try {
+                Life.actionPotentialHandler.build(NaN, NaN, NaN, NaN);
+                fail("Life.actionPotentialHandler.build(NaN, NaN, NaN, NaN) should throw an Exception");
+            } 
+            catch (e) {
+                assertEquals("Life.actionPotentialHandler.build(NaN, NaN, NaN, NaN) should throw an Exception", true, true);
             }
         }
 
@@ -204,28 +222,83 @@
             }
         }
 
-        /*
-        function testGradientOfALineWithStringParameter() {
+        function testBuildWithStringParameter() {
 
-            assertEquals("Life.analyticGeometry.gradientOfALine('') should be 0", 0, Life.analyticGeometry.gradientOfALine(''));
-            assertNaN("Life.analyticGeometry.gradientOfALine('doodads') should be NaN", Life.analyticGeometry.gradientOfALine('doodads'));
+            try {
+                Life.actionPotentialHandler.build('');
+                fail("Life.actionPotentialHandler.build('') should throw an Exception");
+            } 
+            catch (e) {
+                assertEquals("Life.actionPotentialHandler.build('') should throw an Exception", true, true);
+            }
+
+            try {
+                Life.actionPotentialHandler.build('', '');
+                fail("Life.actionPotentialHandler.build('', '') should throw an Exception");
+            } 
+            catch (e) {
+                assertEquals("Life.actionPotentialHandler.build('', '') should throw an Exception", true, true);
+            }
+
+            var nScope = new Life.NeuronScope();
+            neuron = new Life.Neuron();
+            Life.neuronHandler.init(nScope, neuron, Life.Models.neuronT1);
+            assertObjectEquals("Life.actionPotentialHandler.build(nScope, '') should be { id: null, origin: '', startTime: undefined, direction: undefined, a: NaN, b: NaN }", { id: null, origin: '', startTime: undefined, direction: undefined, a: NaN, b: NaN }, Life.actionPotentialHandler.build(nScope, ''));
         }
 
-        function testGradientOfALineWithObjectParameter() {
+        function testBuildWithObjectParameter() {
 
-            assertNaN("Life.analyticGeometry.gradientOfALine({}) should be NaN", Life.analyticGeometry.gradientOfALine({}));
+            try {
+                Life.actionPotentialHandler.build({});
+                fail("Life.actionPotentialHandler.build({}) should throw an Exception");
+            }
+            catch (e) {
+                assertEquals("Life.actionPotentialHandler.build({}) should throw an Exception", true, true);
+            }
+
+            try {
+                Life.actionPotentialHandler.build({}, {});
+                fail("Life.actionPotentialHandler.build({}, {}) should throw an Exception");
+            }
+            catch (e) {
+                assertEquals("Life.actionPotentialHandler.build({}, {}) should throw an Exception", true, true);
+            }
+
+            var nScope = new Life.NeuronScope();
+            neuron = new Life.Neuron();
+            Life.neuronHandler.init(nScope, neuron, Life.Models.neuronT1);
+            assertObjectEquals("Life.actionPotentialHandler.build(nScope, {}) should be { id: null, origin: {}, startTime: undefined, direction: undefined, a: NaN, b: NaN }", { id: null, origin: {}, startTime: undefined, direction: undefined, a: NaN, b: NaN }, Life.actionPotentialHandler.build(nScope, {}));
         }
 
-        function testGradientOfALineWithNumberParameter() {
+        function testBuildWithWrongDirectionParameter() {
 
-            assertEquals("Life.analyticGeometry.gradientOfALine(0) should be 0", 0, Life.analyticGeometry.gradientOfALine(0));
-            assertEquals("Life.analyticGeometry.gradientOfALine(1) should be 1", 1, Life.analyticGeometry.gradientOfALine(1));
-            assertEquals("Life.analyticGeometry.gradientOfALine(5) should be 0.2", 0.2, Life.analyticGeometry.gradientOfALine(5));
-            assertEquals("Life.analyticGeometry.gradientOfALine(-5) should be -0.2", -0.2, Life.analyticGeometry.gradientOfALine(-5));
-            assertEquals("Life.analyticGeometry.gradientOfALine(-1) should be -1", -1, Life.analyticGeometry.gradientOfALine(-1));
-            assertEquals("Life.analyticGeometry.gradientOfALine(0.000001) should be 1000000", 1000000, Life.analyticGeometry.gradientOfALine(0.000001));
-            assertEquals("Life.analyticGeometry.gradientOfALine(-0.000001) should be -1000000", -1000000, Life.analyticGeometry.gradientOfALine(-0.000001));
-        }*/
+            var nScope = new Life.NeuronScope();
+            neuron = new Life.Neuron();
+            Life.neuronHandler.init(nScope, neuron, Life.Models.neuronT1);
+            assertObjectEquals("Life.actionPotentialHandler.build(nScope, 100, 50, 0) should be { id: null, origin: 100, startTime: 50, direction: 0, a: 0, b: 50 }", { id: null, origin: 100, startTime: 50, direction: 0, a: 0, b: 50 }, Life.actionPotentialHandler.build(nScope, 100, 50, 0));
+            assertObjectEquals("Life.actionPotentialHandler.build(nScope, 1, 1, 0) should be { id: null, origin: 1, startTime: 1, direction: 0, a: 0, b: 1 }", { id: null, origin: 1, startTime: 1, direction: 0, a: 0, b: 1 }, Life.actionPotentialHandler.build(nScope, 1, 1, 0));
+        }
+
+        function testBuildWithExpectedParameters() {
+
+            var nScope = new Life.NeuronScope();
+            neuron = new Life.Neuron();
+            Life.neuronHandler.init(nScope, neuron, Life.Models.neuronT1);
+            assertObjectEquals("Life.actionPotentialHandler.build(nScope, 100, 50, 1) should be { id: null, origin: 100, startTime: 50, direction: 1, a: 0.08333333333333333, b: 41.66666666666667 }", { id: null, origin: 100, startTime: 50, direction: 1, a: 0.08333333333333333, b: 41.66666666666667 }, Life.actionPotentialHandler.build(nScope, 100, 50, 1));
+            assertObjectEquals("Life.actionPotentialHandler.build(nScope, 100, 50, -1) should be { id: null, origin: 100, startTime: 50, direction: -1, a: -0.08333333333333333, b: 58.33333333333333 }", { id: null, origin: 100, startTime: 50, direction: -1, a: -0.08333333333333333, b: 58.33333333333333 }, Life.actionPotentialHandler.build(nScope, 100, 50, -1));
+
+            assertObjectEquals("Life.actionPotentialHandler.build(nScope, 1, 1, 1) should be { id: null, origin: 1, startTime: 1, direction: 1, a: 0.08333333333333333, b: 0.9166666666666666 }", { id: null, origin: 1, startTime: 1, direction: 1, a: 0.08333333333333333, b: 0.9166666666666666 }, Life.actionPotentialHandler.build(nScope, 1, 1, 1));
+            assertObjectEquals("Life.actionPotentialHandler.build(nScope, 1, 1, -1) should be { id: null, origin: 1, startTime: 1, direction: -1, a: -0.08333333333333333, b: 1.0833333333333333 }", { id: null, origin: 1, startTime: 1, direction: -1, a: -0.08333333333333333, b: 1.0833333333333333 }, Life.actionPotentialHandler.build(nScope, 1, 1, -1));
+        }
+
+        var nScope = new Life.NeuronScope();
+        neuron = new Life.Neuron();
+        Life.neuronHandler.init(nScope, neuron, Life.Models.neuronT1);
+        console.log(Life.actionPotentialHandler.build(nScope, 100, 50, 1));
+        console.log(Life.actionPotentialHandler.build(nScope, 100, 50, -1));
+
+        console.log(Life.actionPotentialHandler.build(nScope, 1, 1, 1));
+        console.log(Life.actionPotentialHandler.build(nScope, 1, 1, -1));
 
 	</script>
 
