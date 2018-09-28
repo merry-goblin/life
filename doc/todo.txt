@@ -26,3 +26,10 @@ All calcul will be done through goldmann equation, only constants will change
 - services/calculs/analytic-geometry.js : ok
 - services/calculs/arithmetic.js : ok
 - services/calculs/membrane-potential.js : ok
+
+5. Dendrites must have properties that differ from axons of the same neuron
+
+- Impulse speed : todo
+- Channels : todo
+- That means there is a threshold for dendrite and axon of a same neuron : todo
+
