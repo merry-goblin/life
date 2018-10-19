@@ -1,4 +1,10 @@
 
+header {
+	padding: 12px 0px 12px 0px;
+	background-color: #555;
+	color: #fff;
+}
+
 .world-container {
 	width: 100%;
 	max-width: 1200px;
