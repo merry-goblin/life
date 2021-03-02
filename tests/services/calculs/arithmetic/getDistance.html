@@ -1,0 +1,52 @@
+<!doctype  html>
+<html lang="fr">
+<head>
+
+	<title>Unit testes</title>
+	<meta charset="utf-8" />
+
+    <script src="./../../../../src/services/calculs/arithmetic.js"></script>
+
+	<script src="./../../../../vendor/underscorejs/underscore-min.js"></script>
+	<script src="./../../../../vendor/jsunit/app/jsUnitCore.js"></script>
+
+	<script>
+
+        function testGetDistanceWithMissingParameters() {
+
+            assertNaN("Life.arithmetic.getDistance() should be NaN", Life.arithmetic.getDistance());
+            assertNaN("Life.arithmetic.getDistance(1) should be NaN", Life.arithmetic.getDistance(1));
+            assertNaN("Life.arithmetic.getDistance(1, 2) should be NaN", Life.arithmetic.getDistance(1, 2));
+            assertNaN("Life.arithmetic.getDistance(1, 2, 3) should be NaN", Life.arithmetic.getDistance(1, 2, 3));
+        }
+
+        function testGetDistanceWithNullParameters() {
+
+            assertEquals("Life.arithmetic.getDistance(null, null, null, null) should be 0", 0, Life.arithmetic.getDistance(null, null, null, null));
+            assertNaN("Life.arithmetic.getDistance(null) should be NaN", Life.arithmetic.getDistance(null));
+            assertNaN("Life.arithmetic.getDistance(null, null) should be NaN", Life.arithmetic.getDistance(null, null));
+            assertNaN("Life.arithmetic.getDistance(null, null, null) should be NaN", Life.arithmetic.getDistance(null, null, null));
+        }
+
+        function testGetDistanceWithSameAbscissaAndOrOrdinateParameters() {
+
+            assertEquals("Life.arithmetic.getDistance(0, 0, 0, 0) should be 0", 0, Life.arithmetic.getDistance(0, 0, 0, 0));
+            assertEquals("Life.arithmetic.getDistance(1, 2, 1, 4) should be 2", 2, Life.arithmetic.getDistance(1, 2, 1, 4));
+            assertEquals("Life.arithmetic.getDistance(1, 2, 3, 2) should be 2", 2, Life.arithmetic.getDistance(1, 2, 3, 2));
+            assertEquals("Life.arithmetic.getDistance(0, 0, 5, 5) should be 7.0710678118654755", 7.0710678118654755, Life.arithmetic.getDistance(0, 0, 5, 5));
+        }
+
+        function testGetDistanceWithExpectedParameters() {
+
+            assertEquals("Life.arithmetic.getDistance(1, 2, 3, 4) should be 2.8284271247461903", 2.8284271247461903, Life.arithmetic.getDistance(1, 2, 3, 4));
+            assertEquals("Life.arithmetic.getDistance(4, 3, 2, 1) should be 2.8284271247461903", 2.8284271247461903, Life.arithmetic.getDistance(4, 3, 2, 1));
+            assertEquals("Life.arithmetic.getDistance(0.00001, 0.00001, 0.00002, 0.00002) should be 0.000014142135623730951", 0.000014142135623730951, Life.arithmetic.getDistance(0.00001, 0.00001, 0.00002, 0.00002));
+        }
+
+	</script>
+
+</head>
+<body>
+
+</body>
+</html>

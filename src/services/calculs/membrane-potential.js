@@ -36,7 +36,7 @@ Life.membranePotential = (function(life) {
 				topLog += permeability * top;
 				bottomLog += permeability * bottom;
 			}
-			
+
 			var potential = (life.config.potentialConstant * life.config.temperature) * Math.log10(topLog / bottomLog);
 
 			return potential;

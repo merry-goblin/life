@@ -1,0 +1,46 @@
+<!doctype  html>
+<html lang="fr">
+<head>
+
+	<title>Unit testes</title>
+	<meta charset="utf-8" />
+
+    <script src="./../../../../src/services/calculs/arithmetic.js"></script>
+
+	<script src="./../../../../vendor/underscorejs/underscore-min.js"></script>
+	<script src="./../../../../vendor/jsunit/app/jsUnitCore.js"></script>
+
+	<script>
+
+        function testGetDistanceOnOneAxisWithMissingParameters() {
+
+            assertNaN("Life.arithmetic.getDistanceOnOneAxis() should be NaN", Life.arithmetic.getDistanceOnOneAxis());
+            assertNaN("Life.arithmetic.getDistanceOnOneAxis(1) should be NaN", Life.arithmetic.getDistanceOnOneAxis(1));
+       }
+
+        function testGetDistanceOnOneAxisWithNullParameters() {
+
+            assertNaN("Life.arithmetic.getDistanceOnOneAxis(null) should be NaN", Life.arithmetic.getDistanceOnOneAxis(null));
+            assertEquals("Life.arithmetic.getDistanceOnOneAxis(null, null) should be 0", 0, Life.arithmetic.getDistanceOnOneAxis(null, null));
+        }
+
+        function testGetDistanceOnOneAxisWithSamePositionParameters() {
+
+            assertEquals("Life.arithmetic.getDistanceOnOneAxis(0, 0) should be 0", 0, Life.arithmetic.getDistanceOnOneAxis(0, 0));
+            assertEquals("Life.arithmetic.getDistanceOnOneAxis(2, 2) should be 0", 0, Life.arithmetic.getDistanceOnOneAxis(2, 2));
+        }
+
+        function testGetDistanceOnOneAxisWithExpectedParameters() {
+
+            assertEquals("Life.arithmetic.getDistanceOnOneAxis(1, 2) should be 1", 1, Life.arithmetic.getDistanceOnOneAxis(1, 2));
+            assertEquals("Life.arithmetic.getDistanceOnOneAxis(4, 3) should be 1", 1, Life.arithmetic.getDistanceOnOneAxis(4, 3));
+            assertEquals("Life.arithmetic.getDistanceOnOneAxis(0.00001, 0.00002) should be 0.00001", 0.00001, Life.arithmetic.getDistanceOnOneAxis(0.00001, 0.00002));
+        }
+
+	</script>
+
+</head>
+<body>
+
+</body>
+</html>

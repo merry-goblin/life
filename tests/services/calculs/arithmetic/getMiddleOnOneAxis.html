@@ -1,0 +1,46 @@
+<!doctype  html>
+<html lang="fr">
+<head>
+
+	<title>Unit testes</title>
+	<meta charset="utf-8" />
+
+    <script src="./../../../../src/services/calculs/arithmetic.js"></script>
+
+	<script src="./../../../../vendor/underscorejs/underscore-min.js"></script>
+	<script src="./../../../../vendor/jsunit/app/jsUnitCore.js"></script>
+
+	<script>
+
+        function testGetMiddleOnOneAxisWithMissingParameters() {
+
+            assertNaN("Life.arithmetic.getMiddleOnOneAxis() should be NaN", Life.arithmetic.getMiddleOnOneAxis());
+            assertNaN("Life.arithmetic.getMiddleOnOneAxis(1) should be NaN", Life.arithmetic.getMiddleOnOneAxis(1));
+       }
+
+        function testGetMiddleOnOneAxisWithNullParameters() {
+
+            assertNaN("Life.arithmetic.getMiddleOnOneAxis(null) should be NaN", Life.arithmetic.getMiddleOnOneAxis(null));
+            assertEquals("Life.arithmetic.getMiddleOnOneAxis(null, null) should be 0", 0, Life.arithmetic.getMiddleOnOneAxis(null, null));
+        }
+
+        function testGetMiddleOnOneAxisWithSamePositionParameters() {
+
+            assertEquals("Life.arithmetic.getMiddleOnOneAxis(0, 0) should be 0", 0, Life.arithmetic.getMiddleOnOneAxis(0, 0));
+            assertEquals("Life.arithmetic.getMiddleOnOneAxis(2, 2) should be 2", 2, Life.arithmetic.getMiddleOnOneAxis(2, 2));
+        }
+
+        function testGetMiddleOnOneAxisWithExpectedParameters() {
+
+            assertEquals("Life.arithmetic.getMiddleOnOneAxis(1, 2) should be 1.5", 1.5, Life.arithmetic.getMiddleOnOneAxis(1, 2));
+            assertEquals("Life.arithmetic.getMiddleOnOneAxis(4, 3) should be 3.5", 3.5, Life.arithmetic.getMiddleOnOneAxis(4, 3));
+            assertEquals("Life.arithmetic.getMiddleOnOneAxis(0.00001, 0.00002) should be 0.000015", 0.000015000000000000002, Life.arithmetic.getMiddleOnOneAxis(0.00001, 0.00002));
+        }
+
+	</script>
+
+</head>
+<body>
+
+</body>
+</html>
