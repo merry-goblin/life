@@ -46,7 +46,7 @@ Life.analyticGeometry = (function(life) {
 		 * @param  integer x2
 		 * @return {y1, y2} [y1 < y2]
 		 */
-		intersectionOfLineInRange: function(a1, b1, x1, x2) {
+		intersectionOfOrdinatesInRange: function(a1, b1, x1, x2) {
 
 			let y1 = a1 * x1 + b1;
 			let y2 = a1 * x2 + b1;

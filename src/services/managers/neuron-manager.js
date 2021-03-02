@@ -266,7 +266,7 @@ var Life = Life || {};
 
 			let isCollided = true;
 			let radius = life.config.potentialProximity;
-			let intersection = life.analyticGeometry.intersectionOfLineInRange(ap.a, ap.b, psp.origin - radius, psp.origin + radius);
+			let intersection = life.analyticGeometry.intersectionOfOrdinatesInRange(ap.a, ap.b, psp.origin - radius, psp.origin + radius);
 
 			let end = time + timePassed;
 			if ((time <= intersection.y1 && end <= intersection.y1) || (time > intersection.y2 && end > intersection.y2)) {
