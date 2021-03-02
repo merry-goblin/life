@@ -1,8 +1,6 @@
-class Rectangle {
-  constructor(hauteur, largeur) {
-    this.hauteur = hauteur;
-    this.largeur = largeur;
-  }
+// module "mon-module.js"
+function cube(x) {
+  return x * x * x;
 }
-
-export default class {Rectangle} 
+const machin = Math.PI + Math.SQRT2;
+export { cube, machin };
